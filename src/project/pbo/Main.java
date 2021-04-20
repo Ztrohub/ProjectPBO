@@ -6,5 +6,6 @@ public class Main {
         System.out.println("Coba Ganti");
         System.out.println("Hello World");
         System.out.println("hello");
+        System.out.println("Nando Goblok");
     }
 }
