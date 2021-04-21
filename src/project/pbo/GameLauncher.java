@@ -1,5 +1,10 @@
 package project.pbo;
 
+/*
+    Ini Launcher (MAIN)
+    Jangan di otak-atik
+ */
+
 public class GameLauncher {
 
     public GameLauncher(){
