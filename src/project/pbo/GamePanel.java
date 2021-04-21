@@ -54,10 +54,15 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void render(){
-
+        if(g != null){
+            g.setColor(new Color(66,134,244));
+            g.fillRect(0,0, width, height);
+        }
     }
 
     public void draw(){
-
+        Graphics g2 = this.getGraphics();
+        g2.drawImage(img, 0, 0, width, height, null);
+        g2.dispose();
     }
 }
