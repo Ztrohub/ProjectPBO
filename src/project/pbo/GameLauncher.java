@@ -8,8 +8,6 @@ package project.pbo;
 public class GameLauncher {
 
     public static void main(String[] args) {
-        new Window();
-        System.out.println("hai");
-        System.out.println("Hai Jojo");
+
     }
 }
