@@ -1,4 +1,4 @@
-package states;
+package project.pbo.states;
 
 import project.pbo.gfx.Assets;
 

@@ -2,9 +2,8 @@ package project.pbo;
 
 import project.pbo.gfx.Assets;
 import project.pbo.window.Window;
-import states.IntroState;
-import states.MainMenu;
-import states.State;
+import project.pbo.states.IntroState;
+import project.pbo.states.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -19,6 +18,9 @@ public class Game implements Runnable {
 
 //    States
     private State mainMenu, intro;
+
+//    Handler
+    private Handler handler;
 
     private boolean running = false;
 

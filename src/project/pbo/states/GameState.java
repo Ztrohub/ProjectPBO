@@ -1,4 +1,4 @@
-package states;
+package project.pbo.states;
 
 import java.awt.*;
 

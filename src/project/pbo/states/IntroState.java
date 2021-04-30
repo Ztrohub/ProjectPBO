@@ -1,4 +1,4 @@
-package states;
+package project.pbo.states;
 
 import project.pbo.gfx.Assets;
 
@@ -12,18 +12,20 @@ public class IntroState extends State{
 
     @Override
     public void tick() {
-        if (count < 200)
+        if (count < 100)
             alhpa += 0.01f;
 
         if (alhpa >= 1.0f){
             alhpa = 1.0f;
-            if (count < 200)
+            if (count < 100)
             count++;
         }
 
-        if (count >= 200)
+        if (count >= 100)
             alhpa -= 0.01f;
-        if (alhpa <= 0.0f) alhpa = 0.0f;
+        if (alhpa <= 0.0f){
+            State.setCurrentState(new MainMenu());
+        }
     }
 
     @Override
