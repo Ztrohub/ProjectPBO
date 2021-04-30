@@ -5,10 +5,9 @@ import project.pbo.gfx.ImageLoader;
 import javax.swing.*;
 import java.awt.*;
 
-public class Window extends JFrame {
+public class Window extends JFrame implements SIZE{
 
     private final Canvas canvas;
-    final int width = 1080, height = 640;
 
     public Window() {
 

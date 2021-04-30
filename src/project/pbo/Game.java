@@ -1,11 +1,13 @@
 package project.pbo;
 
-import project.pbo.gfx.ImageLoader;
+import project.pbo.gfx.Assets;
 import project.pbo.window.Window;
+import states.IntroState;
+import states.MainMenu;
+import states.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 public class Game implements Runnable {
 
@@ -15,6 +17,9 @@ public class Game implements Runnable {
     private BufferStrategy bs;
     private Graphics g;
 
+//    States
+    private State mainMenu, intro;
+
     private boolean running = false;
 
     public Game(){
@@ -23,10 +28,18 @@ public class Game implements Runnable {
 
     private void init(){
         window = new Window();
+        Assets.init();
+
+//        mainMenu = new MainMenu();
+//        State.setCurrentState(mainMenu);
+
+        intro = new IntroState();
+        State.setCurrentState(intro);
     }
 
     private void tick(){
-
+        if (State.getCurrentState() != null)
+            State.getCurrentState().tick();
     }
 
     private void render(){
@@ -41,6 +54,8 @@ public class Game implements Runnable {
         g.clearRect(0,0, window.getWidth(), window.getHeight());
 
 //        Draw Here
+        if (State.getCurrentState() != null)
+            State.getCurrentState().render(g);
 
         bs.show();
         g.dispose();
@@ -51,9 +66,33 @@ public class Game implements Runnable {
     public void run() {
         init();
 
+        double fps = 60;
+        double timePerTick = 1000000000 / fps;
+        double delta = 0;
+        long now;
+        long lastTime = System.nanoTime();
+//        long timer = 0;
+//        int ticks = 0;
+
         while (running){
-            tick();
-            render();
+            now = System.nanoTime();
+            delta += (now - lastTime) / timePerTick;
+//            timer += now - lastTime;
+            lastTime = now;
+
+            if (delta >= 1) {
+                tick();
+                render();
+//                ticks++;
+                delta--;
+            }
+
+//            UNCOMMENT SEMUA UNTUK LIHAT FPS
+//            if (timer >= 1000000000){
+//                System.out.println("FPS: " + ticks);
+//                ticks = 0;
+//                timer = 0;
+//            }
         }
 
         stop();
