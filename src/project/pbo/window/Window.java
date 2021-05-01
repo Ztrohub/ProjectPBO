@@ -8,6 +8,7 @@ import java.awt.*;
 public class Window extends JFrame implements SIZE{
 
     private final Canvas canvas;
+    private final JLayeredPane layeredPane;
 
     public Window() {
 
@@ -26,16 +27,25 @@ public class Window extends JFrame implements SIZE{
         Cursor c = toolkit.createCustomCursor(ImageLoader.loadImage("/cursor.png"), new Point(this.getContentPane().getX(), this.getContentPane().getY()), "img");
         this.getContentPane().setCursor(c);
 
-        canvas = new Canvas();
-        canvas.setPreferredSize(new Dimension(width,height));
-        canvas.setMaximumSize(new Dimension(width,height));
-        canvas.setMinimumSize(new Dimension(width,height));
+        layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(new Dimension(width,height));
+        layeredPane.setLayout(null);
 
-        this.add(canvas);
+        canvas = new Canvas();
+        canvas.setSize(new Dimension(width,height));
+        layeredPane.add(canvas);
+
+        this.add(layeredPane);
+
         this.pack();
     }
 
     public Canvas getCanvas() {
         return canvas;
+    }
+
+    @Override
+    public JLayeredPane getLayeredPane() {
+        return layeredPane;
     }
 }

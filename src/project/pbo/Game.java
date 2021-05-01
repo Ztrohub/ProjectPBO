@@ -137,4 +137,8 @@ public class Game implements Runnable {
             e.printStackTrace();
         }
     }
+
+    public Window getWindow() {
+        return window;
+    }
 }
