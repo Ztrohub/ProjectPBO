@@ -3,15 +3,20 @@ package project.pbo.states;
 import project.pbo.Handler;
 import project.pbo.gfx.Assets;
 
+import javax.sound.sampled.Clip;
 import java.awt.*;
 
 public class IntroState extends State{
 
-    float alhpa = 0.1f;
-    int count = 0;
+    private float alhpa = 0.1f;
+    private int count = 0;
+    private Clip clip;
 
     public IntroState(Handler handler) {
         super(handler);
+        clip = Assets.audioIntro;
+        clip.start();
+
     }
 
     @Override
@@ -28,6 +33,7 @@ public class IntroState extends State{
         if (count >= 100)
             alhpa -= 0.01f;
         if (alhpa <= 0.0f){
+            clip.stop();
             State.setCurrentState(new LoginState(handler));
         }
     }

@@ -1,6 +1,7 @@
 package project.pbo.gfx;
 
 import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -15,16 +16,19 @@ public class Assets {
 
     public static BufferedImage menuBG, logoSTTS;
     public static BufferedImage loginBG;
-    public static AudioInputStream audioLogin;
+    public static Clip audioLogin, audioIntro;
 
     public static Font regulerFont;
 
     public static void init(){
 
+//        AUDIO
         audioLogin = AudioLoader.loadAudio("res/audio/login.wav");
-
+        audioIntro = AudioLoader.loadAudio("res/audio/intro.wav");
+//        FONT
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
 
+//        IMAGE
         menuBG = ImageLoader.loadImage("/images/background.png");
         logoSTTS = ImageLoader.loadImage("/istts.png");
 

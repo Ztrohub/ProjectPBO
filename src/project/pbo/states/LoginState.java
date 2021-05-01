@@ -5,29 +5,15 @@ import project.pbo.gfx.Assets;
 import project.pbo.gfx.Text;
 import project.pbo.window.SIZE;
 
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
-import java.io.IOException;
 
 public class LoginState extends State implements SIZE {
 
     public LoginState(Handler handler) {
         super(handler);
 
-        Clip clip = null;
-        try {
-            clip = AudioSystem.getClip();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        }
-        try {
-            assert clip != null;
-            clip.open(Assets.audioLogin);
-        } catch (LineUnavailableException | IOException e) {
-            e.printStackTrace();
-        }
+        Clip clip = Assets.audioLogin;
         clip.start();
     }
 
