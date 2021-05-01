@@ -1,5 +1,7 @@
 package project.pbo.states;
 
+import project.pbo.Handler;
+
 import java.awt.*;
 
 public abstract class State {
@@ -15,6 +17,12 @@ public abstract class State {
     }
 
     //    CLASS
+    protected Handler handler;
+
+    public State(Handler handler){
+        this.handler = handler;
+    }
+
     public abstract void tick();
 
     public abstract void render(Graphics g);

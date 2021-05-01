@@ -1,14 +1,18 @@
 package project.pbo.states;
 
+import project.pbo.Handler;
 import project.pbo.gfx.Assets;
 
 import java.awt.*;
 
 public class IntroState extends State{
 
-    Graphics2D g;
     float alhpa = 0.1f;
     int count = 0;
+
+    public IntroState(Handler handler) {
+        super(handler);
+    }
 
     @Override
     public void tick() {
@@ -24,7 +28,7 @@ public class IntroState extends State{
         if (count >= 100)
             alhpa -= 0.01f;
         if (alhpa <= 0.0f){
-            State.setCurrentState(new MainMenu());
+            State.setCurrentState(new LoginState(handler));
         }
     }
 

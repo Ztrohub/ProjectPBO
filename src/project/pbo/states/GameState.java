@@ -1,10 +1,13 @@
 package project.pbo.states;
 
+import project.pbo.Handler;
+
 import java.awt.*;
 
 public class GameState extends State {
 
-    public GameState(){
+    public GameState(Handler handler){
+        super(handler);
 
     }
 

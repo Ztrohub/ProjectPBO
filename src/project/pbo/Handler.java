@@ -1,8 +1,10 @@
 package project.pbo;
 
-public class Handler {
+import project.pbo.account.DB;
 
+public class Handler {
     private Game game;
+    private DB db = new DB();
 
     public Handler(Game game) {
         this.game = game;
@@ -14,5 +16,13 @@ public class Handler {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public DB getDb() {
+        return db;
+    }
+
+    public void setDb(DB db) {
+        this.db = db;
     }
 }
