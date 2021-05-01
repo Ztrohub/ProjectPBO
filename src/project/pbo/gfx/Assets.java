@@ -5,6 +5,13 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 
+    /*
+        Semua File diupload di sini!
+        Panggil dengan Asset.nama
+
+        Load gambar ==> ImageLoader.loadImage("/alamat/namafile.extensi");
+     */
+
     public static BufferedImage menuBG, logoSTTS;
     public static BufferedImage loginBG;
 

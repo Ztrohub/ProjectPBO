@@ -22,6 +22,10 @@ public class Window extends JFrame implements SIZE{
         this.setIconImage(icon.getImage());
         this.getContentPane().setBackground(Color.BLACK);
 
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Cursor c = toolkit.createCustomCursor(ImageLoader.loadImage("/cursor.png"), new Point(this.getContentPane().getX(), this.getContentPane().getY()), "img");
+        this.getContentPane().setCursor(c);
+
         canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(width,height));
         canvas.setMaximumSize(new Dimension(width,height));
