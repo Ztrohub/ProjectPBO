@@ -2,6 +2,7 @@ package project.pbo;
 
 import project.pbo.account.DB;
 import project.pbo.gfx.Assets;
+import project.pbo.input.MouseManager;
 import project.pbo.window.Window;
 import project.pbo.states.IntroState;
 import project.pbo.states.State;
@@ -28,12 +29,21 @@ public class Game implements Runnable {
 
     private boolean running = false;
 
+//    Input
+    private MouseManager mouseManager;
+
     public Game(){
         start();
+        mouseManager = new MouseManager();
     }
 
     private void init(){
         window = new Window();
+        window.getFrame().addMouseListener(mouseManager);
+        window.getFrame().addMouseMotionListener(mouseManager);
+        window.getCanvas().addMouseListener(mouseManager);
+        window.getCanvas().addMouseMotionListener(mouseManager);
+
         Assets.init();
         handler = new Handler(this);
         loadFile();
@@ -140,5 +150,9 @@ public class Game implements Runnable {
 
     public Window getWindow() {
         return window;
+    }
+
+    public MouseManager getMouseManager() {
+        return mouseManager;
     }
 }

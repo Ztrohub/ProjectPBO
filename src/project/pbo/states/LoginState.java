@@ -1,38 +1,110 @@
 package project.pbo.states;
 
 import project.pbo.Handler;
+import project.pbo.account.User;
 import project.pbo.gfx.Assets;
 import project.pbo.gfx.Text;
+import project.pbo.input.MouseManager;
 import project.pbo.window.SIZE;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class LoginState extends State implements SIZE {
 
-    private JTextField username = new JTextField();
-    private JPasswordField password = new JPasswordField();
+    private JTextField jUsername = new JTextField();
+    private JPasswordField jPassword = new JPasswordField();
+    private final Rectangle loginBtn = new Rectangle(280,370,110,50);
+    private final Rectangle registBtn = new Rectangle(20,370, 150, 50 );
+    private final MouseManager mouseManager;
+    private final ArrayList<User> users;
+    private final Clip clip;
 
     public LoginState(Handler handler) {
         super(handler);
-        username.setBounds(20, 215, 370, 30);
-        username.setMargin(new Insets(0, 5, 0, 0));
-        username.setFont(new Font("SansSerif", Font.BOLD, 20));
-        password.setBounds(20, 295, 370, 30);
-        password.setMargin(new Insets(0, 5, 0, 0));
-        password.setFont(new Font("SansSerif", Font.BOLD, 20));
-        handler.getGame().getWindow().getLayeredPane().add(username,0);
-        handler.getGame().getWindow().getLayeredPane().add(password,0);
+        jUsername.setBounds(20, 215, 370, 30);
+        jUsername.setMargin(new Insets(0, 5, 0, 0));
+        jUsername.setFont(new Font("SansSerif", Font.BOLD, 20));
+        jPassword.setBounds(20, 295, 370, 30);
+        jPassword.setMargin(new Insets(0, 5, 0, 0));
+        jPassword.setFont(new Font("SansSerif", Font.BOLD, 20));
+        handler.getGame().getWindow().getLayeredPane().add(jUsername,0);
+        handler.getGame().getWindow().getLayeredPane().add(jPassword,0);
+        this.mouseManager = handler.getMouseManager();
+        this.users = handler.getDb().getUsers();
 
-        Clip clip = Assets.audioLogin;
+        clip = Assets.audioLogin;
         clip.start();
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
 
     }
 
     @Override
     public void tick() {
+        if ((mouseManager.isLeftPressed() || mouseManager.isRightPressed()) && loginBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+            String username = jUsername.getText();
+            String password = String.valueOf(jPassword.getPassword());
 
+            boolean ada = false;
+            for (User user : users){
+                if (user.getUsername().equals(username) && user.getPassword().equals(password)){
+                    ada = true;
+                    clip.stop();
+                    handler.getGame().getWindow().getLayeredPane().remove(jUsername);
+                    handler.getGame().getWindow().getLayeredPane().remove(jPassword);
+                    setCurrentState(new MainMenu(handler, user));
+                }
+            }
+
+            if (!ada){
+                JOptionPane.showMessageDialog(handler.getGame().getWindow(), "Username / password tidak cocok!", "Username / password tidak cocok!", JOptionPane.WARNING_MESSAGE);
+            }
+            mouseManager.setLeftPressed(false);
+            mouseManager.setRightPressed(false);
+
+        }
+        if ((mouseManager.isLeftPressed() || mouseManager.isRightPressed()) && registBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+            JTextField u = new JTextField();
+            JPasswordField p = new JPasswordField();
+            JPasswordField c = new JPasswordField();
+            JPanel jPanel = new JPanel(new GridLayout(0,1));
+            jPanel.add(new JLabel("Username: "));
+            jPanel.add(u);
+            jPanel.add(new JLabel("Password: "));
+            jPanel.add(p);
+            jPanel.add(new JLabel("Confirm Password: "));
+            jPanel.add(c);
+            int result = JOptionPane.showConfirmDialog(handler.getGame().getWindow(), jPanel, "Register",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+
+                String username = u.getText();
+                String password = String.valueOf(p.getPassword());
+                String confirm = String.valueOf(c.getPassword());
+
+                boolean ada = false;
+                for (User user : users){
+                    if (user.getUsername().equals(username)){
+                        ada = true;
+                        break;
+                    }
+                }
+
+                if (ada) JOptionPane.showMessageDialog(handler.getGame().getWindow(), "Username sudah terdaftar!", "Username sudah terdaftar!", JOptionPane.WARNING_MESSAGE);
+                else {
+                    if (password.equals(confirm)){
+                        users.add(new User(username, password));
+                        JOptionPane.showMessageDialog(handler.getGame().getWindow(), "User " + username + " berhasil didaftarkan!");
+                    } else JOptionPane.showMessageDialog(handler.getGame().getWindow(), "Password dan Confirm tidak cocok!", "Password dan Confirm tidak cocok!", JOptionPane.WARNING_MESSAGE);
+                }
+
+            }
+
+            mouseManager.setLeftPressed(false);
+            mouseManager.setRightPressed(false);
+        }
     }
 
     @Override
@@ -43,8 +115,8 @@ public class LoginState extends State implements SIZE {
         Text.drawString(g, "Username: ", 20, 200, false, Color.WHITE, Assets.regulerFont);
         Text.drawString(g, "Password: ", 20, 280, false, Color.WHITE, Assets.regulerFont);
         g.setColor(Color.red);
-        g.fillRect(280,370,110,50);
-        g.fillRect(20,370, 150, 50 );
+        ((Graphics2D) g).fill(loginBtn);
+        ((Graphics2D) g).fill(registBtn);
         Text.drawString(g, "Register", 38, 400, false, Color.WHITE, Assets.regulerFont);
         Text.drawString(g, "Login", 300, 400, false, Color.WHITE, Assets.regulerFont);
 

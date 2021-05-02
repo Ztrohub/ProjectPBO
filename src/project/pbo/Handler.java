@@ -1,6 +1,7 @@
 package project.pbo;
 
 import project.pbo.account.DB;
+import project.pbo.input.MouseManager;
 
 public class Handler {
     private Game game;
@@ -20,6 +21,10 @@ public class Handler {
 
     public DB getDb() {
         return db;
+    }
+
+    public MouseManager getMouseManager(){
+        return game.getMouseManager();
     }
 
     public void setDb(DB db) {

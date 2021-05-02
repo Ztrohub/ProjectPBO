@@ -48,4 +48,8 @@ public class Window extends JFrame implements SIZE{
     public JLayeredPane getLayeredPane() {
         return layeredPane;
     }
+
+    public JFrame getFrame(){
+        return this;
+    }
 }
