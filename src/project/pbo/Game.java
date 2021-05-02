@@ -19,18 +19,13 @@ public class Game implements Runnable {
     private Thread thread;
     private Window window;
 
-    private BufferStrategy bs;
-    private Graphics g;
-
-    private DB db = new DB();
-
 //    Handler
     private Handler handler;
 
     private boolean running = false;
 
 //    Input
-    private MouseManager mouseManager;
+    private final MouseManager mouseManager;
 
     public Game(){
         start();
@@ -74,12 +69,12 @@ public class Game implements Runnable {
     }
 
     private void render(){
-        bs = window.getCanvas().getBufferStrategy();
+        BufferStrategy bs = window.getCanvas().getBufferStrategy();
         if(bs == null) {
             window.getCanvas().createBufferStrategy(3);
             return;
         }
-        g = bs.getDrawGraphics();
+        Graphics g = bs.getDrawGraphics();
 
 //        Clear Screen
         g.clearRect(0,0, window.getWidth(), window.getHeight());

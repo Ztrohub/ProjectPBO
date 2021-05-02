@@ -1,14 +1,18 @@
 package project.pbo.states;
 
 import project.pbo.Handler;
+import project.pbo.account.Player;
+import project.pbo.account.User;
 
 import java.awt.*;
 
 public class GameState extends State {
 
-    public GameState(Handler handler){
-        super(handler);
+    private Player player;
 
+    public GameState(Handler handler, User user){
+        super(handler);
+        this.player = user.getPlayer();
     }
 
     @Override
@@ -18,6 +22,11 @@ public class GameState extends State {
 
     @Override
     public void render(Graphics g) {
+
+    }
+
+    @Override
+    public void playMusic() {
 
     }
 }

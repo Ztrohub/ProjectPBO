@@ -15,10 +15,11 @@ public class Assets {
      */
 
     public static BufferedImage menuBG, logoSTTS;
-    public static BufferedImage loginBG;
+    public static BufferedImage loginBG, loadingBG;
     public static Clip audioLogin, audioIntro, audioMenu;
 
     public static Font regulerFont;
+    public static Font dungeonFont;
 
     public static void init(){
 
@@ -29,10 +30,12 @@ public class Assets {
 
 //        FONT
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
+        dungeonFont = FontLoader.loadFont("res/font/dungeon.ttf", 35);
 
 //        IMAGE
         menuBG = ImageLoader.loadImage("/images/background.png");
         logoSTTS = ImageLoader.loadImage("/istts.png");
+        loadingBG = ImageLoader.loadImage("/images/loadingBG.jpg");
 
         loginBG = ImageLoader.loadImage("/images/loginBG.jpg");
     }

@@ -3,11 +3,14 @@ package project.pbo;
 import project.pbo.account.DB;
 import project.pbo.input.MouseManager;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.io.*;
 
 public class Handler {
     private Game game;
     private DB db = new DB();
+    private double vol = 0.1;
 
     public Handler(Game game) {
         this.game = game;
@@ -43,5 +46,15 @@ public class Handler {
         } catch (IOException e){
             System.out.println("There's Problem on Save!" + e);
         }
+    }
+
+    public void setVol(Clip clip){
+        FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        float dB = (float) (Math.log(this.vol) / Math.log(10) * 20);
+        gain.setValue(dB);
+    }
+
+    public void setVol(double vol) {
+        this.vol = vol;
     }
 }

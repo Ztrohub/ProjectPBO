@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     private String username;
     private String password;
-    private Player player;
+    private final Player player;
 
     public User(String username, String password) {
         this.username = username;
@@ -27,5 +27,9 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

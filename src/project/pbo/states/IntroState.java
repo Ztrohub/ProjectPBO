@@ -10,12 +10,13 @@ public class IntroState extends State{
 
     private float alhpa = 0.1f;
     private int count = 0;
-    private Clip clip;
+    private final Clip clip;
 
     public IntroState(Handler handler) {
         super(handler);
         clip = Assets.audioIntro;
         clip.start();
+        handler.setVol(clip);
 
     }
 
@@ -34,7 +35,9 @@ public class IntroState extends State{
             alhpa -= 0.01f;
         if (alhpa <= 0.0f){
             clip.stop();
-            State.setCurrentState(new LoginState(handler));
+            State state = new LoginState(handler);
+            state.playMusic();
+            State.setCurrentState(state);
         }
     }
 
@@ -43,5 +46,10 @@ public class IntroState extends State{
         ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alhpa));
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.drawImage(Assets.logoSTTS, 400, 180, 250, 250, null);
+    }
+
+    @Override
+    public void playMusic() {
+
     }
 }

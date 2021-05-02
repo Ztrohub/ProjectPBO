@@ -14,13 +14,13 @@ import java.util.ArrayList;
 
 public class LoginState extends State implements SIZE, Pesan {
 
-    private JTextField jUsername = new JTextField();
-    private JPasswordField jPassword = new JPasswordField();
+    private final JTextField jUsername = new JTextField();
+    private final JPasswordField jPassword = new JPasswordField();
     private final Rectangle loginBtn = new Rectangle(280,370,110,50);
     private final Rectangle registBtn = new Rectangle(20,370, 150, 50 );
     private final MouseManager mouseManager;
     private final ArrayList<User> users;
-    private final Clip clip;
+    private Clip clip;
 
     public LoginState(Handler handler) {
         super(handler);
@@ -34,10 +34,6 @@ public class LoginState extends State implements SIZE, Pesan {
         handler.getGame().getWindow().getLayeredPane().add(jPassword,0);
         this.mouseManager = handler.getMouseManager();
         this.users = handler.getDb().getUsers();
-
-        clip = Assets.audioLogin;
-        clip.start();
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
 
     }
 
@@ -54,7 +50,7 @@ public class LoginState extends State implements SIZE, Pesan {
                     clip.stop();
                     handler.getGame().getWindow().getLayeredPane().remove(jUsername);
                     handler.getGame().getWindow().getLayeredPane().remove(jPassword);
-                    setCurrentState(new MainMenu(handler, user));
+                    setCurrentState(new LoadingState(handler, new MainMenu(handler, user)));
                 }
             }
 
@@ -125,7 +121,13 @@ public class LoginState extends State implements SIZE, Pesan {
         Text.drawString(g, "Register", 38, 400, false, Color.WHITE, Assets.regulerFont);
         Text.drawString(g, "Login", 300, 400, false, Color.WHITE, Assets.regulerFont);
 
-//        Input
     }
 
+    @Override
+    public void playMusic() {
+        clip = Assets.audioLogin;
+        clip.start();
+        handler.setVol(clip);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
 }

@@ -10,6 +10,11 @@ public class SettingState extends State{
     }
 
     @Override
+    public void playMusic() {
+
+    }
+
+    @Override
     public void tick() {
 
     }
