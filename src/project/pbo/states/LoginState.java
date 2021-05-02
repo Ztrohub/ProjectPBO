@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class LoginState extends State implements SIZE {
+public class LoginState extends State implements SIZE, Pesan {
 
     private JTextField jUsername = new JTextField();
     private JPasswordField jPassword = new JPasswordField();
@@ -59,7 +59,7 @@ public class LoginState extends State implements SIZE {
             }
 
             if (!ada){
-                JOptionPane.showMessageDialog(handler.getGame().getWindow(), "Username / password tidak cocok!", "Username / password tidak cocok!", JOptionPane.WARNING_MESSAGE);
+                buatPesan("Username/Password tidak cocok!", JOptionPane.ERROR_MESSAGE, handler);
             }
             mouseManager.setLeftPressed(false);
             mouseManager.setRightPressed(false);
@@ -92,12 +92,17 @@ public class LoginState extends State implements SIZE {
                     }
                 }
 
-                if (ada) JOptionPane.showMessageDialog(handler.getGame().getWindow(), "Username sudah terdaftar!", "Username sudah terdaftar!", JOptionPane.WARNING_MESSAGE);
+                if (username.isEmpty() || password.isEmpty()) buatPesan("Field tidak boleh kosong!", JOptionPane.ERROR_MESSAGE, handler);
                 else {
-                    if (password.equals(confirm)){
-                        users.add(new User(username, password));
-                        JOptionPane.showMessageDialog(handler.getGame().getWindow(), "User " + username + " berhasil didaftarkan!");
-                    } else JOptionPane.showMessageDialog(handler.getGame().getWindow(), "Password dan Confirm tidak cocok!", "Password dan Confirm tidak cocok!", JOptionPane.WARNING_MESSAGE);
+                    if (ada) buatPesan("Username sudah terdaftar!", JOptionPane.ERROR_MESSAGE, handler);
+                    else {
+                        if (password.equals(confirm)) {
+                            users.add(new User(username, password));
+                            buatPesan("User " + username + " berhasil didaftarkan!", JOptionPane.INFORMATION_MESSAGE, handler);
+                            handler.saveFile();
+                        } else
+                            buatPesan("Password dan Confirm Password tidak cocok!", JOptionPane.ERROR_MESSAGE, handler);
+                    }
                 }
 
             }

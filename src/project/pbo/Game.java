@@ -57,10 +57,10 @@ public class Game implements Runnable {
     }
 
     private void loadFile(){
-        File file = new File("save.txt");
+        File file = new File("res/save.txt");
         if (file.exists()){
             try {
-                FileInputStream fis = new FileInputStream("save.txt");
+                FileInputStream fis = new FileInputStream("res/save.txt");
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 handler.setDb((DB) ois.readObject());
                 ois.close();
