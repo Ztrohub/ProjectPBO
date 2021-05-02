@@ -16,7 +16,7 @@ public class Assets {
 
     public static BufferedImage menuBG, logoSTTS;
     public static BufferedImage loginBG;
-    public static Clip audioLogin, audioIntro;
+    public static Clip audioLogin, audioIntro, audioMenu;
 
     public static Font regulerFont;
 
@@ -24,7 +24,9 @@ public class Assets {
 
 //        AUDIO
         audioLogin = AudioLoader.loadAudio("res/audio/login.wav");
-        audioIntro = AudioLoader.loadAudio("res/audio/intro.wav");
+        audioIntro = AudioLoader.loadAudio("res/audio/IntroNando.wav");
+        audioMenu = AudioLoader.loadAudio("res/audio/menu.wav");
+
 //        FONT
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
 

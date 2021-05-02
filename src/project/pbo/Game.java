@@ -90,7 +90,6 @@ public class Game implements Runnable {
 
         bs.show();
         g.dispose();
-
     }
 
     @Override

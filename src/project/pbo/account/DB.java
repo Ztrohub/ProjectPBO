@@ -10,7 +10,7 @@ public class DB implements Serializable {
         users = new ArrayList<>();
     }
 
-    public ArrayList<User> getUsers() {
+    public ArrayList <User> getUsers() {
         return users;
     }
 
