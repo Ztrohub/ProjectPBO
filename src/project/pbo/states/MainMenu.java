@@ -3,6 +3,7 @@ package project.pbo.states;
 import project.pbo.Handler;
 import project.pbo.account.User;
 import project.pbo.gfx.Assets;
+import project.pbo.gfx.Text;
 import project.pbo.window.SIZE;
 
 import javax.sound.sampled.Clip;
@@ -12,6 +13,11 @@ public class MainMenu extends State implements SIZE {
 
     private User user;
     private Clip clip;
+
+    private final Rectangle playBtn = new Rectangle(280,100,110,50);
+
+    // X BEDA 25
+    // Y BEDA 31
 
     public MainMenu(Handler handler, User user) {
         super(handler);
@@ -37,6 +43,15 @@ public class MainMenu extends State implements SIZE {
     public void render(Graphics g) {
         g.drawImage(Assets.menuBG, 0, 0, width, height, null);
 
+        // ICON DAN NAMA PLAYER
+        g.drawImage(Assets.avatar, 945, 15, 30, 30, null);
+        Text.drawString(g, user.getUsername(), 985, 36, false, Color.WHITE, Assets.regulerFont);
 
+        // BUTTON
+        g.setColor(new Color(0xB1B1B1));
+        ((Graphics2D) g).fill(playBtn);
+
+        Text.drawString(g, "Play", 305, 131, false, Color.BLACK, Assets.regulerFont);
     }
+
 }

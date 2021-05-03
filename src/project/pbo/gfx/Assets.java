@@ -14,7 +14,7 @@ public class Assets {
         Load gambar ==> ImageLoader.loadImage("/alamat/namafile.extensi");
      */
 
-    public static BufferedImage menuBG, logoSTTS;
+    public static BufferedImage menuBG, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG;
     public static Clip audioLogin, audioIntro, audioMenu, audioGame;
 
@@ -37,6 +37,7 @@ public class Assets {
         menuBG = ImageLoader.loadImage("/images/background.png");
         logoSTTS = ImageLoader.loadImage("/istts.png");
         loadingBG = ImageLoader.loadImage("/images/loadingBG.jpg");
+        avatar = ImageLoader.loadImage("/avatar.png");
 
         loginBG = ImageLoader.loadImage("/images/loginBG.jpg");
     }
