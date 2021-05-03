@@ -33,6 +33,8 @@ public class Window extends JFrame implements SIZE{
 
         canvas = new Canvas();
         canvas.setSize(new Dimension(width,height));
+        canvas.setFocusable(false);
+
         layeredPane.add(canvas);
 
         this.add(layeredPane);

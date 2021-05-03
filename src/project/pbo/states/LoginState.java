@@ -16,8 +16,10 @@ public class LoginState extends State implements SIZE, Pesan {
 
     private final JTextField jUsername = new JTextField();
     private final JPasswordField jPassword = new JPasswordField();
+
     private final Rectangle loginBtn = new Rectangle(280,370,110,50);
     private final Rectangle registBtn = new Rectangle(20,370, 150, 50 );
+
     private final MouseManager mouseManager;
     private final ArrayList<User> users;
     private Clip clip;
@@ -32,13 +34,16 @@ public class LoginState extends State implements SIZE, Pesan {
         jPassword.setFont(new Font("SansSerif", Font.BOLD, 20));
         handler.getGame().getWindow().getLayeredPane().add(jUsername,0);
         handler.getGame().getWindow().getLayeredPane().add(jPassword,0);
+
         this.mouseManager = handler.getMouseManager();
+
         this.users = handler.getDb().getUsers();
 
     }
 
     @Override
     public void tick() {
+
         if ((mouseManager.isLeftPressed() || mouseManager.isRightPressed()) && loginBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
             String username = jUsername.getText();
             String password = String.valueOf(jPassword.getPassword());
@@ -50,6 +55,7 @@ public class LoginState extends State implements SIZE, Pesan {
                     clip.stop();
                     handler.getGame().getWindow().getLayeredPane().remove(jUsername);
                     handler.getGame().getWindow().getLayeredPane().remove(jPassword);
+
                     setCurrentState(new LoadingState(handler, new MainMenu(handler, user)));
                 }
             }
@@ -57,6 +63,7 @@ public class LoginState extends State implements SIZE, Pesan {
             if (!ada){
                 buatPesan("Username/Password tidak cocok!", JOptionPane.ERROR_MESSAGE, handler);
             }
+
             mouseManager.setLeftPressed(false);
             mouseManager.setRightPressed(false);
 
@@ -115,9 +122,11 @@ public class LoginState extends State implements SIZE, Pesan {
         g.fillRect(10, 150, 430, 300);
         Text.drawString(g, "Username: ", 20, 200, false, Color.WHITE, Assets.regulerFont);
         Text.drawString(g, "Password: ", 20, 280, false, Color.WHITE, Assets.regulerFont);
+//
         g.setColor(Color.red);
         ((Graphics2D) g).fill(loginBtn);
         ((Graphics2D) g).fill(registBtn);
+//
         Text.drawString(g, "Register", 38, 400, false, Color.WHITE, Assets.regulerFont);
         Text.drawString(g, "Login", 300, 400, false, Color.WHITE, Assets.regulerFont);
 

@@ -1,8 +1,12 @@
 package project.pbo;
 
 import project.pbo.account.DB;
+import project.pbo.account.User;
 import project.pbo.gfx.Assets;
+import project.pbo.input.KeyManager;
 import project.pbo.input.MouseManager;
+import project.pbo.states.GameState;
+import project.pbo.states.MainMenu;
 import project.pbo.window.Window;
 import project.pbo.states.IntroState;
 import project.pbo.states.State;
@@ -26,10 +30,12 @@ public class Game implements Runnable {
 
 //    Input
     private final MouseManager mouseManager;
+    private final KeyManager keyManager;
 
     public Game(){
         start();
         mouseManager = new MouseManager();
+        keyManager = new KeyManager();
     }
 
     private void init(){
@@ -38,12 +44,21 @@ public class Game implements Runnable {
         window.getFrame().addMouseMotionListener(mouseManager);
         window.getCanvas().addMouseListener(mouseManager);
         window.getCanvas().addMouseMotionListener(mouseManager);
+        window.getFrame().addKeyListener(keyManager);
 
         Assets.init();
         handler = new Handler(this);
         loadFile();
 
-        State.setCurrentState(new IntroState(handler));
+//        TODO Uncomment
+//        User user = new User("test", "123");
+//        State state = new MainMenu(handler, user);
+//        state.playMusic();
+
+        State state = new IntroState(handler);
+
+        State.setCurrentState(state);
+
     }
 
     private void tick(){
@@ -148,5 +163,9 @@ public class Game implements Runnable {
 
     public MouseManager getMouseManager() {
         return mouseManager;
+    }
+
+    public KeyManager getKeyManager() {
+        return keyManager;
     }
 }

@@ -1,6 +1,7 @@
 package project.pbo;
 
 import project.pbo.account.DB;
+import project.pbo.input.KeyManager;
 import project.pbo.input.MouseManager;
 
 import javax.sound.sampled.Clip;
@@ -28,10 +29,6 @@ public class Handler {
         return db;
     }
 
-    public MouseManager getMouseManager(){
-        return game.getMouseManager();
-    }
-
     public void setDb(DB db) {
         this.db = db;
     }
@@ -56,5 +53,13 @@ public class Handler {
 
     public void setVol(double vol) {
         this.vol = vol;
+    }
+
+    public KeyManager getKeyManager(){
+        return game.getKeyManager();
+    }
+
+    public MouseManager getMouseManager(){
+        return game.getMouseManager();
     }
 }

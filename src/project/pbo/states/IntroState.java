@@ -1,6 +1,7 @@
 package project.pbo.states;
 
 import project.pbo.Handler;
+import project.pbo.account.User;
 import project.pbo.gfx.Assets;
 
 import javax.sound.sampled.Clip;
@@ -14,6 +15,7 @@ public class IntroState extends State{
 
     public IntroState(Handler handler) {
         super(handler);
+
         clip = Assets.audioIntro;
         clip.start();
         handler.setVol(clip);
@@ -35,6 +37,7 @@ public class IntroState extends State{
             alhpa -= 0.01f;
         if (alhpa <= 0.0f){
             clip.stop();
+
             State state = new LoginState(handler);
             state.playMusic();
             State.setCurrentState(state);
