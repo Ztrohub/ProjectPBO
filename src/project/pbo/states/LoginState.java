@@ -17,8 +17,8 @@ public class LoginState extends State implements SIZE, Pesan {
     private final JTextField jUsername = new JTextField();
     private final JPasswordField jPassword = new JPasswordField();
 
-    private final Rectangle loginBtn = new Rectangle(280,370,110,50);
-    private final Rectangle registBtn = new Rectangle(20,370, 150, 50 );
+    private final Rectangle loginBtn = new Rectangle(280,470,110,50);
+    private final Rectangle registBtn = new Rectangle(20,470, 150, 50 );
 
     private final MouseManager mouseManager;
     private final ArrayList<User> users;
@@ -26,10 +26,10 @@ public class LoginState extends State implements SIZE, Pesan {
 
     public LoginState(Handler handler) {
         super(handler);
-        jUsername.setBounds(20, 215, 370, 30);
+        jUsername.setBounds(20, 315, 370, 30);
         jUsername.setMargin(new Insets(0, 5, 0, 0));
         jUsername.setFont(new Font("SansSerif", Font.BOLD, 20));
-        jPassword.setBounds(20, 295, 370, 30);
+        jPassword.setBounds(20, 395, 370, 30);
         jPassword.setMargin(new Insets(0, 5, 0, 0));
         jPassword.setFont(new Font("SansSerif", Font.BOLD, 20));
         handler.getGame().getWindow().getLayeredPane().add(jUsername,0);
@@ -119,16 +119,16 @@ public class LoginState extends State implements SIZE, Pesan {
     public void render(Graphics g) {
         g.drawImage(Assets.loginBG, 0, 0, width, height, null);
         g.setColor(new Color(0,0,0,0.5f));
-        g.fillRect(10, 150, 430, 300);
-        Text.drawString(g, "Username: ", 20, 200, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Password: ", 20, 280, false, Color.WHITE, Assets.regulerFont);
+        g.fillRect(10, 250, 430, 300);
+        Text.drawString(g, "Username: ", 20, 300, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, "Password: ", 20, 380, false, Color.WHITE, Assets.regulerFont);
 //
         g.setColor(Color.red);
         ((Graphics2D) g).fill(loginBtn);
         ((Graphics2D) g).fill(registBtn);
 //
-        Text.drawString(g, "Register", 38, 400, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Login", 300, 400, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, "Register", 38, 500, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, "Login", 300, 500, false, Color.WHITE, Assets.regulerFont);
 
     }
 

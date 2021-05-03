@@ -1,6 +1,5 @@
 package project.pbo.gfx;
 
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -13,13 +13,12 @@ public class LoadingState extends State implements SIZE {
     private final State nextState;
     private int count = 0;
     private final int rand;
-    private final String[] quotes = {"\"Every creature has a weakness. The wise hero trains for what he will face.\""
-            , "\"The important thing is not how long you live. It's what you accomplish with your life.\""
-            , "\"Overconfidence is a slow and insidious killer.\""
-            , "\"Even in dark times, we cannot relinquish the things that make us human\""
+    private final String[] quotes = {"Use WASD or Arrow keys to move your character."
+            , "You can gain attack, damage, and max health from shop."
             , "\"Fear is the path to the dark side.\""
-            , "\"Sometimes dungeon is scary and dark. That is why we must find the light.\""
-            , "\"We never lose our demons. We only learn to live above them.\""};
+            , "There are monster bosses waiting in every 10 stages."
+            , "Reflector only can be gain from the grass card."
+            , "When using reflector, user immune to all damage !"};
 
     public LoadingState(Handler handler, State nextState) {
         super(handler);
@@ -42,8 +41,8 @@ public class LoadingState extends State implements SIZE {
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.loadingBG,0, 0, width, height, null);
-        Text.drawString(g, quotes[rand], 540 , 300, true, Color.WHITE, Assets.dungeonFont);
-        Text.drawString(g, "LOADING...", 950 , 500, true, Color.WHITE, Assets.dungeonFont);
+        Text.drawString(g, quotes[rand], 350 , 300, true, Color.WHITE, Assets.dungeonFont);
+        Text.drawString(g, "LOADING...", 950 , 80, true, Color.WHITE, Assets.dungeonFont);
     }
 
     @Override

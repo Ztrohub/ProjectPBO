@@ -34,4 +34,11 @@ public class KeyManager implements KeyListener {
     public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false;
     }
+
+    public void keyReset(){
+        up = false;
+        down = false;
+        left = false;
+        right = false;
+    }
 }

@@ -1,14 +1,27 @@
 package project.pbo.game;
 
-public class Character {
-    String symbol;
-    int health;
-    int x, y;
+public abstract class Character {
+    private String symbol;
+    private int health;
 
-    public Character(String symbol, int health, int x, int y) {
+    public Character(String symbol) {
         this.symbol = symbol;
-        this.health = health;
-        this.x = x;
-        this.y = y;
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
 }

@@ -1,7 +1,5 @@
 package project.pbo;
 
-import javafx.scene.layout.VBox;
-
 /*
     Ini Launcher (MAIN)
     Jangan di otak-atik

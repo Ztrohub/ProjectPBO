@@ -1,7 +1,6 @@
 package project.pbo.states;
 
 import project.pbo.Handler;
-import project.pbo.account.User;
 import project.pbo.gfx.Assets;
 
 import javax.sound.sampled.Clip;
