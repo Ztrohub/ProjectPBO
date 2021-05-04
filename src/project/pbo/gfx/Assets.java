@@ -33,7 +33,7 @@ public class Assets {
         dungeonFont = FontLoader.loadFont("res/font/dungeon.ttf", 35);
 
 //        IMAGE
-        menuBG = ImageLoader.loadImage("/images/background.png");
+        menuBG = ImageLoader.loadImage("/images/nando/mainMenu.jpg");
         logoSTTS = ImageLoader.loadImage("/istts.png");
         loadingBG = ImageLoader.loadImage("/images/loadingBG.jpg");
         avatar = ImageLoader.loadImage("/avatar.png");
