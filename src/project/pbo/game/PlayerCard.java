@@ -2,7 +2,7 @@ package project.pbo.game;
 
 public class PlayerCard extends Card {
 
-    public PlayerCard(int health) {
+    public PlayerCard() {
         super( "P");
     }
 }

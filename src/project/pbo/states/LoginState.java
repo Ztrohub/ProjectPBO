@@ -3,13 +3,13 @@ package project.pbo.states;
 import project.pbo.Handler;
 import project.pbo.account.User;
 import project.pbo.gfx.Assets;
-import project.pbo.gfx.Text;
 import project.pbo.input.MouseManager;
 import project.pbo.window.SIZE;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class LoginState extends State implements SIZE, Pesan {
@@ -17,8 +17,8 @@ public class LoginState extends State implements SIZE, Pesan {
     private final JTextField jUsername = new JTextField();
     private final JPasswordField jPassword = new JPasswordField();
 
-    private final Rectangle loginBtn = new Rectangle(280,470,110,50);
-    private final Rectangle registBtn = new Rectangle(20,470, 150, 50 );
+    private final Rectangle loginBtn = new Rectangle(247,480,130,43);
+    private final Rectangle registBtn = new Rectangle(80,480, 130, 43 );
 
     private final MouseManager mouseManager;
     private final ArrayList<User> users;
@@ -26,14 +26,22 @@ public class LoginState extends State implements SIZE, Pesan {
 
     public LoginState(Handler handler) {
         super(handler);
-        jUsername.setBounds(20, 315, 370, 30);
+        jUsername.setBounds(80, 310, 295, 35);
         jUsername.setMargin(new Insets(0, 5, 0, 0));
         jUsername.setFont(new Font("SansSerif", Font.BOLD, 20));
-        jPassword.setBounds(20, 395, 370, 30);
+        jPassword.setBounds(80, 400, 295, 35);
         jPassword.setMargin(new Insets(0, 5, 0, 0));
         jPassword.setFont(new Font("SansSerif", Font.BOLD, 20));
-        handler.getGame().getWindow().getLayeredPane().add(jUsername,0);
-        handler.getGame().getWindow().getLayeredPane().add(jPassword,0);
+
+        Action action = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                login();
+            }
+        };
+
+        jUsername.addActionListener(action);
+        jPassword.addActionListener(action);
 
         this.mouseManager = handler.getMouseManager();
 
@@ -41,29 +49,33 @@ public class LoginState extends State implements SIZE, Pesan {
 
     }
 
+    void login(){
+        String username = jUsername.getText();
+        String password = String.valueOf(jPassword.getPassword());
+
+        boolean ada = false;
+        for (User user : users){
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)){
+                ada = true;
+                clip.stop();
+                clip.setFramePosition(0);
+                handler.getGame().getWindow().getLayeredPane().remove(jUsername);
+                handler.getGame().getWindow().getLayeredPane().remove(jPassword);
+
+                setCurrentState(new LoadingState(handler, new MainMenu(handler, user)));
+            }
+        }
+
+        if (!ada){
+            buatPesan("Username/Password tidak cocok!", JOptionPane.ERROR_MESSAGE, handler);
+        }
+    }
+
     @Override
     public void tick() {
 
         if ((mouseManager.isLeftPressed() || mouseManager.isRightPressed()) && loginBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
-            String username = jUsername.getText();
-            String password = String.valueOf(jPassword.getPassword());
-
-            boolean ada = false;
-            for (User user : users){
-                if (user.getUsername().equals(username) && user.getPassword().equals(password)){
-                    ada = true;
-                    clip.stop();
-                    handler.getGame().getWindow().getLayeredPane().remove(jUsername);
-                    handler.getGame().getWindow().getLayeredPane().remove(jPassword);
-
-                    setCurrentState(new LoadingState(handler, new MainMenu(handler, user)));
-                }
-            }
-
-            if (!ada){
-                buatPesan("Username/Password tidak cocok!", JOptionPane.ERROR_MESSAGE, handler);
-            }
-
+            login();
             mouseManager.setLeftPressed(false);
             mouseManager.setRightPressed(false);
 
@@ -118,18 +130,6 @@ public class LoginState extends State implements SIZE, Pesan {
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.loginBG, 0, 0, width, height, null);
-        g.setColor(new Color(0,0,0,0.5f));
-        g.fillRect(10, 250, 430, 300);
-        Text.drawString(g, "Username: ", 20, 300, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Password: ", 20, 380, false, Color.WHITE, Assets.regulerFont);
-//
-        g.setColor(Color.red);
-        ((Graphics2D) g).fill(loginBtn);
-        ((Graphics2D) g).fill(registBtn);
-//
-        Text.drawString(g, "Register", 38, 500, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Login", 300, 500, false, Color.WHITE, Assets.regulerFont);
-
     }
 
     @Override
@@ -138,5 +138,9 @@ public class LoginState extends State implements SIZE, Pesan {
         clip.start();
         handler.setVol(clip);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+        handler.getGame().getWindow().getLayeredPane().add(jUsername,0);
+        handler.getGame().getWindow().getLayeredPane().add(jPassword,0);
+        jUsername.requestFocusInWindow();
     }
 }

@@ -46,9 +46,11 @@ public class MainMenu extends State implements SIZE {
         if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed()){
             if(logoutBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LOGOUT
                 clip.stop();
+                clip.setFramePosition(0);
                 setCurrentState(new LoadingState(handler, new LoginState(handler)));
             } else if(playBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK PLAY
                 clip.stop();
+                clip.setFramePosition(0);
                 setCurrentState(new LoadingState(handler, new GameState(handler, user)));
             } else if(shopBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SHOP
                 setCurrentState(new ShopState(handler));

@@ -51,17 +51,18 @@ public class Game implements Runnable {
         loadFile();
 
 //        TODO Uncomment
-        User user = new User("test", "123");
-        State state = new MainMenu(handler, user);
-        state.playMusic();
+//        User user = new User("test", "123");
+//        State state = new GameState(handler, user);
+//        state.playMusic();
 
-//        State state = new IntroState(handler);
+        State state = new IntroState(handler);
 
         State.setCurrentState(state);
 
     }
 
     private void tick(){
+
         if (State.getCurrentState() != null)
             State.getCurrentState().tick();
     }

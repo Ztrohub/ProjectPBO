@@ -44,6 +44,7 @@ public class Assets {
         logoSTTS = ImageLoader.loadImage("/istts.png");
         avatar = ImageLoader.loadImage("/avatar.png");
 
+
 //        ICON
         initBufferArr(coinsIcon, "coinsIcon");
         playIcon = ImageLoader.loadImage("/images/menuAsset/swordIcon.png");

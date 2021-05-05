@@ -15,6 +15,7 @@ import project.pbo.game.helper.Sword;
 import project.pbo.gfx.Assets;
 import project.pbo.gfx.Text;
 import project.pbo.input.KeyManager;
+import project.pbo.input.MouseManager;
 import project.pbo.window.SIZE;
 
 import javax.sound.sampled.Clip;
@@ -26,44 +27,82 @@ public class GameState extends State implements SIZE {
     private final User user;
     private int gold = 0;
     private final Rectangle exitBtn = new Rectangle(950,7, 100, 35 );
+    private final Rectangle replayBtn = new Rectangle(300,350, 150, 35 );
+    private final Rectangle continueBtn = new Rectangle(300,350, 150, 35 );
+    private final Rectangle loseBtn = new Rectangle(650,350, 150, 35 );
     private Clip clip;
     private int health;
-    private final int maxHealth;
+    private int maxHealth;
     private int damage;
     private int defend;
 
-    private final Card[][] cards = new Card[3][3];
+    private Card[][] cards;
 
-    private int x = 0, y = 0;
-    private boolean running = true;
+//    Player
+    private int x, y;
+
     private int counter = 0;
     private boolean delay = false;
 
+    private boolean running = true;
+    private boolean kalah = false;
+    private boolean exit = false;
+
     private final KeyManager keyManager;
+    private final MouseManager mouseManager;
 
     public GameState(Handler handler, User user){
         super(handler);
         this.user = user;
         this.keyManager = handler.getKeyManager();
+        this.mouseManager = handler.getMouseManager();
 
+        init();
+    }
+
+    void init(){
+        this.x = 0; this.y = 0;
+        cards = new Card[3][3];
         health = user.getPlayer().getHealth();
         maxHealth = user.getPlayer().getHealth();
         damage = user.getPlayer().getDamage();
         defend = user.getPlayer().getDefend();
-        cards[x][y] = new PlayerCard(health);
+        cards[x][y] = new PlayerCard();
         randomCard();
     }
 
     @Override
     public void tick() {
+
+        keyManager.tick();
         if (!running){
             clip.stop();
+            clip.setFramePosition(0);
             setCurrentState(new LoadingState(handler, new MainMenu(handler, user)));
         }
 
+        if ((kalah || exit) && loseBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
+                (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) running = false;
+        if (kalah && replayBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
+                (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) {
+            init();
+            kalah = false;
+        }
+
+        if (exit && continueBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
+                (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) exit = false;
+
+        if (exitBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
+                (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) exit = true;
+
+        if (health == 0){
+            kalah = true;
+        }
+
+
         if (delay){
             counter++;
-            if (counter > 50){
+            if (counter > 10){
                 counter = 0;
                 delay = false;
             }
@@ -71,7 +110,7 @@ public class GameState extends State implements SIZE {
             if (keyManager.up) { moveKartu(0, -1); }
             if (keyManager.down) moveKartu(0, 1);
             if (keyManager.left) moveKartu(-1, 0);
-            if (keyManager.right) { moveKartu(1, 0); }
+            if (keyManager.right) { moveKartu(1, 0);}
             if (keyManager.up || keyManager.down || keyManager.left || keyManager.right) delay = true;
         }
     }
@@ -98,7 +137,7 @@ public class GameState extends State implements SIZE {
 
                 if (enemy.getHealth() == 0){
                     cards[tempy][tempx] = cards[this.y][this.x];
-                    cards[this.y][this.x] = null;
+                    cardPindah();
                     this.x = tempx; this.y = tempy;
                 }
             } else {
@@ -118,12 +157,33 @@ public class GameState extends State implements SIZE {
                     Shield shield = (Shield) card;
                     defend = Math.max(user.getPlayer().getDefend() + shield.getDefend(), defend);
                 }
+
                 cards[tempy][tempx] = cards[this.y][this.x];
-                cards[this.y][this.x] = null;
+                cardPindah();
                 this.x = tempx; this.y = tempy;
+
             }
 
             randomCard();
+        }
+    }
+
+    void cardPindah(){
+        if (keyManager.up){
+            if (y != 2) cards[1][this.x] = cards[2][this.x];
+            cards[2][this.x] = null;
+        }
+        if (keyManager.down){
+            if (y != 0) cards[1][this.x] = cards[0][this.x];
+            cards[0][this.x] = null;
+        }
+        if (keyManager.left){
+            if (x != 2) cards[this.y][1] = cards[this.y][2];
+            cards[this.y][2] = null;
+        }
+        if (keyManager.right){
+            if (x != 0) cards[this.y][1] = cards[this.y][0];
+            cards[this.y][0] = null;
         }
     }
 
@@ -176,6 +236,33 @@ public class GameState extends State implements SIZE {
 
 //        Game
         cetakKartu(g);
+
+        if (kalah){
+            g.setColor(Color.black);
+            g.fillRect(190, 150, 700, 300);
+            g.setColor(Color.white);
+            g.drawRect(190, 150, 700, 300);
+            Text.drawString(g, "YOU DIED", 540, 250, true, Color.RED, Assets.regulerFont);
+            g.setColor(Color.RED);
+            ((Graphics2D) g).fill(replayBtn);
+            ((Graphics2D) g).fill(loseBtn);
+            Text.drawString(g, "Restart", 375, 368, true, Color.white, Assets.regulerFont);
+            Text.drawString(g, "Exit", 725, 368, true, Color.white, Assets.regulerFont);
+        }
+
+        if (exit){
+            g.setColor(Color.black);
+            g.fillRect(190, 150, 700, 300);
+            g.setColor(Color.white);
+            g.drawRect(190, 150, 700, 300);
+            Text.drawString(g, "Are you sure want to exit ?", 540, 250, true, Color.RED, Assets.regulerFont);
+            Text.drawString(g, "You will not keep gold on this stage", 540, 300, true, Color.WHITE, Assets.regulerFont);
+            g.setColor(Color.red);
+            ((Graphics2D) g).fill(continueBtn);
+            ((Graphics2D) g).fill(loseBtn);
+            Text.drawString(g, "Continue", 375, 368, true, Color.white, Assets.regulerFont);
+            Text.drawString(g, "Exit", 725, 368, true, Color.white, Assets.regulerFont);
+        }
 
     }
 
