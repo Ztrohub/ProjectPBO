@@ -1,10 +1,12 @@
 package project.pbo.game.enemy;
 
-import project.pbo.game.Character;
+import project.pbo.game.Card;
 
 import java.util.Random;
 
-public abstract class Enemy extends Character{
+public abstract class Enemy extends Card {
+
+    private int health;
 
     public Enemy(String symbol, int stage, int minHealth, int maxHealth) {
         super(symbol);
@@ -12,7 +14,14 @@ public abstract class Enemy extends Character{
         maxHealth *= a;
         minHealth *= a;
         Random rand = new Random();
-        int temp = rand.nextInt(maxHealth-minHealth) + minHealth;
-        this.setHealth(temp);
+        this.health = rand.nextInt(maxHealth-minHealth) + minHealth;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

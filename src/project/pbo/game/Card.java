@@ -1,9 +1,18 @@
 package project.pbo.game;
 
-public class Card <T>{
-    private T Character;
+public abstract class Card {
+    private String symbol;
 
-    public Card(T character) {
-        Character = character;
+    public Card(String symbol) {
+        this.symbol = symbol;
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
 }

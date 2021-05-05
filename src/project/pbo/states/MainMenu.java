@@ -7,6 +7,7 @@ import project.pbo.gfx.Text;
 import project.pbo.window.SIZE;
 
 import javax.sound.sampled.Clip;
+import javax.swing.*;
 import java.awt.*;
 
 public class MainMenu extends State implements SIZE {
@@ -23,6 +24,7 @@ public class MainMenu extends State implements SIZE {
     public MainMenu(Handler handler, User user) {
         super(handler);
         this.user = user;
+
 
 
         System.out.println("Masuk sebagai: " + user.getUsername());

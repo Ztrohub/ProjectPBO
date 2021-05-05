@@ -1,11 +1,8 @@
 package project.pbo.game;
 
-import java.awt.*;
-
-public class PlayerCard extends Character{
+public class PlayerCard extends Card {
 
     public PlayerCard(int health) {
         super( "P");
-        this.setHealth(health);
     }
 }

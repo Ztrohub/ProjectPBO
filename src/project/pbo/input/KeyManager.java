@@ -27,18 +27,10 @@ public class KeyManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         keys[e.getKeyCode()] = true;
-        System.out.println("Pressed");
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false;
-    }
-
-    public void keyReset(){
-        up = false;
-        down = false;
-        left = false;
-        right = false;
     }
 }

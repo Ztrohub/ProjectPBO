@@ -15,7 +15,7 @@ public class Assets {
 
         Load gambar ==> ImageLoader.loadImage("/alamat/namafile.extensi");
      */
-
+//
     static URL url;
 
     static {
@@ -47,7 +47,8 @@ public class Assets {
         dungeonFont = FontLoader.loadFont("res/font/dungeon.ttf", 35);
 
 //        IMAGE
-        menuBG = new ImageIcon(url).getImage();
+        menuBG = new ImageIcon(ImageLoader.loadImage("/images/menuBG.gif")).getImage();
+
         loadingBG = ImageLoader.loadImage("/images/loadingBG.jpg");
         loginBG = ImageLoader.loadImage("/images/loginBG.jpg");
 
