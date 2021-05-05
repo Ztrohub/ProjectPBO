@@ -15,12 +15,13 @@ public class MainMenu extends State implements SIZE {
     private final MouseManager mouseManager;
     private final User user;
     private Clip clip;
+    private int ctrBg, ctrCoin, timer;
 
     private final Rectangle overlayTop = new Rectangle(0, 0, width,70);
-    private final Rectangle playBtn = new Rectangle(360, 0, 70, 70);
-    private final Rectangle shopBtn = new Rectangle(480, 0, 70, 70);
-    private final Rectangle settingBtn = new Rectangle(605, 0, 80, 70);
-    private final Rectangle creditBtn = new Rectangle(755, 0, 70, 70);
+    private final Rectangle playBtn = new Rectangle(305, 0, 70, 70);
+    private final Rectangle shopBtn = new Rectangle(435, 0, 70, 70);
+    private final Rectangle settingBtn = new Rectangle(580, 0, 80, 70);
+    private final Rectangle creditBtn = new Rectangle(745, 0, 70, 70);
     private final Rectangle logoutBtn = new Rectangle(1020, 12, 40, 40);
 
 
@@ -63,17 +64,19 @@ public class MainMenu extends State implements SIZE {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.menuBG, 0, 30, width, height, null);
+        g.drawImage(Assets.menuBG[ctrBg], 0, 28, width, height, null);
         g.drawImage(Assets.mainLogo, 296, 445, 450, 300, null);
+
 
         // OVERLAY TOP
         g.setColor(new Color(0x000000));
         ((Graphics2D) g).fill(overlayTop);
 
         // ICON DAN NAMA PLAYER
-        g.drawImage(Assets.avatar, 16, 31, 30, 30, null);
-        Text.drawString(g, "Logged in as :", 13, 23, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, user.getUsername(), 54, 56, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.avatar, 10, 4, 60, 60, null);
+        g.drawImage(Assets.coinsIcon[ctrCoin], 79, 40, 15, 15, null);
+        Text.drawString(g, user.getUsername(), 78, 29, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, user.getPlayer().getGold() + "", 102, 54, false, Color.WHITE, Assets.regulerFont);
 
 //        g.setColor(new Color(0xE1AD01));
 //        ((Graphics2D) g).fill(playBtn);
@@ -82,23 +85,29 @@ public class MainMenu extends State implements SIZE {
 //        ((Graphics2D) g).fill(creditBtn);
 
         // BUTTON PLAY
-        g.drawImage(Assets.playIcon, 325, -9, 135, 100, null);
-        Text.drawString(g, "Play", 365, 63, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.playIcon, 275, -9, 135, 100, null);
+        Text.drawString(g, "Play", 310, 63, false, Color.WHITE, Assets.regulerFont);
 
         // BUTTON SHOP
-        g.drawImage(Assets.shopIcon, 478, 2, 75, 60, null);
-        Text.drawString(g, "Shop", 485, 63, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.shopIcon, 434, 2, 75, 60, null);
+        Text.drawString(g, "Shop", 440, 63, false, Color.WHITE, Assets.regulerFont);
 
         //BUTTON SETTINGS
-        g.drawImage(Assets.settingIcon, 610, 2, 69, 61, null);
-        Text.drawString(g, "Settings", 590, 63, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.settingIcon, 585, 2, 69, 61, null);
+        Text.drawString(g, "Settings", 565, 63, false, Color.WHITE, Assets.regulerFont);
 
         // BUTTON CREDIT
-        g.drawImage(Assets.creditIcon, 760, 2, 60, 60, null);
-        Text.drawString(g, "Credit", 748, 63, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.creditIcon, 750, 2, 60, 60, null);
+        Text.drawString(g, "Credit", 738, 63, false, Color.WHITE, Assets.regulerFont);
 
         // BUTTON LOGOUT
         g.drawImage(Assets.logout, 1020, 12, 40, 40, null);
+
+        if(timer == 0) {
+            ctrBg = (ctrBg != 19) ? ++ctrBg : 0;
+            ctrCoin = (ctrCoin != 6) ? ++ctrCoin : 0;
+        }
+        this.timer = (this.timer == 4) ? 0 : ++timer;
     }
 
 }
