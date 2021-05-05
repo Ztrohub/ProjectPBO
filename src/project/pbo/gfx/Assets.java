@@ -29,6 +29,7 @@ public class Assets {
     public static Image menuBG;
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG;
+    public static BufferedImage playIcon, shopIcon, settingIcon, creditIcon, logout;
     public static Clip audioLogin, audioIntro, audioMenu, audioGame;
 
     public static Font regulerFont;
@@ -47,8 +48,7 @@ public class Assets {
         dungeonFont = FontLoader.loadFont("res/font/dungeon.ttf", 35);
 
 //        IMAGE
-        menuBG = new ImageIcon(ImageLoader.loadImage("/images/menuBG.gif")).getImage();
-
+        menuBG = new ImageIcon(url).getImage();
         loadingBG = ImageLoader.loadImage("/images/loadingBG.jpg");
         loginBG = ImageLoader.loadImage("/images/loginBG.jpg");
 
@@ -56,5 +56,11 @@ public class Assets {
         logoSTTS = ImageLoader.loadImage("/istts.png");
         avatar = ImageLoader.loadImage("/avatar.png");
 
+//        ICON
+        playIcon = ImageLoader.loadImage("/images/menuAsset/swordIcon.png");
+        shopIcon = ImageLoader.loadImage("/images/menuAsset/shopIcon.png");
+        settingIcon = ImageLoader.loadImage("/images/menuAsset/settingIcon.png");
+        creditIcon = ImageLoader.loadImage("/images/menuAsset/creditIcon.png");
+        logout = ImageLoader.loadImage("/images/menuAsset/logoutIcon.png");
     }
 }
