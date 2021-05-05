@@ -6,8 +6,6 @@ import project.pbo.window.SIZE;
 import java.awt.*;
 
 public class CreditState extends State implements SIZE {
-
-
     public CreditState(Handler handler) {
         super(handler);
     }
