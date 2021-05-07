@@ -20,18 +20,20 @@ public class Assets {
     public static BufferedImage playIcon, shopIcon, settingIcon, creditIcon, logout;
     public static Clip audioLogin, audioIntro, audioMenu, audioGame;
 
+    public static Font smallFont;
     public static Font regulerFont;
     public static Font dungeonFont;
 
     public static void init(){
 
 //        AUDIO
-        audioLogin = AudioLoader.loadAudio("res/audio/login.wav");
+        audioLogin = AudioLoader.loadAudio("res/audio/nando/login1.wav");
         audioIntro = AudioLoader.loadAudio("res/audio/intro.wav");
-        audioMenu = AudioLoader.loadAudio("res/audio/menu.wav");
+        audioMenu = AudioLoader.loadAudio("res/audio/nando/menu.wav");
         audioGame = AudioLoader.loadAudio("res/audio/game.wav");
 
 //        FONT
+        smallFont = FontLoader.loadFont("res/font/mainfont.ttf", 15);
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
         dungeonFont = FontLoader.loadFont("res/font/dungeon.ttf", 35);
 
@@ -43,7 +45,6 @@ public class Assets {
         mainLogo = ImageLoader.loadImage("/mainLogo.png");
         logoSTTS = ImageLoader.loadImage("/istts.png");
         avatar = ImageLoader.loadImage("/avatar.png");
-
 
 //        ICON
         initBufferArr(coinsIcon, "coinsIcon");

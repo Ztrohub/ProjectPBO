@@ -17,12 +17,13 @@ public class MainMenu extends State implements SIZE {
     private Clip clip;
     private int ctrBg, ctrCoin, timer;
 
-    private final Rectangle overlayTop = new Rectangle(0, 0, width,70);
-    private final Rectangle playBtn = new Rectangle(305, 0, 70, 70);
-    private final Rectangle shopBtn = new Rectangle(435, 0, 70, 70);
-    private final Rectangle settingBtn = new Rectangle(580, 0, 80, 70);
-    private final Rectangle creditBtn = new Rectangle(745, 0, 70, 70);
-    private final Rectangle logoutBtn = new Rectangle(1020, 12, 40, 40);
+    private final Rectangle overlayTop = new Rectangle(0, 0, width,72);
+    private final Rectangle playBtn = new Rectangle(301, 0, 74, 70);
+    private final Rectangle shopBtn = new Rectangle(431, 0, 76, 70);
+    private final Rectangle settingBtn = new Rectangle(566, 0, 100, 70);
+    private final Rectangle creditBtn = new Rectangle(725, 0, 90, 70);
+    private final Rectangle logoutBtn = new Rectangle(1020, 12, 44, 50);
+    private final Rectangle overlayBot = new Rectangle(0, 544, width, 100);
 
 
     public MainMenu(Handler handler, User user) {
@@ -66,44 +67,43 @@ public class MainMenu extends State implements SIZE {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.menuBG[ctrBg], 0, 28, width, height, null);
-        g.drawImage(Assets.mainLogo, 296, 445, 450, 300, null);
-
-
-        // OVERLAY TOP
-        g.setColor(new Color(0x000000));
+        g.drawImage(Assets.menuBG[ctrBg], 0, 51, width, height, null);
+        g.setColor(new Color(0x000100));
         ((Graphics2D) g).fill(overlayTop);
+        ((Graphics2D) g).fill(overlayBot);
+        g.drawImage(Assets.mainLogo, 310, 478, 428, 246, null);
 
         // ICON DAN NAMA PLAYER
-        g.drawImage(Assets.avatar, 10, 4, 60, 60, null);
-        g.drawImage(Assets.coinsIcon[ctrCoin], 79, 40, 15, 15, null);
-        Text.drawString(g, user.getUsername(), 78, 29, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, user.getPlayer().getGold() + "", 102, 54, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.avatar, 10, 5, 60, 60, null);
+        g.drawImage(Assets.coinsIcon[ctrCoin], 79, 41, 15, 15, null);
+        Text.drawString(g, user.getUsername(), 78, 30, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, user.getPlayer().getGold() + "", 102, 55, false, Color.WHITE, Assets.regulerFont);
 
 //        g.setColor(new Color(0xE1AD01));
 //        ((Graphics2D) g).fill(playBtn);
 //        ((Graphics2D) g).fill(shopBtn);
 //        ((Graphics2D) g).fill(settingBtn);
 //        ((Graphics2D) g).fill(creditBtn);
+//        ((Graphics2D) g).fill(logoutBtn);
 
         // BUTTON PLAY
-        g.drawImage(Assets.playIcon, 275, -9, 135, 100, null);
-        Text.drawString(g, "Play", 310, 63, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.playIcon, 273, -9, 135, 100, null);
+        Text.drawString(g, "Play", 308, 63, false, Color.WHITE, Assets.regulerFont);
 
         // BUTTON SHOP
-        g.drawImage(Assets.shopIcon, 434, 2, 75, 60, null);
+        g.drawImage(Assets.shopIcon, 432, 2, 75, 60, null);
         Text.drawString(g, "Shop", 440, 63, false, Color.WHITE, Assets.regulerFont);
 
         //BUTTON SETTINGS
-        g.drawImage(Assets.settingIcon, 585, 2, 69, 61, null);
-        Text.drawString(g, "Settings", 565, 63, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.settingIcon, 580, 2, 69, 61, null);
+        Text.drawString(g, "Settings", 568, 63, false, Color.WHITE, Assets.smallFont);
 
         // BUTTON CREDIT
-        g.drawImage(Assets.creditIcon, 750, 2, 60, 60, null);
-        Text.drawString(g, "Credit", 738, 63, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.creditIcon, 740, 2, 60, 60, null);
+        Text.drawString(g, "Credit", 728, 63, false, Color.WHITE, Assets.regulerFont);
 
         // BUTTON LOGOUT
-        g.drawImage(Assets.logout, 1020, 12, 40, 40, null);
+        g.drawImage(Assets.logout, 1020, 15, 44, 44, null);
 
         if(timer == 0) {
             ctrBg = (ctrBg != 19) ? ++ctrBg : 0;
