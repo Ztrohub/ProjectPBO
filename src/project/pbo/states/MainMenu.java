@@ -1,5 +1,6 @@
 package project.pbo.states;
 
+import javafx.scene.effect.BoxBlur;
 import project.pbo.Handler;
 import project.pbo.account.User;
 import project.pbo.gfx.Assets;
@@ -25,6 +26,11 @@ public class MainMenu extends State implements SIZE {
     private final Rectangle logoutBtn = new Rectangle(1020, 12, 44, 50);
     private final Rectangle overlayBot = new Rectangle(0, 544, width, 100);
 
+    private final Rectangle exitBtn = new Rectangle(650,350, 150, 35 );
+    private final Rectangle continueBtn = new Rectangle(300,350, 150, 35 );
+
+    private boolean popUpLogout = false;
+
 
     public MainMenu(Handler handler, User user) {
         super(handler);
@@ -44,24 +50,34 @@ public class MainMenu extends State implements SIZE {
 
     @Override
     public void tick() {
-        if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed()){
-            if(logoutBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LOGOUT
-                clip.stop();
-                clip.setFramePosition(0);
-                setCurrentState(new LoadingState(handler, new LoginState(handler)));
-            } else if(playBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK PLAY
-                clip.stop();
-                clip.setFramePosition(0);
-                setCurrentState(new LoadingState(handler, new GameState(handler, user)));
-            } else if(shopBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SHOP
-                setCurrentState(new ShopState(handler));
-            } else if(settingBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SETTINGS
-                setCurrentState(new SettingState(handler));
-            } else if(creditBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK CREDIT
-                setCurrentState(new CreditState(handler));
+        if(popUpLogout){
+            if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed()){
+                if(exitBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+                    clip.stop();
+                    clip.setFramePosition(0);
+                    setCurrentState(new LoadingState(handler, new LoginState(handler)));
+                } else if(continueBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+                    popUpLogout = false;
+                }
             }
-            mouseManager.setLeftPressed(false);
-            mouseManager.setRightPressed(false);
+        } else {
+            if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed()){
+                if(logoutBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LOGOUT
+                    popUpLogout = true;
+                } else if(playBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK PLAY
+                    clip.stop();
+                    clip.setFramePosition(0);
+                    setCurrentState(new LoadingState(handler, new GameState(handler, user)));
+                } else if(shopBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SHOP
+                    setCurrentState(new ShopState(handler));
+                } else if(settingBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SETTINGS
+                    setCurrentState(new SettingState(handler));
+                } else if(creditBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK CREDIT
+                    setCurrentState(new CreditState(handler));
+                }
+                mouseManager.setLeftPressed(false);
+                mouseManager.setRightPressed(false);
+            }
         }
     }
 
@@ -71,6 +87,7 @@ public class MainMenu extends State implements SIZE {
         g.setColor(new Color(0x000100));
         ((Graphics2D) g).fill(overlayTop);
         ((Graphics2D) g).fill(overlayBot);
+
         g.drawImage(Assets.mainLogo, 310, 478, 428, 246, null);
 
         // ICON DAN NAMA PLAYER
@@ -104,6 +121,20 @@ public class MainMenu extends State implements SIZE {
 
         // BUTTON LOGOUT
         g.drawImage(Assets.logout, 1020, 15, 44, 44, null);
+
+        if(popUpLogout){
+            g.setColor(Color.black);
+            g.fillRect(190, 150, 700, 300);
+            g.setColor(Color.white);
+            g.drawRect(190, 150, 700, 300);
+            Text.drawString(g, "Are you sure want to exit ?", 540, 250, true, Color.RED, Assets.regulerFont);
+            Text.drawString(g, "You will not keep gold on this stage", 540, 300, true, Color.WHITE, Assets.regulerFont);
+            g.setColor(Color.red);
+            ((Graphics2D) g).fill(continueBtn);
+            ((Graphics2D) g).fill(exitBtn);
+            Text.drawString(g, "Continue", 375, 368, true, Color.white, Assets.regulerFont);
+            Text.drawString(g, "Exit", 725, 368, true, Color.white, Assets.regulerFont);
+        }
 
         if(timer == 0) {
             ctrBg = (ctrBg != 19) ? ++ctrBg : 0;
