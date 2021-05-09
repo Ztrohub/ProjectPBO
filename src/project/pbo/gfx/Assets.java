@@ -32,7 +32,7 @@ public class Assets {
 
 //        AUDIO
         audioLogin = AudioLoader.loadAudio("res/audio/nando/login1.wav");
-        audioIntro = AudioLoader.loadAudio("res/audio/nando/intro/intro2.wav");
+        audioIntro = AudioLoader.loadAudio("res/audio/intro.wav");
         audioMenu = AudioLoader.loadAudio("res/audio/nando/menu.wav");
         audioGame = AudioLoader.loadAudio("res/audio/game.wav");
 

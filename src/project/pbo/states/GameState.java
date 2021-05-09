@@ -31,18 +31,12 @@ public class GameState extends State implements SIZE {
     private final Rectangle continueBtn = new Rectangle(300,350, 150, 35 );
     private final Rectangle loseBtn = new Rectangle(650,350, 150, 35 );
     private Clip clip;
-    private int health;
-    private int maxHealth;
-    private int damage;
-    private int defend;
-
     private Card[][] cards;
 
 //    Player
     private int x, y;
 
-    private int counter = 0, timer = 0;
-    private int ctrMummy = 0;
+    private int counter = 0;
     private boolean delay = false;
 
     private boolean running = true;
@@ -51,6 +45,11 @@ public class GameState extends State implements SIZE {
 
     private final KeyManager keyManager;
     private final MouseManager mouseManager;
+
+    private int tempy, tempx, move;
+    private boolean pause = false;
+
+    private PlayerCard pc;
 
     public GameState(Handler handler, User user){
         super(handler);
@@ -64,11 +63,8 @@ public class GameState extends State implements SIZE {
     void init(){
         this.x = 0; this.y = 0;
         cards = new Card[3][3];
-        health = user.getPlayer().getHealth();
-        maxHealth = user.getPlayer().getHealth();
-        damage = user.getPlayer().getDamage();
-        defend = user.getPlayer().getDefend();
-        cards[x][y] = new PlayerCard();
+        pc = new PlayerCard(user.getPlayer().getHealth(), user.getPlayer().getDefend(), user.getPlayer().getDamage(), user.getPlayer().getHealth());
+        cards[x][y] = pc;
         randomCard();
     }
 
@@ -96,7 +92,7 @@ public class GameState extends State implements SIZE {
         if (exitBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
                 (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) exit = true;
 
-        if (health == 0){
+        if (pc.getHealth() == 0){
             kalah = true;
         }
 
@@ -114,6 +110,28 @@ public class GameState extends State implements SIZE {
             if (keyManager.right) { moveKartu(1, 0);}
             if (keyManager.up || keyManager.down || keyManager.left || keyManager.right) delay = true;
         }
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                cards[i][j].tick();
+                if (cards[i][j].isAnimating()) pause = true;
+            }
+        }
+
+        if (!pause && move != 0){
+            reset();
+            moving();
+        }
+        pause = false;
+    }
+
+    void reset(){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                cards[i][j].setX(0);
+                cards[i][j].setY(0);
+            }
+        }
     }
 
     void moveKartu(int x, int y){
@@ -122,71 +140,113 @@ public class GameState extends State implements SIZE {
             Card card = cards[tempy][tempx];
             if (card instanceof Enemy){
                 Enemy enemy = (Enemy) card;
-                if (damage > 0) {
+                if (pc.getDamage() > 0) {
                     int tempH = enemy.getHealth();
-                    enemy.setHealth(Math.max(enemy.getHealth() - damage, 0));
-                    damage = Math.max(damage - tempH, 0);
-                } else if (defend > 0) {
+                    enemy.setHealth(Math.max(enemy.getHealth() - pc.getDamage(), 0));
+                    pc.setDamage(Math.max(pc.getDamage() - tempH, 0));
+                } else if (pc.getDefend() > 0) {
                     int tempH = enemy.getHealth();
-                    enemy.setHealth(Math.max(enemy.getHealth() - defend, 0));
-                    defend = Math.max(defend - tempH, 0);
+                    enemy.setHealth(Math.max(enemy.getHealth() - pc.getDefend(), 0));
+                    pc.setDefend(Math.max(pc.getDefend() - tempH, 0));
                 } else {
                     int tempH = enemy.getHealth();
-                    enemy.setHealth(Math.max(enemy.getHealth() - health, 0));
-                    health = Math.max(health - tempH, 0);
+                    enemy.setHealth(Math.max(enemy.getHealth() - pc.getHealth(), 0));
+                    pc.setHealth(Math.max(pc.getHealth() - tempH, 0));
                 }
 
                 if (enemy.getHealth() == 0){
-                    cards[tempy][tempx] = cards[this.y][this.x];
-                    cardPindah();
-                    this.x = tempx; this.y = tempy;
+
+                    cardPindah(tempy, tempx);
                 }
             } else {
                 if (card instanceof Sword){
                     Sword sword = (Sword) card;
-                    damage = Math.max(user.getPlayer().getDamage() + sword.getDamage(), damage);
+                    pc.setDamage(Math.max(user.getPlayer().getDamage() + sword.getDamage(), pc.getDamage()));
                 }
                 if (card instanceof Healing){
                     Healing healing = (Healing) card;
-                    health = Math.min(health + healing.getHeal(), maxHealth);
+                    pc.setHealth(Math.min(pc.getHealth() + healing.getHeal(), pc.getMaxHealth()));
                 }
                 if (card instanceof Poison){
                     Poison poison = (Poison) card;
-                    health = Math.max(health + poison.getPoison(), 0);
+                    pc.setHealth(Math.max(pc.getHealth() + poison.getPoison(), 0));
                 }
                 if (card instanceof Shield){
                     Shield shield = (Shield) card;
-                    defend = Math.max(user.getPlayer().getDefend() + shield.getDefend(), defend);
+                    pc.setDefend(Math.max(user.getPlayer().getDefend() + shield.getDefend(), pc.getDefend()));
                 }
-
-                cards[tempy][tempx] = cards[this.y][this.x];
-                cardPindah();
-                this.x = tempx; this.y = tempy;
+                cardPindah(tempy, tempx);
 
             }
-
-            randomCard();
         }
     }
 
-    void cardPindah(){
-        if (keyManager.up){
-            if (y != 2) cards[1][this.x] = cards[2][this.x];
+    void moving(){
+        cards[tempy][tempx] = cards[this.y][this.x];
+        if (move == 1){
+            if (y != 2){
+                cards[1][this.x] = cards[2][this.x];
+            }
             cards[2][this.x] = null;
         }
-        if (keyManager.down){
-            if (y != 0) cards[1][this.x] = cards[0][this.x];
+        if (move == 3){
+            if (y != 0) {
+                cards[1][this.x] = cards[0][this.x];
+            }
             cards[0][this.x] = null;
         }
-        if (keyManager.left){
-            if (x != 2) cards[this.y][1] = cards[this.y][2];
+        if (move == 4){
+            if (x != 2){
+                cards[this.y][1] = cards[this.y][2];
+            }
             cards[this.y][2] = null;
         }
-        if (keyManager.right){
-            if (x != 0) cards[this.y][1] = cards[this.y][0];
+        if (move == 2){
+            if (x != 0){
+                cards[this.y][1] = cards[this.y][0];
+            }
             cards[this.y][0] = null;
         }
+        this.x = tempx; this.y = tempy;
+
+        move = 0;
+
+        randomCard();
     }
+
+    void cardPindah(int tempy, int tempx){
+        this.tempy = tempy; this.tempx = tempx;
+        cards[tempy][tempx].fading();
+        if (keyManager.up){
+            this.move = 1;
+            cards[this.y][this.x].setMove(1);
+            if (y != 2){
+                cards[2][this.x].setMove(1);
+            }
+        }
+        if (keyManager.down){
+            this.move = 3;
+            cards[this.y][this.x].setMove(3);
+            if (y != 0) {
+                cards[0][this.x].setMove(3);
+            }
+        }
+        if (keyManager.left){
+            this.move = 4;
+            cards[this.y][this.x].setMove(4);
+            if (x != 2){
+                cards[this.y][2].setMove(4);
+            }
+        }
+        if (keyManager.right){
+            this.move = 2;
+            cards[this.y][this.x].setMove(2);
+            if (x != 0){
+                cards[this.y][0].setMove(2);
+            }
+        }
+    }
+
 
     void randomCard(){
         for (int i = 0; i < 3; i++){
@@ -206,6 +266,8 @@ public class GameState extends State implements SIZE {
             }
         }
     }
+
+
 
     @Override
     public void render(Graphics g) {
@@ -228,12 +290,15 @@ public class GameState extends State implements SIZE {
         g.drawRect(700, 170, 330, 290);
         g.drawRect(700, 460, 331, 150);
         Text.drawString(g, user.getUsername(), 870, 125, true, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Health: " + health + " / " + maxHealth, 720, 495, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Damage: " + damage, 720, 540, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Defend: " + defend, 720, 585, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, "Health: " + pc.getHealth() + " / " + pc.getMaxHealth(), 720, 495, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, "Damage: " + pc.getDamage(), 720, 540, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, "Defend: " + pc.getDefend(), 720, 585, false, Color.WHITE, Assets.regulerFont);
 
 //        Game
         cetakKartu(g);
+
+        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (kalah){
             g.setColor(Color.black);
@@ -268,62 +333,17 @@ public class GameState extends State implements SIZE {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 Card c = cards[i][j];
-                g.setColor(Color.red);
-                g.drawRect((j*184)+40, (i*177)+80, 184, 177);
-                if (c instanceof PlayerCard){
-                    Text.drawString(g, ""+damage, (j*184)+190, (i*177)+230, true, Color.WHITE, Assets.regulerFont);
-                    Text.drawString(g, ""+defend, (j*184)+70, (i*177)+230, true, Color.WHITE, Assets.regulerFont);
-                    Text.drawString(g, ""+health, (j*184)+190, (i*177)+105, true, Color.WHITE, Assets.regulerFont);
-                    Text.drawString(g, c.getSymbol(), (j*184)+132, (i*177)+168, true, Color.WHITE, Assets.regulerFont);
-                }
-                else {
 
-
-                    if(c.getSymbol().equalsIgnoreCase("s")){
-                        g.drawImage(Assets.mummyEnemy[ctrMummy], (j*184)+38, (i*177)+82, 179, 172, null);
-                    } else {
-                        Text.drawString(g, c.getSymbol(), (j * 184) + 132, (i * 177) + 168, true, Color.WHITE, Assets.regulerFont);
-                    }
-
-
-                    if (c instanceof Enemy){
-                        Enemy enemy = (Enemy) c;
-                        Text.drawString(g, "" + enemy.getHealth(), (j * 184) + 190, (i * 177) + 105, true, Color.WHITE, Assets.regulerFont);
-                    }
-                    if (c instanceof Sword){
-                        Sword sword = (Sword) c;
-                        Text.drawString(g, ""+ sword.getDamage(), (j*184)+190, (i*177)+230, true, Color.WHITE, Assets.regulerFont);
-                    }
-                    if (c instanceof Healing){
-                        Healing healing = (Healing) c;
-                        Text.drawString(g, ""+healing.getHeal(), (j*184)+190, (i*177)+105, true, Color.WHITE, Assets.regulerFont);
-                    }
-                    if (c instanceof Poison){
-                        Poison poison = (Poison) c;
-                        Text.drawString(g, ""+poison.getPoison(), (j*184)+190, (i*177)+105, true, Color.WHITE, Assets.regulerFont);
-                    }
-                    if (c instanceof Shield){
-                        Shield shield = (Shield) c;
-                        Text.drawString(g, ""+shield.getDefend(), (j*184)+70, (i*177)+230, true, Color.WHITE, Assets.regulerFont);
-                    }
-
-                }
+                c.render(g, j, i);
             }
         }
-
-        if(timer == 0) {
-            ctrMummy = (ctrMummy != 12) ? ++ctrMummy : 0;
-        }
-        this.timer = (this.timer == 6) ? 0 : ++timer;
     }
 
     @Override
     public void playMusic() {
         clip = Assets.audioGame;
         clip.start();
-
-        //TODO Suara game tak buat 0 dulu
-        handler.setVol(clip, 0);
+        handler.setVol(clip);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 }
