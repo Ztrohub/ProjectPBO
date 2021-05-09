@@ -51,6 +51,12 @@ public class Handler {
         gain.setValue(dB);
     }
 
+    public void setvol(Clip clip, double vol){
+        FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        float dB = (float) (Math.log(this.vol + vol) / Math.log(10) * 20);
+        gain.setValue(dB);
+    }
+
     public void setVol(double vol) {
         this.vol = vol;
     }
