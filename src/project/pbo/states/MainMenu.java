@@ -16,7 +16,7 @@ public class MainMenu extends State implements SIZE {
     private final MouseManager mouseManager;
     private final User user;
     private Clip clip;
-    private int ctrBg, ctrCoin, timer;
+    private int ctrBg, ctrCoin, ctrMummy, timer;
 
     private final Rectangle overlayTop = new Rectangle(0, 0, width,72);
     private final Rectangle playBtn = new Rectangle(301, 0, 74, 70);
@@ -26,8 +26,8 @@ public class MainMenu extends State implements SIZE {
     private final Rectangle logoutBtn = new Rectangle(1020, 12, 44, 50);
     private final Rectangle overlayBot = new Rectangle(0, 544, width, 100);
 
-    private final Rectangle exitBtn = new Rectangle(650,350, 150, 35 );
-    private final Rectangle continueBtn = new Rectangle(300,350, 150, 35 );
+    private final Rectangle continueBtn = new Rectangle(597,340, 175, 35 );
+    private final Rectangle exitBtn = new Rectangle(292,340, 200, 35 );
 
     private boolean popUpLogout = false;
 
@@ -44,7 +44,7 @@ public class MainMenu extends State implements SIZE {
     public void playMusic(){
         clip = Assets.audioMenu;
         clip.start();
-        handler.setVol(clip);
+        handler.setVol(clip, 0.7f);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
@@ -123,24 +123,28 @@ public class MainMenu extends State implements SIZE {
         g.drawImage(Assets.logout, 1020, 15, 44, 44, null);
 
         if(popUpLogout){
-            g.setColor(Color.black);
-            g.fillRect(190, 150, 700, 300);
-            g.setColor(Color.white);
-            g.drawRect(190, 150, 700, 300);
-            Text.drawString(g, "Are you sure want to exit ?", 540, 250, true, Color.RED, Assets.regulerFont);
-            Text.drawString(g, "You will not keep gold on this stage", 540, 300, true, Color.WHITE, Assets.regulerFont);
-            g.setColor(Color.red);
-            ((Graphics2D) g).fill(continueBtn);
-            ((Graphics2D) g).fill(exitBtn);
-            Text.drawString(g, "Continue", 375, 368, true, Color.white, Assets.regulerFont);
-            Text.drawString(g, "Exit", 725, 368, true, Color.white, Assets.regulerFont);
+            g.drawImage(Assets.popUp, 237, 155, 600, 240, null);
+
+            Text.drawString(g, "WARNING!", 537, 201, true, new Color(0xe28743), Assets.warningFont);
+            Text.drawString(g, "Are you sure want to log out ?", 537, 275, true, Color.WHITE, Assets.warningFont);
+
+//            g.setColor(Color.red);
+//            ((Graphics2D) g).fill(continueBtn);
+//            ((Graphics2D) g).fill(exitBtn);
+
+            Text.drawString(g, "Continue", 392, 357, true, Color.white, Assets.smallFont);
+            Text.drawString(g, "Cancel", 692, 357, true, Color.white, Assets.smallFont);
         }
 
         if(timer == 0) {
             ctrBg = (ctrBg != 19) ? ++ctrBg : 0;
             ctrCoin = (ctrCoin != 6) ? ++ctrCoin : 0;
+            ctrMummy = (ctrMummy != 12) ? ++ctrMummy : 0;
         }
         this.timer = (this.timer == 4) ? 0 : ++timer;
+
+
+
     }
 
 }

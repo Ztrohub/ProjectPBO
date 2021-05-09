@@ -41,7 +41,8 @@ public class GameState extends State implements SIZE {
 //    Player
     private int x, y;
 
-    private int counter = 0;
+    private int counter = 0, timer = 0;
+    private int ctrMummy = 0;
     private boolean delay = false;
 
     private boolean running = true;
@@ -187,7 +188,6 @@ public class GameState extends State implements SIZE {
         }
     }
 
-
     void randomCard(){
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
@@ -206,8 +206,6 @@ public class GameState extends State implements SIZE {
             }
         }
     }
-
-
 
     @Override
     public void render(Graphics g) {
@@ -279,7 +277,15 @@ public class GameState extends State implements SIZE {
                     Text.drawString(g, c.getSymbol(), (j*184)+132, (i*177)+168, true, Color.WHITE, Assets.regulerFont);
                 }
                 else {
-                    Text.drawString(g, c.getSymbol(), (j * 184) + 132, (i * 177) + 168, true, Color.WHITE, Assets.regulerFont);
+
+
+                    if(c.getSymbol().equalsIgnoreCase("s")){
+                        g.drawImage(Assets.mummyEnemy[ctrMummy], (j*184)+38, (i*177)+82, 179, 172, null);
+                    } else {
+                        Text.drawString(g, c.getSymbol(), (j * 184) + 132, (i * 177) + 168, true, Color.WHITE, Assets.regulerFont);
+                    }
+
+
                     if (c instanceof Enemy){
                         Enemy enemy = (Enemy) c;
                         Text.drawString(g, "" + enemy.getHealth(), (j * 184) + 190, (i * 177) + 105, true, Color.WHITE, Assets.regulerFont);
@@ -304,13 +310,20 @@ public class GameState extends State implements SIZE {
                 }
             }
         }
+
+        if(timer == 0) {
+            ctrMummy = (ctrMummy != 12) ? ++ctrMummy : 0;
+        }
+        this.timer = (this.timer == 6) ? 0 : ++timer;
     }
 
     @Override
     public void playMusic() {
         clip = Assets.audioGame;
         clip.start();
-        handler.setVol(clip);
+
+        //TODO Suara game tak buat 0 dulu
+        handler.setVol(clip, 0);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 }

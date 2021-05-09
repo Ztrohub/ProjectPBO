@@ -11,7 +11,7 @@ import java.io.*;
 public class Handler {
     private Game game;
     private DB db = new DB();
-    private double vol = 0.1;
+    private double vol = 0.5;
 
     public Handler(Game game) {
         this.game = game;
@@ -51,7 +51,7 @@ public class Handler {
         gain.setValue(dB);
     }
 
-    public void setvol(Clip clip, double vol){
+    public void setVol(Clip clip, double vol){
         FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         float dB = (float) (Math.log(this.vol + vol) / Math.log(10) * 20);
         gain.setValue(dB);
