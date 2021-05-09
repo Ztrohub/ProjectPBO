@@ -95,10 +95,18 @@ public class GameState extends State implements SIZE {
         }
 
         if (doneAnim && !kalah && !exit){
-            if (keyManager.up) { moveKartu(0, -1); }
-            if (keyManager.down) moveKartu(0, 1);
-            if (keyManager.left) moveKartu(-1, 0);
-            if (keyManager.right) { moveKartu(1, 0);}
+            if (keyManager.up) {
+                moveKartu(0, -1);
+            }
+            else if (keyManager.down) {
+                moveKartu(0, 1);
+            }
+            else if (keyManager.left) {
+                moveKartu(-1, 0);
+            }
+            else if (keyManager.right) {
+                moveKartu(1, 0);
+            }
         }
 
         for (int i = 0; i < 3; i++) {
