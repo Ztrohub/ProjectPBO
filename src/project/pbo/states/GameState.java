@@ -36,9 +36,6 @@ public class GameState extends State implements SIZE {
 //    Player
     private int x, y;
 
-    private int counter = 0;
-    private boolean delay = false;
-
     private boolean running = true;
     private boolean kalah = false;
     private boolean exit = false;
@@ -48,6 +45,7 @@ public class GameState extends State implements SIZE {
 
     private int tempy, tempx, move;
     private boolean pause = false;
+    private boolean doneAnim = true;
 
     private PlayerCard pc;
 
@@ -96,31 +94,28 @@ public class GameState extends State implements SIZE {
             kalah = true;
         }
 
-
-        if (delay){
-            counter++;
-            if (counter > 10){
-                counter = 0;
-                delay = false;
-            }
-        } else {
+        if (doneAnim && !kalah && !exit){
             if (keyManager.up) { moveKartu(0, -1); }
             if (keyManager.down) moveKartu(0, 1);
             if (keyManager.left) moveKartu(-1, 0);
             if (keyManager.right) { moveKartu(1, 0);}
-            if (keyManager.up || keyManager.down || keyManager.left || keyManager.right) delay = true;
         }
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 cards[i][j].tick();
-                if (cards[i][j].isAnimating()) pause = true;
+                if (cards[i][j].isAnimating()){
+                    pause = true;
+                    doneAnim = false;
+                }
             }
         }
+
 
         if (!pause && move != 0){
             reset();
             moving();
+            doneAnim = true;
         }
         pause = false;
     }
@@ -333,7 +328,6 @@ public class GameState extends State implements SIZE {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 Card c = cards[i][j];
-
                 c.render(g, j, i);
             }
         }

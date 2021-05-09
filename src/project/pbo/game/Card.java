@@ -73,7 +73,7 @@ public abstract class Card {
             if (move == 4){
                 x-=6;
                 if (x <= -184){
-                    x = 184;
+                    x = -184;
                     move = 0;
                 }
             }

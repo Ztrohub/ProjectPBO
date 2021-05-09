@@ -11,7 +11,7 @@ import java.io.*;
 public class Handler {
     private Game game;
     private DB db = new DB();
-    private double vol = 0.5;
+    private double vol = 0.1;
 
     public Handler(Game game) {
         this.game = game;
