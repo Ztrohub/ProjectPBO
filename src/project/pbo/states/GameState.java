@@ -59,7 +59,7 @@ public class GameState extends State implements SIZE {
     }
 
     void init(){
-        this.x = 0; this.y = 0;
+        this.x = 1; this.y = 1;
         cards = new Card[3][3];
         pc = new PlayerCard(user.getPlayer().getHealth(), user.getPlayer().getDefend(), user.getPlayer().getDamage(), user.getPlayer().getHealth());
         cards[x][y] = pc;
@@ -275,7 +275,7 @@ public class GameState extends State implements SIZE {
     @Override
     public void render(Graphics g) {
 //        Background
-        g.setColor(Color.black);
+        g.setColor(new Color(36,39,44));
         g.fillRect(0,0,width,height);
 
 //        Tab bar

@@ -1,7 +1,6 @@
 package project.pbo.game.enemy;
 
 import project.pbo.game.Card;
-
 import java.util.Random;
 
 public abstract class Enemy extends Card {

@@ -21,12 +21,16 @@ public class Assets {
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG, popUp;
     public static BufferedImage playIcon, shopIcon, settingIcon, creditIcon, logout;
+
+    public static BufferedImage card, cardBG;
+
     public static Clip audioLogin, audioIntro, audioMenu, audioGame;
 
     public static Font smallFont;
     public static Font regulerFont;
     public static Font dungeonFont;
     public static Font warningFont;
+    public static Font smallerFont;
 
     public static void init(){
 
@@ -37,6 +41,7 @@ public class Assets {
         audioGame = AudioLoader.loadAudio("res/audio/game.wav");
 
 //        FONT
+        smallerFont = FontLoader.loadFont("res/font/mainfont.ttf", 13);
         smallFont = FontLoader.loadFont("res/font/mainfont.ttf", 15);
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
         warningFont = FontLoader.loadFont("res/font/mainfont.ttf", 17);
@@ -63,6 +68,11 @@ public class Assets {
 
 //        ENEMY
         potongSprite(mummyEnemy, "mummy");
+
+//        GAME
+        card = ImageLoader.loadImage("/images/content/test.png");
+        cardBG = ImageLoader.loadImage("/images/content/card/cardBG.png");
+
     }
 
     public static void initBufferArr(BufferedImage[] temp, String nameBuffer){

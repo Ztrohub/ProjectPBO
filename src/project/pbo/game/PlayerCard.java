@@ -4,12 +4,13 @@ public class PlayerCard extends Card {
 
     private int health, defend, damage, maxHealth;
     public PlayerCard(int health, int defend, int damage, int maxHealth) {
-        super( "P");
+        super( "Hero");
         this.health = health;
         this.defend = defend;
         this.damage = damage;
         this.maxHealth = maxHealth;
     }
+
 
     public int getMaxHealth() {
         return maxHealth;

@@ -22,7 +22,7 @@ public class KeyManager implements KeyListener {
 
         if (pressed){
             delay++;
-            if (delay > 30){
+            if (delay > 25){
                 delay = 0;
                 pressed = false;
             }
