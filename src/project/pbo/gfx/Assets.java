@@ -20,7 +20,7 @@ public class Assets {
 
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG, popUp;
-    public static BufferedImage playIcon, shopIcon, settingIcon, creditIcon, logout;
+    public static BufferedImage playIcon, shopIcon, settingIcon, leaderBoardIcon, logout;
 
     public static BufferedImage card, cardBG;
 
@@ -41,7 +41,7 @@ public class Assets {
         audioGame = AudioLoader.loadAudio("res/audio/game.wav");
 
 //        FONT
-        smallerFont = FontLoader.loadFont("res/font/mainfont.ttf", 13);
+        smallerFont = FontLoader.loadFont("res/font/mainfont.ttf", 14);
         smallFont = FontLoader.loadFont("res/font/mainfont.ttf", 15);
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
         warningFont = FontLoader.loadFont("res/font/mainfont.ttf", 17);
@@ -62,9 +62,8 @@ public class Assets {
         playIcon = ImageLoader.loadImage("/images/menuAsset/swordIcon.png");
         shopIcon = ImageLoader.loadImage("/images/menuAsset/shopIcon.png");
         settingIcon = ImageLoader.loadImage("/images/menuAsset/settingIcon.png");
-        creditIcon = ImageLoader.loadImage("/images/menuAsset/creditIcon.png");
+        leaderBoardIcon = ImageLoader.loadImage("/images/menuAsset/leaderBoardIcon.png");
         logout = ImageLoader.loadImage("/images/menuAsset/logoutIcon.png");
-
 
 //        ENEMY
         potongSprite(mummyEnemy, "mummy");
