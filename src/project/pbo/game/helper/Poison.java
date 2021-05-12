@@ -1,6 +1,8 @@
 package project.pbo.game.helper;
 
 import project.pbo.game.Card;
+
+import java.awt.*;
 import java.util.Random;
 
 public class Poison extends Card {
@@ -9,6 +11,11 @@ public class Poison extends Card {
     public Poison() {
         super("Poison");
         poison = (new Random().nextInt(5)+1) * -1;
+    }
+
+    @Override
+    protected void cetak(Graphics g) {
+
     }
 
     public int getPoison() {

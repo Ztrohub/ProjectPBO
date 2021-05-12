@@ -1,5 +1,7 @@
 package project.pbo.game;
 
+import java.awt.*;
+
 public class PlayerCard extends Card {
 
     private int health, defend, damage, maxHealth;
@@ -11,6 +13,10 @@ public class PlayerCard extends Card {
         this.maxHealth = maxHealth;
     }
 
+    @Override
+    protected void cetak(Graphics g) {
+
+    }
 
     public int getMaxHealth() {
         return maxHealth;

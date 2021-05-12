@@ -91,6 +91,8 @@ public abstract class Card {
         Text.drawString(g, this.getSymbol(), (x * 184) + 132+this.x, (y * 177) + 225+this.y, true,
                 this instanceof PlayerCard ? new Color(217, 199, 51) : Color.WHITE, Assets.smallerFont);
 
+        cetak(g);
+
         if (this instanceof PlayerCard){
             PlayerCard pc = (PlayerCard) this;
             Text.drawString(g, ""+pc.getDamage(), (x*184)+190+this.x-10, (y*177)+230+this.y-5, true, new Color(74, 116, 186), Assets.regulerFont);
@@ -119,6 +121,8 @@ public abstract class Card {
         }
 
     }
+
+    protected abstract void cetak(Graphics g);
 
     public int getMove() {
         return move;
