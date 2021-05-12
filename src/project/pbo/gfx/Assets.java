@@ -17,10 +17,9 @@ public class Assets {
     public static BufferedImage[] menuBG = new BufferedImage[20], coinsIcon = new BufferedImage[7];
     public static BufferedImage[] mummyEnemy = new BufferedImage[13];
 
-
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG, popUp;
-    public static BufferedImage playIcon, shopIcon, settingIcon, leaderBoardIcon, logout;
+    public static BufferedImage playIcon, storeIcon, settingsIcon, rankingIcon, logout;
 
     public static BufferedImage card, cardBG;
 
@@ -62,11 +61,11 @@ public class Assets {
 
 //        ICON
         initBufferArr(coinsIcon, "coinsIcon");
-        playIcon = ImageLoader.loadImage("/images/menuAsset/swordIcon.png");
-        shopIcon = ImageLoader.loadImage("/images/menuAsset/shopIcon.png");
-        settingIcon = ImageLoader.loadImage("/images/menuAsset/settingIcon.png");
-        leaderBoardIcon = ImageLoader.loadImage("/images/menuAsset/leaderBoardIcon.png");
-        logout = ImageLoader.loadImage("/images/menuAsset/logoutIcon.png");
+        playIcon = ImageLoader.loadImage("/images/menuAsset/play.png");
+        storeIcon = ImageLoader.loadImage("/images/menuAsset/store.png");
+        settingsIcon = ImageLoader.loadImage("/images/menuAsset/settings.png");
+        rankingIcon = ImageLoader.loadImage("/images/menuAsset/ranking.png");
+        logout = ImageLoader.loadImage("/images/menuAsset/logout.png");
 
 //        ENEMY
         potongSprite(mummyEnemy, "mummy");

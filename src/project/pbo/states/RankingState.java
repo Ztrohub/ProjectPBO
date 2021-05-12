@@ -5,8 +5,8 @@ import project.pbo.window.SIZE;
 
 import java.awt.*;
 
-public class LeaderboardState  extends State implements SIZE {
-    public LeaderboardState(Handler handler) {
+public class RankingState extends State implements SIZE {
+    public RankingState(Handler handler) {
         super(handler);
     }
 

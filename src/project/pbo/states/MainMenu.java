@@ -12,16 +12,18 @@ import java.awt.*;
 
 public class MainMenu extends State implements SIZE {
 
+    private float alhpa = 0.1f;
     private int ctrBg, ctrCoin, ctrMummy, timer;
+    private boolean isRanking = false, isLogout = false;
     private final MouseManager mouseManager;
     private final User user;
     private Clip clip;
 
-    private final Rectangle overlayTop = new Rectangle(0, 0, width,72);
-    private final Rectangle playBtn = new Rectangle(301, 0, 74, 70);
-    private final Rectangle shopBtn = new Rectangle(431, 0, 76, 70);
-    private final Rectangle settingBtn = new Rectangle(566, 0, 100, 70);
-    private final Rectangle leaderBoardBtn = new Rectangle(725, 0, 90, 70);
+    private final Rectangle overlayTop = new Rectangle(0, 0, width,73);
+    private final Rectangle playBtn = new Rectangle(300, 0, 75, 70);
+    private final Rectangle rankingBtn = new Rectangle(430, 0, 90, 70);
+    private final Rectangle storeBtn = new Rectangle(583, 0, 78, 70);
+    private final Rectangle settingsBtn = new Rectangle(727, 0, 95, 70);
     private final Rectangle logoutBtn = new Rectangle(1020, 12, 44, 50);
     private final Rectangle overlayBot = new Rectangle(0, 544, width, 100);
 
@@ -31,8 +33,8 @@ public class MainMenu extends State implements SIZE {
     private final Rectangle popBtnYes = new Rectangle(292, 360, 200, 35 );
 
     // ATRIBUT POP UP MENU
-    private boolean popUpLogout = false, animated = false;
-    private String arahAnimasi;
+    private boolean animated = false;
+    private String jenisAnimasi;
 
     // GAMBAR 175
     // CONTINUE BTN 360
@@ -67,7 +69,7 @@ public class MainMenu extends State implements SIZE {
 
     @Override
     public void tick() {
-        if(popUpLogout){
+        if(isLogout){
             if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed() && !animated){
                 if(popBtnYes.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
                     clip.stop();
@@ -75,25 +77,34 @@ public class MainMenu extends State implements SIZE {
                     setCurrentState(new LoadingState(handler, new LoginState(handler)));
                 } else if(popBtnNo.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
                     animated = true;
-                    arahAnimasi = "naik";
+                    jenisAnimasi = "naik";
                 }
             }
-        } else {
+        } else if(isRanking){
+            if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed() && !animated){
+                if(popBtnNo.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+                    animated = true;
+                    jenisAnimasi = "hilang";
+                }
+            }
+        }
+
+        else {
             if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed()){
                 if(logoutBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LOGOUT
                     animated = true;
-                    popUpLogout = true;
-                    arahAnimasi = "turun";
+                    isLogout = true;
+                    jenisAnimasi = "turun";
                 } else if(playBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK PLAY
                     clip.stop();
                     clip.setFramePosition(0);
                     setCurrentState(new LoadingState(handler, new GameState(handler, user)));
-                } else if(shopBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SHOP
+                } else if(rankingBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LEADERBOARD
+                    isRanking = true;
+                } else if(storeBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SHOP
                     setCurrentState(new ShopState(handler));
-                } else if(settingBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SETTINGS
+                } else if(settingsBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SETTINGS
                     setCurrentState(new SettingState(handler));
-                } else if(leaderBoardBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LEADERBOARD
-                    setCurrentState(new LeaderboardState(handler));
                 }
                 mouseManager.setLeftPressed(false);
                 mouseManager.setRightPressed(false);
@@ -111,51 +122,56 @@ public class MainMenu extends State implements SIZE {
         g.drawImage(Assets.mainLogo, 310, 478, 428, 246, null);
 
         // ICON DAN NAMA PLAYER
-        g.drawImage(Assets.avatar, 10, 5, 60, 60, null);
-        g.drawImage(Assets.coinsIcon[ctrCoin], 79, 41, 15, 15, null);
-        Text.drawString(g, user.getUsername(), 78, 30, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, user.getPlayer().getGold() + "", 102, 55, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.avatar, 10, 6, 60, 60, null);
+        g.drawImage(Assets.coinsIcon[ctrCoin], 79, 42, 15, 15, null);
+        Text.drawString(g, user.getUsername(), 78, 31, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, user.getPlayer().getGold() + "", 103, 55, false, Color.WHITE, Assets.regulerFont);
 
 //        g.setColor(new Color(0xE1AD01));
 //        ((Graphics2D) g).fill(playBtn);
-//        ((Graphics2D) g).fill(shopBtn);
-//        ((Graphics2D) g).fill(settingBtn);
-//        ((Graphics2D) g).fill(leaderBoardBtn);
+//        ((Graphics2D) g).fill(rankingBtn);
+//        ((Graphics2D) g).fill(storeBtn);
+//        ((Graphics2D) g).fill(settingsBtn);
 //        ((Graphics2D) g).fill(logoutBtn);
 
         // BUTTON PLAY
-        g.drawImage(Assets.playIcon, 273, -9, 135, 100, null);
-        Text.drawString(g, "Play", 308, 63, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.playIcon, 313, 3, 52, 66, null);
+        Text.drawString(g, "Play", 312, 64, false, Color.WHITE, Assets.regulerFont);
 
-        // BUTTON SHOP
-        g.drawImage(Assets.shopIcon, 432, 2, 75, 60, null);
-        Text.drawString(g, "Shop", 440, 63, false, Color.WHITE, Assets.regulerFont);
+        // BUTTON RANKING
+        g.drawImage(Assets.rankingIcon, 445, 6, 60, 55, null);
+        Text.drawString(g, "Ranking", 430, 64, false, Color.WHITE, Assets.regulerFont);
 
-        //BUTTON SETTINGS
-        g.drawImage(Assets.settingIcon, 580, 2, 69, 61, null);
-        Text.drawString(g, "Settings", 568, 63, false, Color.WHITE, Assets.smallFont);
+        // BUTTON STORE
+        g.drawImage(Assets.storeIcon, 585, 2, 75, 60, null);
+        Text.drawString(g, "Store", 589, 64, false, Color.WHITE, Assets.regulerFont);
 
-        // BUTTON LEADERBOARD
-        g.drawImage(Assets.leaderBoardIcon, 750, 4, 60, 55, null);
-        Text.drawString(g, "Leaderboard", 722, 63, false, Color.WHITE, Assets.smallerFont);
+        // BUTTON SETTINGS
+        g.drawImage(Assets.settingsIcon, 740, 2, 69, 61, null);
+        Text.drawString(g, "Settings", 731, 64, false, Color.WHITE, Assets.smallerFont);
 
         // BUTTON LOGOUT
         g.drawImage(Assets.logout, 1020, 15, 44, 44, null);
 
-        if(popUpLogout){
+        if(isLogout){
             if(animated) popAnimated();
 
             g.drawImage(Assets.popUp, 237, yGambar, 600, 240, null);
 
-            Text.drawString(g, "WARNING!", 537, yWarning, true, new Color(0xe28743), Assets.warningFont);
-            Text.drawString(g, "Are you sure want to log out ?", 537, yMessage, true, Color.WHITE, Assets.warningFont);
+            Text.drawString(g, "WARNING!", 537, yWarning, true, new Color(0xe28743), Assets.regulerFont);
+            Text.drawString(g, "Are you sure want to log out ?", 537, yMessage, true, Color.WHITE, Assets.regulerFont);
 
 //            g.setColor(Color.red);
 //            ((Graphics2D) g).fill(popBtnNo);
 //            ((Graphics2D) g).fill(popBtnYes);
 
-            Text.drawString(g, "Yes", 392, yYes, true, Color.white, Assets.smallFont);
-            Text.drawString(g, "No", 692, yNo, true, Color.white, Assets.smallFont);
+            Text.drawString(g, "Yes", 392, yYes, true, Color.WHITE, Assets.smallerFont);
+            Text.drawString(g, "No", 692, yNo, true, Color.WHITE, Assets.smallerFont);
+        } else if(isRanking){
+            if(animated) popAnimated();
+
+
+
         }
 
         if(timer == 0) {
@@ -167,7 +183,7 @@ public class MainMenu extends State implements SIZE {
     }
 
     private void popAnimated(){
-        if(arahAnimasi.equalsIgnoreCase("turun")){
+        if(jenisAnimasi.equalsIgnoreCase("turun")){
             this.yGambar += 20;
             this.yWarning += 20;
             this.yMessage += 20;
@@ -176,9 +192,9 @@ public class MainMenu extends State implements SIZE {
 
             if(yGambar == 175) {
                 animated = false;
-                arahAnimasi = "";
+                jenisAnimasi = "";
             }
-        } else if(arahAnimasi.equalsIgnoreCase("naik")){
+        } else if(jenisAnimasi.equalsIgnoreCase("naik")){
             this.yGambar -= 20;
             this.yWarning -= 20;
             this.yMessage -= 20;
@@ -187,12 +203,26 @@ public class MainMenu extends State implements SIZE {
 
             if(yGambar == -225) {
                 animated = false;
-                popUpLogout = false;
-                arahAnimasi = "";
+                isLogout = false;
+                jenisAnimasi = "";
+            }
+        } else if(jenisAnimasi.equalsIgnoreCase("muncul")){
+            if(alhpa < 1.0f)
+                alhpa += 0.01f;
+
+            if(alhpa >= 1.0f) {
+                System.out.println("error");
+                animated = false;
+                jenisAnimasi = "";
+            }
+        } else if(jenisAnimasi.equalsIgnoreCase("hilang")){
+            alhpa -= 0.01f;
+
+            if(alhpa <= 0.0f) {
+                animated = false;
+                jenisAnimasi = "";
             }
         }
-
-
     }
 
 }
