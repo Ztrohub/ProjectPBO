@@ -3,16 +3,16 @@ package project.pbo.account;
 import java.io.Serializable;
 
 public class Player implements Serializable {
-    private int gold = 0, health = 11, stage = 1;
+    private int gold = 0, health = 11, highestStep = 0;
     private int damage = 0, defend = 0;
 
 
-    public int getStage() {
-        return stage;
+    public int getHighestStep() {
+        return highestStep;
     }
 
-    public void setStage(int stage) {
-        this.stage = stage;
+    public void setHighestStep(int highestStep) {
+        this.highestStep = highestStep;
     }
 
     public int getGold() {

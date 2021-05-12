@@ -93,8 +93,8 @@ public abstract class Card {
 
         if (this instanceof PlayerCard){
             PlayerCard pc = (PlayerCard) this;
-            Text.drawString(g, ""+pc.getDamage(), (x*184)+190+this.x-5, (y*177)+230+this.y-5, true, new Color(74, 116, 186), Assets.regulerFont);
-            Text.drawString(g, ""+pc.getDefend(), (x*184)+70+this.x+5, (y*177)+230+this.y-5, true, new Color(74, 116, 186), Assets.regulerFont);
+            Text.drawString(g, ""+pc.getDamage(), (x*184)+190+this.x-10, (y*177)+230+this.y-5, true, new Color(74, 116, 186), Assets.regulerFont);
+            Text.drawString(g, ""+pc.getDefend(), (x*184)+70+this.x+10, (y*177)+230+this.y-5, true, new Color(74, 116, 186), Assets.regulerFont);
             Text.drawString(g, ""+pc.getHealth(), (x*184)+190+this.x-10, (y*177)+105+this.y+10, true, new Color(166, 121, 89), Assets.regulerFont);
         }
         if (this instanceof Enemy){
@@ -107,7 +107,7 @@ public abstract class Card {
         }
         if (this instanceof Healing){
             Healing healing = (Healing) this;
-            Text.drawString(g, ""+healing.getHeal(), (x * 184) + 190+this.x-10, (y * 177) + 105+this.y+10, true, new Color(74, 116, 186), Assets.regulerFont);
+            Text.drawString(g, ""+healing.getHeal(), (x * 184) + 190+this.x-10, (y * 177) + 105+this.y+10, true, new Color(206, 34, 50), Assets.regulerFont);
         }
         if (this instanceof Poison){
             Poison poison = (Poison) this;

@@ -26,10 +26,12 @@ public class GameState extends State implements SIZE {
 
     private final User user;
     private int gold = 0;
-    private final Rectangle exitBtn = new Rectangle(950,7, 100, 35 );
-    private final Rectangle replayBtn = new Rectangle(300,350, 150, 35 );
-    private final Rectangle continueBtn = new Rectangle(300,350, 150, 35 );
-    private final Rectangle loseBtn = new Rectangle(650,350, 150, 35 );
+    private final Rectangle exitBtn = new Rectangle(1000, 13, 35, 35);
+    private final Rectangle replayBtn = new Rectangle(597,340, 175, 35 );
+
+    private final Rectangle continueBtn = new Rectangle(597,340, 175, 35 );
+    private final Rectangle loseBtn = new Rectangle(292,340, 200, 35 );
+
     private Clip clip;
     private Card[][] cards;
 
@@ -47,7 +49,11 @@ public class GameState extends State implements SIZE {
     private boolean pause = false;
     private boolean doneAnim = true;
 
+    private int ctrCoin, timer;
+
     private PlayerCard pc;
+
+    private int step = 1;
 
     public GameState(Handler handler, User user){
         super(handler);
@@ -71,6 +77,7 @@ public class GameState extends State implements SIZE {
 
         keyManager.tick();
         if (!running){
+            user.getPlayer().setHighestStep(Math.max(user.getPlayer().getHighestStep(), step));
             clip.stop();
             clip.setFramePosition(0);
             setCurrentState(new LoadingState(handler, new MainMenu(handler, user)));
@@ -80,6 +87,8 @@ public class GameState extends State implements SIZE {
                 (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) running = false;
         if (kalah && replayBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
                 (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) {
+            user.getPlayer().setHighestStep(Math.max(user.getPlayer().getHighestStep(), step));
+            step = 1;
             init();
             kalah = false;
         }
@@ -124,8 +133,78 @@ public class GameState extends State implements SIZE {
             reset();
             moving();
             doneAnim = true;
+            step++;
         }
         pause = false;
+    }
+
+    @Override
+    public void render(Graphics g) {
+//        Background
+        g.setColor(new Color(36,39,44));
+        g.fillRect(0,0,width,height);
+
+//        Tab bar
+        g.setColor(Color.black);
+        g.fillRect(0,0,width,60);
+        g.drawImage(Assets.coinsIcon[ctrCoin], 15, 10, 35, 35, null);
+        Text.drawString(g, "" + gold, 70, 37, false, new Color(255,191,64), Assets.biggerFont);
+        Text.drawString(g, "Step " + (step-1), 540, 30, true, Color.gray, Assets.biggerFont);
+        g.setColor(Color.red);
+        g.drawImage(Assets.logout, 1000, 13, 35, 35, null);
+
+//        Hero Memu
+        g.setColor(Color.red);
+        g.drawRect(700, 80, 330, 90);
+        g.drawRect(700, 170, 330, 290);
+        g.drawRect(700, 460, 331, 150);
+        Text.drawString(g, user.getUsername(), 870, 125, true, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, "Health: " + pc.getHealth() + " / " + pc.getMaxHealth(), 720, 495, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, "Damage: " + pc.getDamage(), 720, 540, false, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, "Defend: " + pc.getDefend(), 720, 585, false, Color.WHITE, Assets.regulerFont);
+
+//        Game
+        cetakKartu(g);
+
+        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        if (kalah){
+            g.drawImage(Assets.popUp, 237, 155, 600, 240, null);
+
+            Text.drawString(g, "YOU DIED!", 537, 201, true, new Color(0xe28743), Assets.warningFont);
+            Text.drawString(g, "You got " + gold + " gold", 537, 260, true, Color.WHITE, Assets.smallFont);
+            Text.drawString(g, "Want to restart?", 537, 300, true, Color.WHITE, Assets.warningFont);
+
+            Text.drawString(g, "Exit", 392, 357, true, Color.white, Assets.smallFont);
+            Text.drawString(g, "Restart", 692, 357, true, Color.white, Assets.smallFont);
+        }
+
+        if (exit){
+            g.drawImage(Assets.popUp, 237, 155, 600, 240, null);
+
+            Text.drawString(g, "WARNING!", 537, 201, true, new Color(0xe28743), Assets.warningFont);
+            Text.drawString(g, "Are you sure want to Exit?", 537, 275, true, Color.WHITE, Assets.warningFont);
+
+            Text.drawString(g, "Yes", 392, 357, true, Color.white, Assets.smallFont);
+            Text.drawString(g, "No", 692, 357, true, Color.white, Assets.smallFont);
+
+        }
+
+        if(timer == 0) {
+            ctrCoin = (ctrCoin != 6) ? ++ctrCoin : 0;
+        }
+        this.timer = (this.timer == 4) ? 0 : ++timer;
+
+    }
+
+    void cetakKartu(Graphics g){
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                Card c = cards[i][j];
+                c.render(g, j, i);
+            }
+        }
     }
 
     void reset(){
@@ -256,15 +335,20 @@ public class GameState extends State implements SIZE {
             for (int j = 0; j < 3; j++){
                 if (cards[i][j] == null){
                     Random random = new Random();
-                    int rand = random.nextInt(7);
-                    int stage = user.getPlayer().getStage();
-                    if (rand == 0) cards[i][j] = new MonsterTree(stage);
-                    if (rand == 1) cards[i][j] = new Skeleton(stage);
-                    if (rand == 2) cards[i][j] = new Slime(stage);
-                    if (rand == 3) cards[i][j] = new Healing();
-                    if (rand == 4) cards[i][j] = new Poison();
-                    if (rand == 5) cards[i][j] = new Shield();
-                    if (rand == 6) cards[i][j] = new Sword();
+                    int enemyorhelp = random.nextInt(100);
+                    int rand = random.nextInt(100);
+                    if (enemyorhelp > (Math.min(step * 5, 50))){
+                        if (rand < 30) cards[i][j] = new Shield();
+                        else if (rand < 60) cards[i][j] = new Sword();
+                        else if (rand < 90) cards[i][j] = new Healing();
+                        else cards[i][j] = new Poison();
+                    } else {
+                        int stage = step/5 + 1;
+                        if (rand < 40) cards[i][j] = new Slime(stage);
+                        if (rand < 80) cards[i][j] = new Skeleton(stage);
+                        else cards[i][j] = new MonsterTree(stage);
+                    }
+
                 }
             }
         }
@@ -272,74 +356,7 @@ public class GameState extends State implements SIZE {
 
 
 
-    @Override
-    public void render(Graphics g) {
-//        Background
-        g.setColor(new Color(36,39,44));
-        g.fillRect(0,0,width,height);
 
-//        Tab bar
-        g.setColor(Color.gray);
-        g.fillRect(0,0,width,50);
-        Text.drawString(g, "Stage: " + user.getPlayer().getStage(), 10, 30, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Gold: " + gold, 180, 30, false, Color.WHITE, Assets.regulerFont);
-        g.setColor(Color.red);
-        ((Graphics2D) g).fill(exitBtn);
-        Text.drawString(g, "Exit", 1000, 25, true, Color.WHITE, Assets.regulerFont);
-
-//        Hero Memu
-        g.setColor(Color.red);
-        g.drawRect(700, 80, 330, 90);
-        g.drawRect(700, 170, 330, 290);
-        g.drawRect(700, 460, 331, 150);
-        Text.drawString(g, user.getUsername(), 870, 125, true, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Health: " + pc.getHealth() + " / " + pc.getMaxHealth(), 720, 495, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Damage: " + pc.getDamage(), 720, 540, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Defend: " + pc.getDefend(), 720, 585, false, Color.WHITE, Assets.regulerFont);
-
-//        Game
-        cetakKartu(g);
-
-        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        if (kalah){
-            g.setColor(Color.black);
-            g.fillRect(190, 150, 700, 300);
-            g.setColor(Color.white);
-            g.drawRect(190, 150, 700, 300);
-            Text.drawString(g, "YOU DIED", 540, 250, true, Color.RED, Assets.regulerFont);
-            g.setColor(Color.RED);
-            ((Graphics2D) g).fill(replayBtn);
-            ((Graphics2D) g).fill(loseBtn);
-            Text.drawString(g, "Restart", 375, 368, true, Color.white, Assets.regulerFont);
-            Text.drawString(g, "Exit", 725, 368, true, Color.white, Assets.regulerFont);
-        }
-
-        if (exit){
-            g.setColor(Color.black);
-            g.fillRect(190, 150, 700, 300);
-            g.setColor(Color.white);
-            g.drawRect(190, 150, 700, 300);
-            Text.drawString(g, "Are you sure want to exit ?", 540, 250, true, Color.RED, Assets.regulerFont);
-            Text.drawString(g, "You will not keep gold on this stage", 540, 300, true, Color.WHITE, Assets.regulerFont);
-            g.setColor(Color.red);
-            ((Graphics2D) g).fill(continueBtn);
-            ((Graphics2D) g).fill(loseBtn);
-            Text.drawString(g, "Continue", 375, 368, true, Color.white, Assets.regulerFont);
-            Text.drawString(g, "Exit", 725, 368, true, Color.white, Assets.regulerFont);
-        }
-
-    }
-
-    void cetakKartu(Graphics g){
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
-                Card c = cards[i][j];
-                c.render(g, j, i);
-            }
-        }
-    }
 
     @Override
     public void playMusic() {

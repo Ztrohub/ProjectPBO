@@ -31,6 +31,8 @@ public class Assets {
     public static Font dungeonFont;
     public static Font warningFont;
     public static Font smallerFont;
+    public static Font biggerFont;
+
 
     public static void init(){
 
@@ -44,6 +46,7 @@ public class Assets {
         smallerFont = FontLoader.loadFont("res/font/mainfont.ttf", 14);
         smallFont = FontLoader.loadFont("res/font/mainfont.ttf", 15);
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
+        biggerFont = FontLoader.loadFont("res/font/mainfont.ttf", 24);
         warningFont = FontLoader.loadFont("res/font/mainfont.ttf", 17);
         dungeonFont = FontLoader.loadFont("res/font/dungeon.ttf", 35);
 
