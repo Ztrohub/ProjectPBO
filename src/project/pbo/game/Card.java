@@ -91,7 +91,7 @@ public abstract class Card {
         Text.drawString(g, this.getSymbol(), (x * 184) + 132+this.x, (y * 177) + 225+this.y, true,
                 this instanceof PlayerCard ? new Color(217, 199, 51) : Color.WHITE, Assets.smallerFont);
 
-        cetak(g);
+        cetak(g, x, y);
 
         if (this instanceof PlayerCard){
             PlayerCard pc = (PlayerCard) this;
@@ -122,7 +122,7 @@ public abstract class Card {
 
     }
 
-    protected abstract void cetak(Graphics g);
+    protected abstract void cetak(Graphics g, int x, int y);
 
     public int getMove() {
         return move;
