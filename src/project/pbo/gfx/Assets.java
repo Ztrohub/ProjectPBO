@@ -16,6 +16,8 @@ public class Assets {
 
     public static BufferedImage[] menuBG = new BufferedImage[20], coinsIcon = new BufferedImage[7];
     public static BufferedImage[] mummyEnemy = new BufferedImage[13];
+    public static BufferedImage[] stoneMonsterEnemy = new BufferedImage[13];
+    public static BufferedImage[] slimeEnemy = new BufferedImage[8];
 
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG, popUp;
@@ -25,11 +27,10 @@ public class Assets {
 
     public static Clip audioLogin, audioIntro, audioMenu, audioGame;
 
-    public static Font smallFont;
-    public static Font regulerFont;
+    public static Font smallerFont, smallFont, regulerFont;
+    public static Font menuSmallFont, menuRegulerFont;
     public static Font dungeonFont;
     public static Font warningFont;
-    public static Font smallerFont;
     public static Font biggerFont;
 
 
@@ -42,6 +43,9 @@ public class Assets {
         audioGame = AudioLoader.loadAudio("res/audio/game.wav");
 
 //        FONT
+        menuSmallFont = FontLoader.loadFont("res/font/mainfont.ttf", 14);
+        menuRegulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 16);
+
         smallerFont = FontLoader.loadFont("res/font/mainfont.ttf", 14);
         smallFont = FontLoader.loadFont("res/font/mainfont.ttf", 15);
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
@@ -69,6 +73,8 @@ public class Assets {
 
 //        ENEMY
         potongSprite(mummyEnemy, "mummy");
+        potongSprite(stoneMonsterEnemy, "stone monster");
+        potongSprite(slimeEnemy, "slime");
 
 //        GAME
         card = ImageLoader.loadImage("/images/content/test.png");
@@ -90,6 +96,10 @@ public class Assets {
         for (int i = 0; i < temp.length; i++) {
             if(nameBuffer.equalsIgnoreCase("mummy")){
                 mummyEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/mummy.png").getSubimage(292*i, 0, 292, 384);
+            } else if(nameBuffer.equalsIgnoreCase("stone monster")){
+                stoneMonsterEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/stone monster.png").getSubimage(130*i, 0, 130, 137);
+            } else if(nameBuffer.equalsIgnoreCase("slime")){
+                slimeEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/slime.png").getSubimage(236*i, 0, 236, 132);
             }
         }
     }

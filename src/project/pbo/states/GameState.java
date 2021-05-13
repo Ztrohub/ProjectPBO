@@ -5,7 +5,7 @@ import project.pbo.account.User;
 import project.pbo.game.Card;
 import project.pbo.game.PlayerCard;
 import project.pbo.game.enemy.Enemy;
-import project.pbo.game.enemy.MonsterTree;
+import project.pbo.game.enemy.StoneMonster;
 import project.pbo.game.enemy.Skeleton;
 import project.pbo.game.enemy.Slime;
 import project.pbo.game.helper.Healing;
@@ -346,7 +346,7 @@ public class GameState extends State implements SIZE {
                         int stage = step/5 + 1;
                         if (rand < 40) cards[i][j] = new Slime(stage);
                         if (rand < 80) cards[i][j] = new Skeleton(stage);
-                        else cards[i][j] = new MonsterTree(stage);
+                        else cards[i][j] = new StoneMonster(stage);
                     }
 
                 }
