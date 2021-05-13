@@ -18,6 +18,8 @@ public class Assets {
     public static BufferedImage[] mummyEnemy = new BufferedImage[13];
     public static BufferedImage[] stoneMonsterEnemy = new BufferedImage[13];
     public static BufferedImage[] slimeEnemy = new BufferedImage[8];
+    public static BufferedImage[] necroEnemy = new BufferedImage[8];
+    public static BufferedImage[] shamanEnemy = new BufferedImage[11];
 
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG, popUp;
@@ -75,6 +77,8 @@ public class Assets {
         potongSprite(mummyEnemy, "mummy");
         potongSprite(stoneMonsterEnemy, "stone monster");
         potongSprite(slimeEnemy, "slime");
+        potongSprite(necroEnemy, "necromancer");
+        potongSprite(shamanEnemy, "shaman");
 
 //        GAME
         card = ImageLoader.loadImage("/images/content/test.png");
@@ -100,6 +104,10 @@ public class Assets {
                 stoneMonsterEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/stone monster.png").getSubimage(130*i, 0, 130, 137);
             } else if(nameBuffer.equalsIgnoreCase("slime")){
                 slimeEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/slime.png").getSubimage(236*i, 0, 236, 132);
+            } else if(nameBuffer.equalsIgnoreCase("necromancer")){
+                necroEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/necromancer.png").getSubimage(159*i, 0, 159, 196);
+            } else if(nameBuffer.equalsIgnoreCase("shaman")){
+                shamanEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/shaman.png").getSubimage(160*i, 0, 160, 237);
             }
         }
     }

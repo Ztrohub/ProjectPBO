@@ -83,6 +83,7 @@ public class MainMenu extends State implements SIZE {
         } else if(isRanking){
             if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed() && !animated){
                 if(popBtnNo.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+                    isRanking = false;
                     animated = true;
                     jenisAnimasi = "hilang";
                 }
@@ -101,6 +102,8 @@ public class MainMenu extends State implements SIZE {
                     setCurrentState(new LoadingState(handler, new GameState(handler, user)));
                 } else if(rankingBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LEADERBOARD
                     isRanking = true;
+                    animated = true;
+                    jenisAnimasi = "muncul";
                 } else if(storeBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SHOP
                     setCurrentState(new ShopState(handler));
                 } else if(settingsBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SETTINGS
@@ -170,7 +173,7 @@ public class MainMenu extends State implements SIZE {
         } else if(isRanking){
             if(animated) popAnimated();
 
-
+            g.drawImage(Assets.logoSTTS, 400, 180, 250, 250, null);
         }
 
         if(timer == 0) {
@@ -210,7 +213,6 @@ public class MainMenu extends State implements SIZE {
                 alhpa += 0.01f;
 
             if(alhpa >= 1.0f) {
-                System.out.println("error");
                 animated = false;
                 jenisAnimasi = "";
             }
