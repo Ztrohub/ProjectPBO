@@ -1,10 +1,7 @@
 package project.pbo.game;
 
 import project.pbo.game.enemy.Enemy;
-import project.pbo.game.helper.Healing;
-import project.pbo.game.helper.Poison;
-import project.pbo.game.helper.Shield;
-import project.pbo.game.helper.Sword;
+import project.pbo.game.helper.*;
 import project.pbo.gfx.Assets;
 import project.pbo.gfx.Text;
 
@@ -86,7 +83,9 @@ public abstract class Card {
         ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alhpa));
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g.drawImage(Assets.cardBG, (x*184)+40+this.x, (y*177)+80+this.y, 184, 177, null);
+        g.setColor(new Color(25, 25, 25));
+        g.fillRect((x*184)+40+this.x, (y*177)+80+this.y, 184, 177);
+//        g.drawImage(Assets.cardBG, (x*184)+40+this.x, (y*177)+80+this.y, 184, 177, null);
         g.drawImage(Assets.card, (x*184)+40+this.x, (y*177)+80+this.y, 184, 177, null);
         Text.drawString(g, this.getSymbol(), (x * 184) + 132+this.x, (y * 177) + 225+this.y, true,
                 this instanceof PlayerCard ? new Color(217, 199, 51) : Color.WHITE, Assets.smallerFont);
@@ -118,6 +117,10 @@ public abstract class Card {
         if (this instanceof Shield){
             Shield shield = (Shield) this;
             Text.drawString(g, ""+shield.getDefend(), (x * 184) + 190+this.x-10, (y * 177) + 105+this.y+10, true, new Color(74, 116, 186), Assets.regulerFont);
+        }
+        if (this instanceof Gold){
+            Gold gold = (Gold) this;
+            Text.drawString(g, ""+gold.getGold(), (x * 184) + 190+this.x-10, (y * 177) + 105+this.y+10, true, new Color(255,191,64), Assets.regulerFont);
         }
 
     }

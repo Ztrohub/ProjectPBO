@@ -55,9 +55,6 @@ public class MainMenu extends State implements SIZE {
         super(handler);
         this.user = user;
         this.mouseManager = handler.getMouseManager();
-
-
-        System.out.println("Masuk sebagai: " + user.getUsername());
     }
 
     public void playMusic(){

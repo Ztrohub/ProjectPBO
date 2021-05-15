@@ -16,7 +16,7 @@ public class Shield extends Card {
 
     @Override
     protected void cetak(Graphics g, int x, int y) {
-        g.drawImage(Assets.card, (x*184)+40+this.x, (y*177)+80+this.y, 184, 177, null);
+        g.drawImage(Assets.shield, (x*184)+90+this.x, (y*177)+120+this.y, 80, 80, null);
     }
 
     public int getDefend() {

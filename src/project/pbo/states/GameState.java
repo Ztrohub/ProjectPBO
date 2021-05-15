@@ -5,13 +5,10 @@ import project.pbo.account.User;
 import project.pbo.game.Card;
 import project.pbo.game.PlayerCard;
 import project.pbo.game.enemy.Enemy;
-import project.pbo.game.enemy.StoneMonster;
 import project.pbo.game.enemy.Mummy;
+import project.pbo.game.enemy.Shaman;
 import project.pbo.game.enemy.Slime;
-import project.pbo.game.helper.Healing;
-import project.pbo.game.helper.Poison;
-import project.pbo.game.helper.Shield;
-import project.pbo.game.helper.Sword;
+import project.pbo.game.helper.*;
 import project.pbo.gfx.Assets;
 import project.pbo.gfx.Text;
 import project.pbo.input.KeyManager;
@@ -48,6 +45,7 @@ public class GameState extends State implements SIZE {
     private int tempy, tempx, move;
     private boolean pause = false;
     private boolean doneAnim = true;
+    private boolean saved = true;
 
     private int ctrCoin, timer;
 
@@ -77,7 +75,7 @@ public class GameState extends State implements SIZE {
 
         keyManager.tick();
         if (!running){
-            user.getPlayer().setHighestStep(Math.max(user.getPlayer().getHighestStep(), step));
+            user.getPlayer().setHighestStep(Math.max(user.getPlayer().getHighestStep(), step-1));
             clip.stop();
             clip.setFramePosition(0);
             setCurrentState(new LoadingState(handler, new MainMenu(handler, user)));
@@ -87,8 +85,9 @@ public class GameState extends State implements SIZE {
                 (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) running = false;
         if (kalah && replayBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
                 (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) {
-            user.getPlayer().setHighestStep(Math.max(user.getPlayer().getHighestStep(), step));
+            gold = 0;
             step = 1;
+            saved = true;
             init();
             kalah = false;
         }
@@ -101,6 +100,12 @@ public class GameState extends State implements SIZE {
 
         if (pc.getHealth() == 0){
             kalah = true;
+            if (saved){
+                user.getPlayer().setHighestStep(Math.max(user.getPlayer().getHighestStep(), step-1));
+                user.getPlayer().setGold(user.getPlayer().getGold() + gold);
+                saved = false;
+                handler.saveFile();
+            }
         }
 
         if (doneAnim && !kalah && !exit){
@@ -141,8 +146,7 @@ public class GameState extends State implements SIZE {
     @Override
     public void render(Graphics g) {
 //        Background
-        g.setColor(new Color(36,39,44));
-        g.fillRect(0,0,width,height);
+        g.drawImage(Assets.gameBG, 0, 0, width, height, null);
 
 //        Tab bar
         g.setColor(Color.black);
@@ -154,14 +158,11 @@ public class GameState extends State implements SIZE {
         g.drawImage(Assets.logout, 1000, 13, 35, 35, null);
 
 //        Hero Memu
-        g.setColor(Color.red);
-        g.drawRect(700, 80, 330, 90);
-        g.drawRect(700, 170, 330, 290);
-        g.drawRect(700, 460, 331, 150);
-        Text.drawString(g, user.getUsername(), 870, 125, true, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Health: " + pc.getHealth() + " / " + pc.getMaxHealth(), 720, 495, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Damage: " + pc.getDamage(), 720, 540, false, Color.WHITE, Assets.regulerFont);
-        Text.drawString(g, "Defend: " + pc.getDefend(), 720, 585, false, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.heroMenu, 650, 60, 400, 555, null);
+//        Text.drawString(g, user.getUsername(), 870, 125, true, Color.WHITE, Assets.regulerFont);
+        Text.drawString(g, pc.getHealth() + " / " + pc.getMaxHealth(), 730, 140, false, Color.WHITE, Assets.mediumFont);
+        Text.drawString(g, pc.getDamage()+"", 730, 190, false, Color.WHITE, Assets.mediumFont);
+        Text.drawString(g, pc.getDefend()+"", 730, 245, false, Color.WHITE, Assets.mediumFont);
 
 //        Game
         cetakKartu(g);
@@ -184,7 +185,8 @@ public class GameState extends State implements SIZE {
             g.drawImage(Assets.popUp, 237, 155, 600, 240, null);
 
             Text.drawString(g, "WARNING!", 537, 201, true, new Color(0xe28743), Assets.warningFont);
-            Text.drawString(g, "Are you sure want to Exit?", 537, 275, true, Color.WHITE, Assets.warningFont);
+            Text.drawString(g, "Are you sure want to Exit?", 537, 265, true, Color.WHITE, Assets.warningFont);
+            Text.drawString(g, "Gold and step will not be saved!", 537, 300, true, Color.WHITE, Assets.warningFont);
 
             Text.drawString(g, "Yes", 392, 357, true, Color.white, Assets.smallFont);
             Text.drawString(g, "No", 692, 357, true, Color.white, Assets.smallFont);
@@ -237,7 +239,6 @@ public class GameState extends State implements SIZE {
                 }
 
                 if (enemy.getHealth() == 0){
-
                     cardPindah(tempy, tempx);
                 }
             } else {
@@ -256,6 +257,10 @@ public class GameState extends State implements SIZE {
                 if (card instanceof Shield){
                     Shield shield = (Shield) card;
                     pc.setDefend(Math.max(user.getPlayer().getDefend() + shield.getDefend(), pc.getDefend()));
+                }
+                if (card instanceof Gold){
+                    Gold gold = (Gold) card;
+                    this.gold += gold.getGold();
                 }
                 cardPindah(tempy, tempx);
 
@@ -340,13 +345,14 @@ public class GameState extends State implements SIZE {
                     if (enemyorhelp > (Math.min(step * 5, 50))){
                         if (rand < 30) cards[i][j] = new Shield();
                         else if (rand < 60) cards[i][j] = new Sword();
+                        else if (rand < 80) cards[i][j] = new Gold();
                         else if (rand < 90) cards[i][j] = new Healing();
                         else cards[i][j] = new Poison();
                     } else {
                         int stage = step/5 + 1;
                         if (rand < 40) cards[i][j] = new Slime(stage);
                         if (rand < 80) cards[i][j] = new Mummy(stage);
-                        else cards[i][j] = new StoneMonster(stage);
+                        else cards[i][j] = new Shaman(stage);
                     }
 
                 }

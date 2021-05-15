@@ -15,7 +15,7 @@ public class Sword extends Card {
 
     @Override
     protected void cetak(Graphics g, int x, int y) {
-        g.drawImage(Assets.card, (x*184)+40+this.x, (y*177)+80+this.y, 184, 177, null);
+        g.drawImage(Assets.sword, (x*184)+80+this.x, (y*177)+110+this.y, 100, 100, null);
     }
 
     public int getDamage() {

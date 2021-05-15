@@ -16,7 +16,6 @@ public class Assets {
 
     public static BufferedImage[] menuBG = new BufferedImage[20], coinsIcon = new BufferedImage[7];
     public static BufferedImage[] mummyEnemy = new BufferedImage[13];
-    public static BufferedImage[] stoneMonsterEnemy = new BufferedImage[13];
     public static BufferedImage[] slimeEnemy = new BufferedImage[8];
     public static BufferedImage[] necroEnemy = new BufferedImage[8];
     public static BufferedImage[] shamanEnemy = new BufferedImage[11];
@@ -26,14 +25,17 @@ public class Assets {
     public static BufferedImage playIcon, storeIcon, settingsIcon, rankingIcon, logout;
 
     public static BufferedImage card, cardBG;
+    public static BufferedImage heroMenu, gameBG;
+    public static BufferedImage coin, sword, shield, heal, poison;
 
     public static Clip audioLogin, audioIntro, audioMenu, audioGame;
 
-    public static Font smallerFont, smallFont, regulerFont;
+    public static Font smallerFont, smallFont, regulerFont, mediumFont;
     public static Font menuSmallFont, menuRegulerFont;
     public static Font dungeonFont;
     public static Font warningFont;
     public static Font biggerFont;
+
 
 
     public static void init(){
@@ -52,6 +54,7 @@ public class Assets {
         smallFont = FontLoader.loadFont("res/font/mainfont.ttf", 15);
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
         biggerFont = FontLoader.loadFont("res/font/mainfont.ttf", 24);
+        mediumFont = FontLoader.loadFont("res/font/mainfont.ttf", 20);
         warningFont = FontLoader.loadFont("res/font/mainfont.ttf", 17);
         dungeonFont = FontLoader.loadFont("res/font/dungeon.ttf", 35);
 
@@ -61,9 +64,18 @@ public class Assets {
         loginBG = ImageLoader.loadImage("/images/loginBG.jpg");
         popUp = ImageLoader.loadImage("/images/menuAsset/popUp.png");
 
+        heroMenu = ImageLoader.loadImage("/images/content/card/heroMenu1.png");
+        gameBG = ImageLoader.loadImage("/images/content/card/gameBG.png");
+
         mainLogo = ImageLoader.loadImage("/mainLogo.png");
         logoSTTS = ImageLoader.loadImage("/istts.png");
         avatar = ImageLoader.loadImage("/avatar.png");
+
+        coin = ImageLoader.loadImage("/images/coin.png");
+        sword = ImageLoader.loadImage("/images/sword.png");
+        shield = ImageLoader.loadImage("/images/shield.png");
+        heal = ImageLoader.loadImage("/images/heal.png");
+        poison = ImageLoader.loadImage("/images/poison.png");
 
 //        ICON
         initBufferArr(coinsIcon, "coinsIcon");
@@ -75,7 +87,6 @@ public class Assets {
 
 //        ENEMY
         potongSprite(mummyEnemy, "mummy");
-        potongSprite(stoneMonsterEnemy, "stone monster");
         potongSprite(slimeEnemy, "slime");
         potongSprite(necroEnemy, "necromancer");
         potongSprite(shamanEnemy, "shaman");
@@ -100,9 +111,8 @@ public class Assets {
         for (int i = 0; i < temp.length; i++) {
             if(nameBuffer.equalsIgnoreCase("mummy")){
                 mummyEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/mummy.png").getSubimage(292*i, 0, 292, 384);
-            } else if(nameBuffer.equalsIgnoreCase("stone monster")){
-                stoneMonsterEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/stone monster.png").getSubimage(130*i, 0, 130, 137);
-            } else if(nameBuffer.equalsIgnoreCase("slime")){
+            }
+            else if(nameBuffer.equalsIgnoreCase("slime")){
                 slimeEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/slime.png").getSubimage(236*i, 0, 236, 132);
             } else if(nameBuffer.equalsIgnoreCase("necromancer")){
                 necroEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/necromancer.png").getSubimage(159*i, 0, 159, 196);
