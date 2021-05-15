@@ -12,9 +12,8 @@ import java.awt.*;
 
 public class MainMenu extends State implements SIZE {
 
-    private float alhpa = 0.1f;
     private int ctrBg, ctrCoin, ctrMummy, timer;
-    private boolean isRanking = false, isLogout = false;
+    private boolean isLogout = false;
     private final MouseManager mouseManager;
     private final User user;
     private Clip clip;
@@ -76,18 +75,10 @@ public class MainMenu extends State implements SIZE {
                     animated = true;
                     jenisAnimasi = "naik";
                 }
+                mouseManager.setLeftPressed(false);
+                mouseManager.setRightPressed(false);
             }
-        } else if(isRanking){
-            if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed() && !animated){
-                if(popBtnNo.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
-                    isRanking = false;
-                    animated = true;
-                    jenisAnimasi = "hilang";
-                }
-            }
-        }
-
-        else {
+        } else {
             if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed()){
                 if(logoutBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LOGOUT
                     animated = true;
@@ -98,9 +89,7 @@ public class MainMenu extends State implements SIZE {
                     clip.setFramePosition(0);
                     setCurrentState(new LoadingState(handler, new GameState(handler, user)));
                 } else if(rankingBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LEADERBOARD
-                    isRanking = true;
-                    animated = true;
-                    jenisAnimasi = "muncul";
+                    setCurrentState(new RankingState(handler, this));
                 } else if(storeBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SHOP
                     setCurrentState(new ShopState(handler));
                 } else if(settingsBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SETTINGS
@@ -147,7 +136,7 @@ public class MainMenu extends State implements SIZE {
         Text.drawString(g, "Store", 593, 64, false, Color.WHITE, Assets.menuRegulerFont);
 
         // BUTTON SETTINGS
-        g.drawImage(Assets.settingsIcon, 740, 2, 69, 61, null);
+        g.drawImage(Assets.settingsIcon, 739, 6, 67, 58, null);
         Text.drawString(g, "Settings", 731, 64, false, Color.WHITE, Assets.menuSmallFont);
 
         // BUTTON LOGOUT
@@ -167,10 +156,6 @@ public class MainMenu extends State implements SIZE {
 
             Text.drawString(g, "Yes", 392, yYes, true, Color.WHITE, Assets.menuSmallFont);
             Text.drawString(g, "No", 692, yNo, true, Color.WHITE, Assets.menuSmallFont);
-        } else if(isRanking){
-            if(animated) popAnimated();
-
-            g.drawImage(Assets.logoSTTS, 400, 180, 250, 250, null);
         }
 
         if(timer == 0) {
@@ -205,22 +190,6 @@ public class MainMenu extends State implements SIZE {
                 isLogout = false;
                 jenisAnimasi = "";
             }
-        } else if(jenisAnimasi.equalsIgnoreCase("muncul")){
-            if(alhpa < 1.0f)
-                alhpa += 0.01f;
-
-            if(alhpa >= 1.0f) {
-                animated = false;
-                jenisAnimasi = "";
-            }
-        } else if(jenisAnimasi.equalsIgnoreCase("hilang")){
-            alhpa -= 0.01f;
-
-            if(alhpa <= 0.0f) {
-                animated = false;
-                jenisAnimasi = "";
-            }
         }
     }
-
 }

@@ -17,7 +17,7 @@ public class IntroState extends State{
 
         clip = Assets.audioIntro;
         clip.start();
-        handler.setVol(clip, 0.9f);
+        handler.setVol(clip, 0.1f);
     }
 
     @Override

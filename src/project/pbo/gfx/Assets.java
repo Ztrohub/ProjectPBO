@@ -21,8 +21,8 @@ public class Assets {
     public static BufferedImage[] shamanEnemy = new BufferedImage[11];
 
     public static BufferedImage mainLogo, logoSTTS, avatar;
-    public static BufferedImage loginBG, loadingBG, popUp;
-    public static BufferedImage playIcon, storeIcon, settingsIcon, rankingIcon, logout;
+    public static BufferedImage loginBG, loadingBG, rankingBG, popUp, textArea;
+    public static BufferedImage playIcon, storeIcon, settingsIcon, rankingIcon, logout, xIcon;
 
     public static BufferedImage card, cardBG;
     public static BufferedImage heroMenu, gameBG;
@@ -30,12 +30,10 @@ public class Assets {
 
     public static Clip audioLogin, audioIntro, audioMenu, audioGame;
 
-    public static Font smallerFont, smallFont, regulerFont, mediumFont;
+    public static Font smallerFont, smallFont, regulerFont, mediumFont, biggerFont, superMegaBigFont;
     public static Font menuSmallFont, menuRegulerFont;
     public static Font dungeonFont;
     public static Font warningFont;
-    public static Font biggerFont;
-
 
 
     public static void init(){
@@ -53,37 +51,44 @@ public class Assets {
         smallerFont = FontLoader.loadFont("res/font/mainfont.ttf", 14);
         smallFont = FontLoader.loadFont("res/font/mainfont.ttf", 15);
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
-        biggerFont = FontLoader.loadFont("res/font/mainfont.ttf", 24);
         mediumFont = FontLoader.loadFont("res/font/mainfont.ttf", 20);
+        biggerFont = FontLoader.loadFont("res/font/mainfont.ttf", 24);
+        superMegaBigFont = FontLoader.loadFont("res/font/mainfont.ttf", 55);
         warningFont = FontLoader.loadFont("res/font/mainfont.ttf", 17);
         dungeonFont = FontLoader.loadFont("res/font/dungeon.ttf", 35);
 
 //        IMAGE
+        // BACKGROUND IMAGE
         initBufferArr(menuBG, "menuBG");
         loadingBG = ImageLoader.loadImage("/images/loadingBG.jpg");
         loginBG = ImageLoader.loadImage("/images/loginBG.jpg");
-        popUp = ImageLoader.loadImage("/images/menuAsset/popUp.png");
+        rankingBG = ImageLoader.loadImage("/images/background.png");
 
-        heroMenu = ImageLoader.loadImage("/images/content/card/heroMenu1.png");
-        gameBG = ImageLoader.loadImage("/images/content/card/gameBG.png");
-
+        // RANDOM IMAGE
         mainLogo = ImageLoader.loadImage("/mainLogo.png");
         logoSTTS = ImageLoader.loadImage("/istts.png");
         avatar = ImageLoader.loadImage("/avatar.png");
+        popUp = ImageLoader.loadImage("/images/asset/mainMenu/popUp.png");
+        textArea = ImageLoader.loadImage("/images/asset/ranking/textArea.png");
+        xIcon = ImageLoader.loadImage("/images/asset/ranking/xIcon.png");
 
-        coin = ImageLoader.loadImage("/images/coin.png");
-        sword = ImageLoader.loadImage("/images/sword.png");
-        shield = ImageLoader.loadImage("/images/shield.png");
-        heal = ImageLoader.loadImage("/images/heal.png");
-        poison = ImageLoader.loadImage("/images/poison.png");
+        // ITEM & HERO MENU IMAGE
+        heroMenu = ImageLoader.loadImage("/images/content/card/heroMenu1.png");
+        gameBG = ImageLoader.loadImage("/images/content/card/gameBG.png");
+
+        coin = ImageLoader.loadImage("/images/asset/item/coin.png");
+        sword = ImageLoader.loadImage("/images/asset/item/sword.png");
+        shield = ImageLoader.loadImage("/images/asset/item/shield.png");
+        heal = ImageLoader.loadImage("/images/asset/item/heal.png");
+        poison = ImageLoader.loadImage("/images/asset/item/poison.png");
 
 //        ICON
         initBufferArr(coinsIcon, "coinsIcon");
-        playIcon = ImageLoader.loadImage("/images/menuAsset/play.png");
-        storeIcon = ImageLoader.loadImage("/images/menuAsset/store.png");
-        settingsIcon = ImageLoader.loadImage("/images/menuAsset/settings.png");
-        rankingIcon = ImageLoader.loadImage("/images/menuAsset/ranking.png");
-        logout = ImageLoader.loadImage("/images/menuAsset/logout.png");
+        playIcon = ImageLoader.loadImage("/images/asset/mainMenu/play.png");
+        storeIcon = ImageLoader.loadImage("/images/asset/mainMenu/store.png");
+        settingsIcon = ImageLoader.loadImage("/images/asset/mainMenu/settings.png");
+        rankingIcon = ImageLoader.loadImage("/images/asset/mainMenu/ranking.png");
+        logout = ImageLoader.loadImage("/images/asset/mainMenu/logout.png");
 
 //        ENEMY
         potongSprite(mummyEnemy, "mummy");
@@ -94,7 +99,6 @@ public class Assets {
 //        GAME
         card = ImageLoader.loadImage("/images/content/test.png");
         cardBG = ImageLoader.loadImage("/images/content/card/cardBG.png");
-
     }
 
     public static void initBufferArr(BufferedImage[] temp, String nameBuffer){

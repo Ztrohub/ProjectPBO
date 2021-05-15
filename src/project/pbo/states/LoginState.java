@@ -136,7 +136,7 @@ public class LoginState extends State implements SIZE, Pesan {
     public void playMusic() {
         clip = Assets.audioLogin;
         clip.start();
-        handler.setVol(clip, 0.2f);
+        handler.setVol(clip, 0.1f);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
 
         handler.getGame().getWindow().getLayeredPane().add(jUsername,0);
