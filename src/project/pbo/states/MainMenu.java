@@ -58,7 +58,7 @@ public class MainMenu extends State implements SIZE {
     public void playMusic(){
         clip = Assets.audioMenu;
         clip.start();
-        handler.setVol(clip);
+        handler.setVol(clip,0.5);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 

@@ -4,10 +4,7 @@ import project.pbo.Handler;
 import project.pbo.account.User;
 import project.pbo.game.Card;
 import project.pbo.game.PlayerCard;
-import project.pbo.game.enemy.Enemy;
-import project.pbo.game.enemy.Mummy;
-import project.pbo.game.enemy.Shaman;
-import project.pbo.game.enemy.Slime;
+import project.pbo.game.enemy.*;
 import project.pbo.game.helper.*;
 import project.pbo.gfx.Assets;
 import project.pbo.gfx.Text;
@@ -25,6 +22,9 @@ public class GameState extends State implements SIZE {
     private int gold = 0;
     private final Rectangle exitBtn = new Rectangle(1000, 13, 35, 35);
     private final Rectangle replayBtn = new Rectangle(597,340, 175, 35 );
+
+    private int ctrHero;
+    private int timerHero;
 
     private final Rectangle continueBtn = new Rectangle(597,340, 175, 35 );
     private final Rectangle loseBtn = new Rectangle(292,340, 200, 35 );
@@ -159,7 +159,16 @@ public class GameState extends State implements SIZE {
 
 //        Hero Memu
         g.drawImage(Assets.heroMenu, 650, 60, 400, 555, null);
-//        Text.drawString(g, user.getUsername(), 870, 125, true, Color.WHITE, Assets.regulerFont);
+        g.drawImage(Assets.player[ctrHero], 680, 260, 350, 350, null);
+
+        if(timerHero == 0) {
+            ctrHero = (ctrHero == Assets.player.length - 1) ? 0 : ++ctrHero;
+            this.timerHero++;
+        } else {
+            if(timerHero == 7) this.timerHero = 0;
+            else this.timerHero++;
+        }
+        Text.drawString(g, user.getUsername(), 855, 285, true, Color.WHITE, Assets.regulerFont);
         Text.drawString(g, pc.getHealth() + " / " + pc.getMaxHealth(), 730, 140, false, Color.WHITE, Assets.mediumFont);
         Text.drawString(g, pc.getDamage()+"", 730, 190, false, Color.WHITE, Assets.mediumFont);
         Text.drawString(g, pc.getDefend()+"", 730, 245, false, Color.WHITE, Assets.mediumFont);
@@ -349,10 +358,16 @@ public class GameState extends State implements SIZE {
                         else if (rand < 90) cards[i][j] = new Healing();
                         else cards[i][j] = new Poison();
                     } else {
-                        int stage = step/5 + 1;
-                        if (rand < 40) cards[i][j] = new Slime(stage);
+                        int stage = step/10 + 1;
+                        if (rand < 50) cards[i][j] = new Slime(stage);
                         if (rand < 80) cards[i][j] = new Mummy(stage);
-                        else cards[i][j] = new Shaman(stage);
+                        else {
+                            if (step - 1 < 100) cards[i][j] = new Shaman(stage);
+                            else {
+                                if (rand < 90) cards[i][j] = new Shaman(stage);
+                                else cards[i][j] = new Necromancer(stage-10);
+                            }
+                        }
                     }
 
                 }

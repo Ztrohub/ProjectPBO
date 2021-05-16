@@ -6,6 +6,10 @@ import java.awt.*;
 
 public class PlayerCard extends Card {
 
+
+    private int ctrEnemy;
+    private int timer;
+
     private int health, defend, damage, maxHealth;
     public PlayerCard(int health, int defend, int damage, int maxHealth) {
         super( "Hero");
@@ -17,7 +21,15 @@ public class PlayerCard extends Card {
 
     @Override
     protected void cetak(Graphics g, int x, int y) {
-        g.drawImage(Assets.card, (x*184)+40+this.x, (y*177)+80+this.y, 184, 177, null);
+        g.drawImage(Assets.player[ctrEnemy], (x*184)+57+this.x, (y*177)+90+this.y, 140, 130, null);
+
+        if(timer == 0) {
+            ctrEnemy = (ctrEnemy == Assets.player.length - 1) ? 0 : ++ctrEnemy;
+            this.timer++;
+        } else {
+            if(timer == 7) this.timer = 0;
+            else this.timer++;
+        }
     }
 
     public int getMaxHealth() {

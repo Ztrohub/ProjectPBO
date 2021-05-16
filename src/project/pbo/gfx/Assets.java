@@ -19,6 +19,7 @@ public class Assets {
     public static BufferedImage[] slimeEnemy = new BufferedImage[8];
     public static BufferedImage[] necroEnemy = new BufferedImage[8];
     public static BufferedImage[] shamanEnemy = new BufferedImage[11];
+    public static BufferedImage[] player = new BufferedImage[21];
 
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG, rankingBG, popUp, textArea;
@@ -96,6 +97,7 @@ public class Assets {
         potongSprite(slimeEnemy, "slime");
         potongSprite(necroEnemy, "necromancer");
         potongSprite(shamanEnemy, "shaman");
+        potongSprite(player, "player");
 
 //        GAME
         card = ImageLoader.loadImage("/images/content/test.png");
@@ -123,6 +125,8 @@ public class Assets {
                 necroEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/necromancer.png").getSubimage(159*i, 0, 159, 196);
             } else if(nameBuffer.equalsIgnoreCase("shaman")){
                 shamanEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/shaman.png").getSubimage(160*i, 0, 160, 237);
+            }else if(nameBuffer.equalsIgnoreCase("player")){
+                player[i] = ImageLoader.loadImage("/images/sprite/player.png").getSubimage(640*i, 0, 640, 640);
             }
         }
     }
