@@ -22,7 +22,7 @@ public class Assets {
 
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG, rankingBG, popUp, textArea;
-    public static BufferedImage playIcon, storeIcon, settingsIcon, rankingIcon, logout, xIcon;
+    public static BufferedImage playIcon, storeIcon, settingsIcon, rankingIcon, logout, xIcon, medalIcon;
 
     public static BufferedImage card, cardBG;
     public static BufferedImage heroMenu, gameBG;
@@ -70,7 +70,6 @@ public class Assets {
         avatar = ImageLoader.loadImage("/avatar.png");
         popUp = ImageLoader.loadImage("/images/asset/mainMenu/popUp.png");
         textArea = ImageLoader.loadImage("/images/asset/ranking/textArea.png");
-        xIcon = ImageLoader.loadImage("/images/asset/ranking/xIcon.png");
 
         // ITEM & HERO MENU IMAGE
         heroMenu = ImageLoader.loadImage("/images/content/card/heroMenu1.png");
@@ -84,11 +83,13 @@ public class Assets {
 
 //        ICON
         initBufferArr(coinsIcon, "coinsIcon");
-        playIcon = ImageLoader.loadImage("/images/asset/mainMenu/play.png");
+        playIcon = ImageLoader.loadImage("/images/asset/mainMenu/pedang.png");
         storeIcon = ImageLoader.loadImage("/images/asset/mainMenu/store.png");
         settingsIcon = ImageLoader.loadImage("/images/asset/mainMenu/settings.png");
         rankingIcon = ImageLoader.loadImage("/images/asset/mainMenu/ranking.png");
         logout = ImageLoader.loadImage("/images/asset/mainMenu/logout.png");
+        xIcon = ImageLoader.loadImage("/images/asset/ranking/xIcon.png");
+        medalIcon = ImageLoader.loadImage("/images/asset/ranking/medal.png");
 
 //        ENEMY
         potongSprite(mummyEnemy, "mummy");

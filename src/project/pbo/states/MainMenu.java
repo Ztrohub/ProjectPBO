@@ -19,13 +19,12 @@ public class MainMenu extends State implements SIZE {
     private Clip clip;
 
     private final Rectangle overlayTop = new Rectangle(0, 0, width,73);
-    private final Rectangle playBtn = new Rectangle(303, 0, 74, 70);
-    private final Rectangle rankingBtn = new Rectangle(432, 0, 95, 70);
-    private final Rectangle storeBtn = new Rectangle(585, 0, 81, 70);
-    private final Rectangle settingsBtn = new Rectangle(727, 0, 95, 70);
+    private final Rectangle playBtn = new Rectangle(302, 0, 75, 70);
+    private final Rectangle rankingBtn = new Rectangle(442, 0, 95, 70);
+    private final Rectangle storeBtn = new Rectangle(595, 0, 81, 70);
+    private final Rectangle settingsBtn = new Rectangle(737, 0, 95, 70);
     private final Rectangle logoutBtn = new Rectangle(1020, 12, 44, 50);
     private final Rectangle overlayBot = new Rectangle(0, 544, width, 100);
-
 
     // LOGOUT BUTTON YES / NO
     private final Rectangle popBtnNo = new Rectangle(597, 360, 175, 35 );
@@ -124,20 +123,20 @@ public class MainMenu extends State implements SIZE {
 //        ((Graphics2D) g).fill(logoutBtn);
 
         // BUTTON PLAY
-        g.drawImage(Assets.playIcon, 263, -9, 148, 104, null);
+        g.drawImage(Assets.playIcon, 302, 6, 75, 56, null);
         Text.drawString(g, "Play", 314, 64, false, Color.WHITE, Assets.menuRegulerFont);
 
         // BUTTON RANKING
-        g.drawImage(Assets.rankingIcon, 449, 6, 60, 55, null);
-        Text.drawString(g, "Ranking", 434, 64, false, Color.WHITE, Assets.menuRegulerFont);
+        g.drawImage(Assets.rankingIcon, 459, 6, 60, 55, null);
+        Text.drawString(g, "Ranking", 444, 64, false, Color.WHITE, Assets.menuRegulerFont);
 
         // BUTTON STORE
-        g.drawImage(Assets.storeIcon, 589, 2, 75, 60, null);
-        Text.drawString(g, "Store", 593, 64, false, Color.WHITE, Assets.menuRegulerFont);
+        g.drawImage(Assets.storeIcon, 599, 2, 75, 60, null);
+        Text.drawString(g, "Store", 603, 64, false, Color.WHITE, Assets.menuRegulerFont);
 
         // BUTTON SETTINGS
-        g.drawImage(Assets.settingsIcon, 739, 6, 67, 58, null);
-        Text.drawString(g, "Settings", 731, 64, false, Color.WHITE, Assets.menuSmallFont);
+        g.drawImage(Assets.settingsIcon, 749, 6, 67, 58, null);
+        Text.drawString(g, "Settings", 741, 64, false, Color.WHITE, Assets.menuSmallFont);
 
         // BUTTON LOGOUT
         g.drawImage(Assets.logout, 1020, 15, 44, 44, null);
@@ -149,10 +148,6 @@ public class MainMenu extends State implements SIZE {
 
             Text.drawString(g, "WARNING!", 537, yWarning, true, new Color(0xe28743), Assets.menuRegulerFont);
             Text.drawString(g, "Are you sure want to log out ?", 537, yMessage, true, Color.WHITE, Assets.menuRegulerFont);
-
-//            g.setColor(Color.red);
-//            ((Graphics2D) g).fill(popBtnNo);
-//            ((Graphics2D) g).fill(popBtnYes);
 
             Text.drawString(g, "Yes", 392, yYes, true, Color.WHITE, Assets.menuSmallFont);
             Text.drawString(g, "No", 692, yNo, true, Color.WHITE, Assets.menuSmallFont);
