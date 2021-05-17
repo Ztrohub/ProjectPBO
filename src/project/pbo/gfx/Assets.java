@@ -36,7 +36,6 @@ public class Assets {
     public static Font dungeonFont;
     public static Font warningFont;
 
-
     public static void init(){
 
 //        AUDIO
@@ -115,6 +114,7 @@ public class Assets {
     }
 
     public static void potongSprite(BufferedImage[] temp, String nameBuffer){
+        System.out.println("hallo");
         for (int i = 0; i < temp.length; i++) {
             if(nameBuffer.equalsIgnoreCase("mummy")){
                 mummyEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/mummy.png").getSubimage(292*i, 0, 292, 384);
@@ -125,7 +125,7 @@ public class Assets {
                 necroEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/necromancer.png").getSubimage(159*i, 0, 159, 196);
             } else if(nameBuffer.equalsIgnoreCase("shaman")){
                 shamanEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/shaman.png").getSubimage(160*i, 0, 160, 237);
-            }else if(nameBuffer.equalsIgnoreCase("player")){
+            } else if(nameBuffer.equalsIgnoreCase("player")){
                 player[i] = ImageLoader.loadImage("/images/sprite/player.png").getSubimage(640*i, 0, 640, 640);
             }
         }
