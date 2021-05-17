@@ -1,14 +1,17 @@
 package project.pbo.states;
 
 import project.pbo.Handler;
+import project.pbo.account.User;
 import project.pbo.gfx.Assets;
 import project.pbo.gfx.Text;
 import project.pbo.input.MouseManager;
 import project.pbo.window.SIZE;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class RankingState extends State implements SIZE {
+    private final ArrayList <User> hello = handler.getDb().getUsers();
     private float alhpa = 0.1f;
     private boolean animated;
     private String jenisAnimasi;
@@ -21,6 +24,16 @@ public class RankingState extends State implements SIZE {
         super(handler);
         this.currMain = currMain;
         this.mouseManager = handler.getMouseManager();
+
+        if(hello.size() > 0){
+            for (int i = 1; i < hello.size(); i++) {
+                if(hello.get(i-1).getPlayer().getHighestStep() < hello.get(i).getPlayer().getHighestStep()){
+                    User temp = hello.get(i-1);
+                    hello.set(i-1, hello.get(i));
+                    hello.set(i, temp);
+                }
+            }
+        }
 
         this.animated = true;
         this.jenisAnimasi = "muncul";
@@ -77,16 +90,22 @@ public class RankingState extends State implements SIZE {
         for (int i = 0; i < 5; i++) {
             Text.drawString(g, (i+1) + "", 196, 274+(63*i), true, Color.WHITE, Assets.mediumFont);
 
-            if(i == 0) g.drawImage(Assets.medalIcon, 240, 220, 75, 75, null);
-            else g.drawImage(Assets.avatar, 256, 316+(63*(i-1)), 40, 40, null);
-
             // NAMA PLAYER
-            Text.drawString(g, "EMPTY", 400, 274+(63*i), true, Color.WHITE, Assets.mediumFont);
+            if(i < hello.size()){
+                if(hello.get(i).getPlayer().getHighestStep() > 0){
+                    if(i == 0) g.drawImage(Assets.medalIcon, 240, 220, 75, 75, null);
+                    else g.drawImage(Assets.avatar, 256, 316+(63*(i-1)), 40, 40, null);
 
-            // SCORE PLAYER
-            if(i < 1) Text.drawString(g, "0", 868, 274+(63*i), true, Color.WHITE, Assets.mediumFont);
-            else if(i < 3) Text.drawString(g, "50", 868, 274+(63*i), true, Color.WHITE, Assets.mediumFont);
-            else Text.drawString(g, "100", 868, 274+(63*i), true, Color.WHITE, Assets.mediumFont);
+                    Text.drawString(g, hello.get(i).getUsername(), 360, 280+(63*i), false, Color.WHITE, Assets.mediumFont);
+                    Text.drawString(g, String.valueOf(hello.get(i).getPlayer().getHighestStep()), 868, 274+(63*i), true, Color.WHITE, Assets.mediumFont);
+                } else {
+                    Text.drawString(g, "EMPTY", 530, 275+(63*i), true, Color.WHITE, Assets.mediumFont);
+                    Text.drawString(g, "-", 868, 275+(63*i), true, Color.WHITE, Assets.mediumFont);
+                }
+            } else {
+                Text.drawString(g, "EMPTY", 530, 275+(63*i), true, Color.WHITE, Assets.mediumFont);
+                Text.drawString(g, "-", 868, 275+(63*i), true, Color.WHITE, Assets.mediumFont);
+            }
         }
     }
 

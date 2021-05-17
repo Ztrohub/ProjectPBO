@@ -102,12 +102,12 @@ public class MainMenu extends State implements SIZE {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.menuBG[ctrBg], 0, 51, width, height, null);
+        g.drawImage(Assets.menuBG[ctrBg], 0, 48, width, height, null);
         g.setColor(new Color(0x000100));
         ((Graphics2D) g).fill(overlayTop);
         ((Graphics2D) g).fill(overlayBot);
 
-        g.drawImage(Assets.mainLogo, 310, 478, 428, 246, null);
+        g.drawImage(Assets.mainLogo, 310, 483, 427, 245, null);
 
         // ICON DAN NAMA PLAYER
         g.drawImage(Assets.avatar, 10, 6, 60, 60, null);

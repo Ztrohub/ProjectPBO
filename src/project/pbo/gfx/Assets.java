@@ -19,7 +19,7 @@ public class Assets {
     public static BufferedImage[] slimeEnemy = new BufferedImage[8];
     public static BufferedImage[] necroEnemy = new BufferedImage[8];
     public static BufferedImage[] shamanEnemy = new BufferedImage[11];
-    public static BufferedImage[] player = new BufferedImage[21];
+    public static BufferedImage[] player = new BufferedImage[15];
 
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG, rankingBG, popUp, textArea;
@@ -59,10 +59,10 @@ public class Assets {
 
 //        IMAGE
         // BACKGROUND IMAGE
-        initBufferArr(menuBG, "menuBG");
+        potongSprite(menuBG, "/images/sprite/mainMenuBG.png", 1076, 540);
         loadingBG = ImageLoader.loadImage("/images/loadingBG.jpg");
         loginBG = ImageLoader.loadImage("/images/loginBG.jpg");
-        rankingBG = ImageLoader.loadImage("/images/background.png");
+        rankingBG = ImageLoader.loadImage("/images/rankingBG.png");
 
         // RANDOM IMAGE
         mainLogo = ImageLoader.loadImage("/mainLogo.png");
@@ -82,7 +82,7 @@ public class Assets {
         poison = ImageLoader.loadImage("/images/asset/item/poison.png");
 
 //        ICON
-        initBufferArr(coinsIcon, "coinsIcon");
+        potongSprite(coinsIcon, "/images/sprite/Coins/", -1, -1);
         playIcon = ImageLoader.loadImage("/images/asset/mainMenu/pedang.png");
         storeIcon = ImageLoader.loadImage("/images/asset/mainMenu/store.png");
         settingsIcon = ImageLoader.loadImage("/images/asset/mainMenu/settings.png");
@@ -92,42 +92,23 @@ public class Assets {
         medalIcon = ImageLoader.loadImage("/images/asset/ranking/medal.png");
 
 //        ENEMY
-        potongSprite(mummyEnemy, "mummy");
-        potongSprite(slimeEnemy, "slime");
-        potongSprite(necroEnemy, "necromancer");
-        potongSprite(shamanEnemy, "shaman");
-        potongSprite(player, "player");
+        potongSprite(mummyEnemy, "/images/sprite/Enemy/mummy.png", 292, 384);
+        potongSprite(slimeEnemy, "/images/sprite/Enemy/slime.png", 236, 132);
+        potongSprite(necroEnemy, "/images/sprite/Enemy/necromancer.png", 159, 196);
+        potongSprite(shamanEnemy, "/images/sprite/Enemy/shaman.png", 160, 237);
+        potongSprite(player, "/images/sprite/player.png", 640, 640);
 
 //        GAME
         card = ImageLoader.loadImage("/images/content/test.png");
         cardBG = ImageLoader.loadImage("/images/content/card/cardBG.png");
     }
 
-    public static void initBufferArr(BufferedImage[] temp, String nameBuffer){
+    public static void potongSprite(BufferedImage[] temp, String path, int width, int height){
         for (int i = 0; i < temp.length; i++) {
-            if(nameBuffer.equalsIgnoreCase("menuBG")){
-                menuBG[i] = ImageLoader.loadImage("/images/sprite/bgMenu/" + i + ".png");
-            } else if(nameBuffer.equalsIgnoreCase("coinsIcon")){
-                coinsIcon[i] = ImageLoader.loadImage("/images/sprite/Coins/" + i + ".png");
-            }
-        }
-    }
-
-    public static void potongSprite(BufferedImage[] temp, String nameBuffer){
-        System.out.println("hallo");
-        for (int i = 0; i < temp.length; i++) {
-            if(nameBuffer.equalsIgnoreCase("mummy")){
-                mummyEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/mummy.png").getSubimage(292*i, 0, 292, 384);
-            }
-            else if(nameBuffer.equalsIgnoreCase("slime")){
-                slimeEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/slime.png").getSubimage(236*i, 0, 236, 132);
-            } else if(nameBuffer.equalsIgnoreCase("necromancer")){
-                necroEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/necromancer.png").getSubimage(159*i, 0, 159, 196);
-            } else if(nameBuffer.equalsIgnoreCase("shaman")){
-                shamanEnemy[i] = ImageLoader.loadImage("/images/sprite/Enemy/shaman.png").getSubimage(160*i, 0, 160, 237);
-            } else if(nameBuffer.equalsIgnoreCase("player")){
-                player[i] = ImageLoader.loadImage("/images/sprite/player.png").getSubimage(640*i, 0, 640, 640);
-            }
+            if(width != -1)
+                temp[i] = ImageLoader.loadImage(path).getSubimage(width*i, 0, width, height);
+            else
+                temp[i] = ImageLoader.loadImage(path + i + ".png"); // GAMBAR COIN
         }
     }
 }
