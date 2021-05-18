@@ -85,7 +85,6 @@ public abstract class Card {
 
         g.setColor(new Color(25, 25, 25));
         g.fillRect((x*184)+40+this.x, (y*177)+80+this.y, 184, 177);
-//        g.drawImage(Assets.cardBG, (x*184)+40+this.x, (y*177)+80+this.y, 184, 177, null);
         g.drawImage(Assets.card, (x*184)+40+this.x, (y*177)+80+this.y, 184, 177, null);
         Text.drawString(g, this.getSymbol(), (x * 184) + 132+this.x, (y * 177) + 225+this.y, true,
                 this instanceof PlayerCard ? new Color(217, 199, 51) : Color.WHITE, Assets.smallerFont);

@@ -19,12 +19,12 @@ public class Window extends JFrame implements SIZE{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        ImageIcon icon = new ImageIcon(ImageLoader.loadImage("/logo.png"));
+        ImageIcon icon = new ImageIcon(ImageLoader.loadImage("/images/logo.png"));
         this.setIconImage(icon.getImage());
         this.getContentPane().setBackground(Color.BLACK);
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Cursor c = toolkit.createCustomCursor(ImageLoader.loadImage("/cursor.png"), new Point(this.getContentPane().getX(), this.getContentPane().getY()), "img");
+        Cursor c = toolkit.createCustomCursor(ImageLoader.loadImage("/images/cursor.png"), new Point(this.getContentPane().getX(), this.getContentPane().getY()), "img");
         this.getContentPane().setCursor(c);
 
         layeredPane = new JLayeredPane();
