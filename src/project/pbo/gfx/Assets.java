@@ -29,7 +29,7 @@ public class Assets {
     public static BufferedImage heroMenu, gameBG;
     public static BufferedImage coin, sword, shield, heal, poison;
 
-    public static Clip audioLogin, audioIntro, audioMenu, audioGame;
+    public static Clip audioLogin, audioIntro, audioMenu, audioGame, audioClick;
 
     public static Font smallerFont, smallFont, regulerFont, mediumFont, biggerFont, superMegaBigFont;
     public static Font menuSmallFont, menuRegulerFont;
@@ -43,6 +43,7 @@ public class Assets {
         audioIntro = AudioLoader.loadAudio("res/audio/intro.wav");
         audioMenu = AudioLoader.loadAudio("res/audio/nando/menu.wav");
         audioGame = AudioLoader.loadAudio("res/audio/game.wav");
+        audioClick = AudioLoader.loadAudio("res/audio/click.wav");
 
 //        FONT
         menuSmallFont = FontLoader.loadFont("res/font/mainfont.ttf", 14);

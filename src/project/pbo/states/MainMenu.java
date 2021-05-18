@@ -17,6 +17,7 @@ public class MainMenu extends State implements SIZE {
     private final MouseManager mouseManager;
     private final User user;
     private Clip clip;
+    private Clip click;
 
     private final Rectangle overlayTop = new Rectangle(0, 0, width,73);
     private final Rectangle playBtn = new Rectangle(302, 0, 75, 70);
@@ -58,6 +59,8 @@ public class MainMenu extends State implements SIZE {
     public void playMusic(){
         clip = Assets.audioMenu;
         clip.start();
+        click = Assets.audioClick;
+        handler.setVol(click, 0.1);
         handler.setVol(clip,0.5);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
@@ -67,10 +70,18 @@ public class MainMenu extends State implements SIZE {
         if(isLogout){
             if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed() && !animated){
                 if(popBtnYes.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+                    click.stop();
+                    click.flush();
+                    click.setFramePosition(0);
+                    click.start();
                     clip.stop();
                     clip.setFramePosition(0);
                     setCurrentState(new LoadingState(handler, new LoginState(handler)));
                 } else if(popBtnNo.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+                    click.stop();
+                    click.flush();
+                    click.setFramePosition(0);
+                    click.start();
                     animated = true;
                     jenisAnimasi = "naik";
                 }
@@ -79,19 +90,39 @@ public class MainMenu extends State implements SIZE {
             }
         } else {
             if((mouseManager.isLeftPressed()) || mouseManager.isRightPressed()){
-                if(logoutBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LOGOUT
+                if(logoutBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){// USER CLICK LOGOUT
+                    click.stop();
+                    click.flush();
+                    click.setFramePosition(0);
+                    click.start();
                     animated = true;
                     isLogout = true;
                     jenisAnimasi = "turun";
                 } else if(playBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK PLAY
+                    click.stop();
+                    click.flush();
+                    click.setFramePosition(0);
+                    click.start();
                     clip.stop();
                     clip.setFramePosition(0);
                     setCurrentState(new LoadingState(handler, new GameState(handler, user)));
                 } else if(rankingBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK LEADERBOARD
+                    click.stop();
+                    click.flush();
+                    click.setFramePosition(0);
+                    click.start();
                     setCurrentState(new RankingState(handler, this));
                 } else if(storeBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SHOP
+                    click.stop();
+                    click.flush();
+                    click.setFramePosition(0);
+                    click.start();
                     setCurrentState(new ShopState(handler));
                 } else if(settingsBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SETTINGS
+                    click.stop();
+                    click.flush();
+                    click.setFramePosition(0);
+                    click.start();
                     setCurrentState(new SettingState(handler));
                 }
                 mouseManager.setLeftPressed(false);

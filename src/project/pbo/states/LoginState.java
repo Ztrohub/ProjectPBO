@@ -23,6 +23,7 @@ public class LoginState extends State implements SIZE, Pesan {
     private final MouseManager mouseManager;
     private final ArrayList<User> users;
     private Clip clip;
+    private Clip click;
 
     public LoginState(Handler handler) {
         super(handler);
@@ -75,12 +76,20 @@ public class LoginState extends State implements SIZE, Pesan {
     public void tick() {
 
         if ((mouseManager.isLeftPressed() || mouseManager.isRightPressed()) && loginBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+            click.stop();
+            click.flush();
+            click.setFramePosition(0);
+            click.start();
             login();
             mouseManager.setLeftPressed(false);
             mouseManager.setRightPressed(false);
 
         }
         if ((mouseManager.isLeftPressed() || mouseManager.isRightPressed()) && registBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+            click.stop();
+            click.flush();
+            click.setFramePosition(0);
+            click.start();
             JTextField u = new JTextField();
             JPasswordField p = new JPasswordField();
             JPasswordField c = new JPasswordField();
@@ -135,8 +144,10 @@ public class LoginState extends State implements SIZE, Pesan {
     @Override
     public void playMusic() {
         clip = Assets.audioLogin;
-        clip.start();
+        click = Assets.audioClick;
+        handler.setVol(click, 0.1f);
         handler.setVol(clip, 0.1f);
+        clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
 
         handler.getGame().getWindow().getLayeredPane().add(jUsername,0);

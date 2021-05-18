@@ -7,6 +7,7 @@ import project.pbo.gfx.Text;
 import project.pbo.input.MouseManager;
 import project.pbo.window.SIZE;
 
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -18,12 +19,16 @@ public class RankingState extends State implements SIZE {
     private final MouseManager mouseManager;
     private final MainMenu currMain;
 
+    private final Clip click;
+
     private final Rectangle exitBtn = new Rectangle(962, 26, 89, 36);
 
     public RankingState(Handler handler, MainMenu currMain) {
         super(handler);
         this.currMain = currMain;
         this.mouseManager = handler.getMouseManager();
+        click = Assets.audioClick;
+        handler.setVol(click, 0.1);
 
         if(hello.size() > 0){
             for (int i = 1; i < hello.size(); i++) {
@@ -42,6 +47,10 @@ public class RankingState extends State implements SIZE {
     @Override
     public void tick() {
         if((mouseManager.isLeftPressed() || mouseManager.isRightPressed()) && exitBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
+            click.stop();
+            click.flush();
+            click.setFramePosition(0);
+            click.start();
             this.animated = true;
             this.jenisAnimasi = "hilang";
             mouseManager.setLeftPressed(false);

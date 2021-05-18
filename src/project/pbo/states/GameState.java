@@ -30,6 +30,7 @@ public class GameState extends State implements SIZE {
     private final Rectangle loseBtn = new Rectangle(292,340, 200, 35 );
 
     private Clip clip;
+    private Clip click;
     private Card[][] cards;
 
 //    Player
@@ -59,6 +60,7 @@ public class GameState extends State implements SIZE {
         this.keyManager = handler.getKeyManager();
         this.mouseManager = handler.getMouseManager();
 
+        handler.getGame().getWindow().requestFocus();
         init();
     }
 
@@ -82,9 +84,19 @@ public class GameState extends State implements SIZE {
         }
 
         if ((kalah || exit) && loseBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
-                (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) running = false;
+                (mouseManager.isRightPressed() || mouseManager.isLeftPressed())){
+            click.stop();
+            click.flush();
+            click.setFramePosition(0);
+            click.start();
+            running = false;
+        }
         if (kalah && replayBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
                 (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) {
+            click.stop();
+            click.flush();
+            click.setFramePosition(0);
+            click.start();
             gold = 0;
             step = 1;
             saved = true;
@@ -93,10 +105,22 @@ public class GameState extends State implements SIZE {
         }
 
         if (exit && continueBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
-                (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) exit = false;
+                (mouseManager.isRightPressed() || mouseManager.isLeftPressed())){
+            click.stop();
+            click.flush();
+            click.setFramePosition(0);
+            click.start();
+            exit = false;
+        }
 
         if (exitBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
-                (mouseManager.isRightPressed() || mouseManager.isLeftPressed())) exit = true;
+                (mouseManager.isRightPressed() || mouseManager.isLeftPressed())){
+            click.stop();
+            click.flush();
+            click.setFramePosition(0);
+            click.start();
+            exit = true;
+        }
 
         if (pc.getHealth() == 0){
             kalah = true;
@@ -382,8 +406,10 @@ public class GameState extends State implements SIZE {
     @Override
     public void playMusic() {
         clip = Assets.audioGame;
-        clip.start();
+        click = Assets.audioClick;
+        handler.setVol(click, 0.1);
         handler.setVol(clip);
+        clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 }
