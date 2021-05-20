@@ -20,7 +20,7 @@ public class GameState extends State implements SIZE {
 
     private final User user;
     private int gold = 0;
-    private final Rectangle exitBtn = new Rectangle(1000, 13, 35, 35);
+    private final Rectangle exitBtn = new Rectangle(962, 13, 90, 35);
     private final Rectangle replayBtn = new Rectangle(597,340, 175, 35 );
 
     private int ctrHero;
@@ -178,8 +178,13 @@ public class GameState extends State implements SIZE {
         g.drawImage(Assets.coinsIcon[ctrCoin], 15, 10, 35, 35, null);
         Text.drawString(g, "" + gold, 70, 37, false, new Color(255,191,64), Assets.biggerFont);
         Text.drawString(g, "Step " + (step-1), 540, 30, true, Color.gray, Assets.biggerFont);
+
+//        Exit Game
         g.setColor(Color.red);
-        g.drawImage(Assets.logout, 1000, 13, 35, 35, null);
+        Text.drawString(g, "EXIT", 1019, 31, true, Color.WHITE, Assets.smallFont);
+        g.drawRect(962, 12, 89, 36);
+        g.drawImage(Assets.xIcon, 971, 24, 12, 12, null);
+
 
 //        Hero Memu
         g.drawImage(Assets.heroMenu, 650, 60, 400, 555, null);

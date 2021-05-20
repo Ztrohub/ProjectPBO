@@ -14,15 +14,16 @@ public class Assets {
      */
 //
 
-    public static BufferedImage[] menuBG = new BufferedImage[20], coinsIcon = new BufferedImage[7];
+    public static BufferedImage[] menuBG = new BufferedImage[20], blurBG = new BufferedImage[20];
+    public static BufferedImage[] coinsIcon = new BufferedImage[7];
     public static BufferedImage[] mummyEnemy = new BufferedImage[13];
     public static BufferedImage[] slimeEnemy = new BufferedImage[8];
     public static BufferedImage[] necroEnemy = new BufferedImage[8];
     public static BufferedImage[] shamanEnemy = new BufferedImage[11];
-    public static BufferedImage[] player = new BufferedImage[15];
+    public static BufferedImage[] player = new BufferedImage[21];
 
     public static BufferedImage mainLogo, logoSTTS, avatar;
-    public static BufferedImage loginBG, loadingBG, rankingBG, popUp, textArea;
+    public static BufferedImage loginBG, loadingBG, popUp, textArea;
     public static BufferedImage playIcon, storeIcon, settingsIcon, rankingIcon, logout, xIcon, medalIcon;
 
     public static BufferedImage card;
@@ -60,9 +61,9 @@ public class Assets {
 //        IMAGE
         // BACKGROUND IMAGE
         potongSprite(menuBG, "/images/BG/mainMenuBG.png", 1076, 540);
+        potongSprite(blurBG, "/images/BG/blurMenuBG.png", 1076, 540);
         loadingBG = ImageLoader.loadImage("/images/BG/loadingBG.jpg");
         loginBG = ImageLoader.loadImage("/images/BG/loginBG.jpg");
-        rankingBG = ImageLoader.loadImage("/images/BG/rankingBG.png");
         gameBG = ImageLoader.loadImage("/images/BG/gameBG.png");
 
         // UTILS IMAGE
@@ -80,7 +81,7 @@ public class Assets {
         logout = ImageLoader.loadImage("/images/asset/mainMenu/logout.png");
 
 //        Ranking
-        textArea = ImageLoader.loadImage("/images/asset/ranking/textArea.png");
+        textArea = ImageLoader.loadImage("/res/images/asset/ranking/textArea.png");
         xIcon = ImageLoader.loadImage("/images/asset/ranking/xIcon.png");
         medalIcon = ImageLoader.loadImage("/images/asset/ranking/medal.png");
 
