@@ -3,6 +3,7 @@ package project.pbo.gfx;
 import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class Assets {
 
@@ -37,6 +38,79 @@ public class Assets {
     public static Font dungeonFont;
     public static Font warningFont;
 
+    public static void initMenu(){
+//        BACKGROUND
+        potongSprite(menuBG, "/images/BG/mainMenuBG.png", 1076, 540);
+        potongSprite(blurBG, "/images/BG/blurMenuBG.png", 1076, 540);
+
+//        MAIN MENU
+        playIcon = ImageLoader.loadImage("/images/asset/mainMenu/pedang.png");
+        storeIcon = ImageLoader.loadImage("/images/asset/mainMenu/store.png");
+        settingsIcon = ImageLoader.loadImage("/images/asset/mainMenu/settings.png");
+        rankingIcon = ImageLoader.loadImage("/images/asset/mainMenu/ranking.png");
+        logout = ImageLoader.loadImage("/images/asset/mainMenu/logout.png");
+
+//        RANKING
+        medalIcon = ImageLoader.loadImage("/images/asset/ranking/medal.png");
+        textArea = ImageLoader.loadImage("/images/asset/ranking/textArea.png");
+    }
+
+    public static void initLogin(){
+        loginBG = ImageLoader.loadImage("/images/BG/loginBG.jpg");
+    }
+
+    public static void initGame(){
+        gameBG = ImageLoader.loadImage("/images/BG/gameBG.png");
+
+//        GAME
+        heroMenu = ImageLoader.loadImage("/images/asset/game/heroMenu.png");
+        card = ImageLoader.loadImage("/images/asset/game/card.png");
+        coin = ImageLoader.loadImage("/images/asset/game/item/coin.png");
+        sword = ImageLoader.loadImage("/images/asset/game/item/sword.png");
+        shield = ImageLoader.loadImage("/images/asset/game/item/shield.png");
+        heal = ImageLoader.loadImage("/images/asset/game/item/heal.png");
+        poison = ImageLoader.loadImage("/images/asset/game/item/poison.png");
+
+
+//        SPRITE
+        potongSprite(mummyEnemy, "/images/sprite/Enemy/mummy.png", 292, 384);
+        potongSprite(slimeEnemy, "/images/sprite/Enemy/slime.png", 236, 132);
+        potongSprite(necroEnemy, "/images/sprite/Enemy/necromancer.png", 159, 196);
+        potongSprite(shamanEnemy, "/images/sprite/Enemy/shaman.png", 160, 237);
+        potongSprite(player, "/images/sprite/player.png", 640, 640);
+    }
+
+    public static void nullThisYeah(){
+        playIcon = null;
+        storeIcon = null;
+        settingsIcon = null;
+        rankingIcon = null;
+        logout = null;
+        medalIcon = null;
+        loginBG = null;
+        gameBG = null;
+        heroMenu = null;
+        textArea = null;
+        card = null;
+        coin = null;
+        sword = null;
+        shield = null;
+        heal = null;
+        poison = null;
+
+        arrayNuller(menuBG);
+        arrayNuller(blurBG);
+        arrayNuller(mummyEnemy);
+        arrayNuller(slimeEnemy);
+        arrayNuller(necroEnemy);
+        arrayNuller(shamanEnemy);
+        arrayNuller(player);
+    }
+
+    public static void arrayNuller(BufferedImage[] temp){
+        Arrays.fill(temp, null);
+    }
+
     public static void init(){
 
 //        AUDIO
@@ -60,47 +134,17 @@ public class Assets {
 
 //        IMAGE
         // BACKGROUND IMAGE
-        potongSprite(menuBG, "/images/BG/mainMenuBG.png", 1076, 540);
-        potongSprite(blurBG, "/images/BG/blurMenuBG.png", 1076, 540);
         loadingBG = ImageLoader.loadImage("/images/BG/loadingBG.jpg");
-        loginBG = ImageLoader.loadImage("/images/BG/loginBG.jpg");
-        gameBG = ImageLoader.loadImage("/images/BG/gameBG.png");
 
         // UTILS IMAGE
         mainLogo = ImageLoader.loadImage("/images/mainLogo.png");
         logoSTTS = ImageLoader.loadImage("/images/istts.png");
         avatar = ImageLoader.loadImage("/images/avatar.png");
+        xIcon = ImageLoader.loadImage("/images/asset/ranking/xIcon.png");
+        popUp = ImageLoader.loadImage("/images/asset/mainMenu/popUp.png");
+
         potongSprite(coinsIcon, "/images/sprite/Coins/", -1, -1);
 
-//        MAIN MENU IMAGE
-        popUp = ImageLoader.loadImage("/images/asset/mainMenu/popUp.png");
-        playIcon = ImageLoader.loadImage("/images/asset/mainMenu/pedang.png");
-        storeIcon = ImageLoader.loadImage("/images/asset/mainMenu/store.png");
-        settingsIcon = ImageLoader.loadImage("/images/asset/mainMenu/settings.png");
-        rankingIcon = ImageLoader.loadImage("/images/asset/mainMenu/ranking.png");
-        logout = ImageLoader.loadImage("/images/asset/mainMenu/logout.png");
-
-//        Ranking
-        textArea = ImageLoader.loadImage("/res/images/asset/ranking/textArea.png");
-        xIcon = ImageLoader.loadImage("/images/asset/ranking/xIcon.png");
-        medalIcon = ImageLoader.loadImage("/images/asset/ranking/medal.png");
-
-//        GAME
-        heroMenu = ImageLoader.loadImage("/images/asset/game/heroMenu.png");
-        card = ImageLoader.loadImage("/images/asset/game/card.png");
-        coin = ImageLoader.loadImage("/images/asset/game/item/coin.png");
-        sword = ImageLoader.loadImage("/images/asset/game/item/sword.png");
-        shield = ImageLoader.loadImage("/images/asset/game/item/shield.png");
-        heal = ImageLoader.loadImage("/images/asset/game/item/heal.png");
-        poison = ImageLoader.loadImage("/images/asset/game/item/poison.png");
-
-
-//        SPRITE
-        potongSprite(mummyEnemy, "/images/sprite/Enemy/mummy.png", 292, 384);
-        potongSprite(slimeEnemy, "/images/sprite/Enemy/slime.png", 236, 132);
-        potongSprite(necroEnemy, "/images/sprite/Enemy/necromancer.png", 159, 196);
-        potongSprite(shamanEnemy, "/images/sprite/Enemy/shaman.png", 160, 237);
-        potongSprite(player, "/images/sprite/player.png", 640, 640);
 
     }
 

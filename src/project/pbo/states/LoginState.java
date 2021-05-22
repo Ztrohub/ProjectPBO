@@ -154,4 +154,9 @@ public class LoginState extends State implements SIZE, Pesan {
         handler.getGame().getWindow().getLayeredPane().add(jPassword,0);
         jUsername.requestFocusInWindow();
     }
+
+    @Override
+    public void loadFile() {
+        Assets.initLogin();
+    }
 }

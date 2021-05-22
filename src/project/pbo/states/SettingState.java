@@ -24,4 +24,9 @@ public class SettingState extends State{
     public void render(Graphics g) {
 
     }
+
+    @Override
+    public void loadFile() {
+
+    }
 }

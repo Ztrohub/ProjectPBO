@@ -417,4 +417,9 @@ public class GameState extends State implements SIZE {
         clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
+
+    @Override
+    public void loadFile() {
+        Assets.initGame();
+    }
 }

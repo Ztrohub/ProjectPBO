@@ -15,6 +15,7 @@ public class IntroState extends State{
     public IntroState(Handler handler) {
         super(handler);
 
+        Assets.initLogin();
         clip = Assets.audioIntro;
         clip.start();
         handler.setVol(clip, 0.1f);
@@ -51,6 +52,11 @@ public class IntroState extends State{
 
     @Override
     public void playMusic() {
+
+    }
+
+    @Override
+    public void loadFile() {
 
     }
 }

@@ -11,6 +11,7 @@ import java.util.Random;
 public class LoadingState extends State implements SIZE {
 
     private final State nextState;
+    private final Thread thread;
     private int count = 0;
     private final int rand;
     private final String[] quotes = {"Use WASD or Arrow keys to move your character."
@@ -23,19 +24,18 @@ public class LoadingState extends State implements SIZE {
     public LoadingState(Handler handler, State nextState) {
         super(handler);
         this.nextState = nextState;
+        thread = new Thread(new LoadThread(nextState));
+        thread.start();
         rand = new Random().nextInt(6);
     }
 
     @Override
     public void tick() {
-        int time = new Random().nextInt(400)+500;
-        if (count < time){
-            count++;
-        }
-        if (count >= time){
+        if (!thread.isAlive() && count > 300){
             nextState.playMusic();
             setCurrentState(nextState);
         }
+        count++;
     }
 
     @Override
@@ -47,6 +47,11 @@ public class LoadingState extends State implements SIZE {
 
     @Override
     public void playMusic() {
+
+    }
+
+    @Override
+    public void loadFile() {
 
     }
 }

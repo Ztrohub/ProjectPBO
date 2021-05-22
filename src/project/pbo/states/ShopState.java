@@ -24,4 +24,9 @@ public class ShopState extends State implements SIZE {
     public void playMusic() {
 
     }
+
+    @Override
+    public void loadFile() {
+
+    }
 }

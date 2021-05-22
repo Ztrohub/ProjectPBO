@@ -29,4 +29,6 @@ public abstract class State {
 
     public abstract void playMusic();
 
+    public abstract void loadFile();
+
 }

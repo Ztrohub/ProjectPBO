@@ -218,4 +218,9 @@ public class MainMenu extends State implements SIZE {
             }
         }
     }
+
+    @Override
+    public void loadFile() {
+        Assets.initMenu();
+    }
 }
