@@ -22,6 +22,9 @@ public class Assets {
     public static BufferedImage[] necroEnemy = new BufferedImage[8];
     public static BufferedImage[] shamanEnemy = new BufferedImage[11];
     public static BufferedImage[] player = new BufferedImage[21];
+    public static BufferedImage shop;
+    public static BufferedImage bybuttonlight;
+    public static BufferedImage bybuttondrk;
 
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG, popUp, textArea;
@@ -41,7 +44,7 @@ public class Assets {
     public static void initMenu(){
 //        BACKGROUND
         potongSprite(menuBG, "/images/BG/mainMenuBG.png", 1076, 540);
-        potongSprite(blurBG, "/images/BG/blurMenuBG.png", 1076, 540);
+
 
 //        MAIN MENU
         playIcon = ImageLoader.loadImage("/images/asset/mainMenu/pedang.png");
@@ -66,9 +69,6 @@ public class Assets {
         heroMenu = ImageLoader.loadImage("/images/asset/game/heroMenu.png");
         card = ImageLoader.loadImage("/images/asset/game/card.png");
         coin = ImageLoader.loadImage("/images/asset/game/item/coin.png");
-        sword = ImageLoader.loadImage("/images/asset/game/item/sword.png");
-        shield = ImageLoader.loadImage("/images/asset/game/item/shield.png");
-        heal = ImageLoader.loadImage("/images/asset/game/item/heal.png");
         poison = ImageLoader.loadImage("/images/asset/game/item/poison.png");
 
 
@@ -93,9 +93,6 @@ public class Assets {
         textArea = null;
         card = null;
         coin = null;
-        sword = null;
-        shield = null;
-        heal = null;
         poison = null;
 
         arrayNuller(menuBG);
@@ -135,6 +132,8 @@ public class Assets {
 //        IMAGE
         // BACKGROUND IMAGE
         loadingBG = ImageLoader.loadImage("/images/BG/loadingBG.jpg");
+        shop =  ImageLoader.loadImage("/images/asset/shop/shop.png");
+        potongSprite(blurBG, "/images/BG/blurMenuBG.png", 1076, 540);
 
         // UTILS IMAGE
         mainLogo = ImageLoader.loadImage("/images/mainLogo.png");
@@ -142,6 +141,12 @@ public class Assets {
         avatar = ImageLoader.loadImage("/images/avatar.png");
         xIcon = ImageLoader.loadImage("/images/asset/ranking/xIcon.png");
         popUp = ImageLoader.loadImage("/images/asset/mainMenu/popUp.png");
+        sword = ImageLoader.loadImage("/images/asset/game/item/sword.png");
+        shield = ImageLoader.loadImage("/images/asset/game/item/shield.png");
+        heal = ImageLoader.loadImage("/images/asset/game/item/heal.png");
+        bybuttondrk = ImageLoader.loadImage("/images/asset/shop/buybutton1.png");
+        bybuttonlight = ImageLoader.loadImage("/images/asset/shop/buybutton2.png");
+
 
         potongSprite(coinsIcon, "/images/sprite/Coins/", -1, -1);
 

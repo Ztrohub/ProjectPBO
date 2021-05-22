@@ -5,11 +5,8 @@ import project.pbo.account.User;
 import project.pbo.gfx.Assets;
 import project.pbo.input.KeyManager;
 import project.pbo.input.MouseManager;
-import project.pbo.states.GameState;
-import project.pbo.states.MainMenu;
+import project.pbo.states.*;
 import project.pbo.window.Window;
-import project.pbo.states.IntroState;
-import project.pbo.states.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -51,15 +48,15 @@ public class Game implements Runnable {
         loadFile();
 
 //        TODO Uncomment
-//        User user = new User("test", "123");
+        User user = new User("test", "123");
 
-//        State state = new GameState(handler, user);
-//        state.playMusic();
+        State state = new ShopState(handler, user);
+        state.playMusic();
 
 //        State state = new MainMenu(handler, user);
 //        state.playMusic();
 
-        State state = new IntroState(handler);
+//        State state = new IntroState(handler);
 
         State.setCurrentState(state);
 

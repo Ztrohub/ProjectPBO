@@ -117,7 +117,7 @@ public class MainMenu extends State implements SIZE {
                     click.flush();
                     click.setFramePosition(0);
                     click.start();
-                    setCurrentState(new ShopState(handler));
+                    setCurrentState(new ShopState(handler,user));
                 } else if(settingsBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SETTINGS
                     click.stop();
                     click.flush();
