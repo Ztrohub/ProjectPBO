@@ -53,8 +53,12 @@ public class Game implements Runnable {
 //        State state = new ShopState(handler, user);
 //        state.playMusic();
 
+//        State state = new GameState(handler, user);
+//        state.playMusic();
+
 //        State state = new MainMenu(handler, user);
 //        state.playMusic();
+//        Assets.initMenu();
 
         State state = new IntroState(handler);
 

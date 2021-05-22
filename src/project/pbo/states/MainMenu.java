@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class MainMenu extends State implements SIZE {
 
-    private int ctrBg, ctrCoin, ctrMummy, timer;
+    private int ctrBg, ctrCoin, timer;
     private boolean isLogout = false;
     private final MouseManager mouseManager;
     private final User user;
@@ -28,8 +28,8 @@ public class MainMenu extends State implements SIZE {
     private final Rectangle overlayBot = new Rectangle(0, 544, width, 100);
 
     // LOGOUT BUTTON YES / NO
-    private final Rectangle popBtnNo = new Rectangle(597, 360, 175, 35 );
-    private final Rectangle popBtnYes = new Rectangle(292, 360, 200, 35 );
+    private final Rectangle popBtnNo = new Rectangle(597, 356, 185, 35 );
+    private final Rectangle popBtnYes = new Rectangle(292, 356, 200, 35 );
 
     // ATRIBUT POP UP MENU
     private boolean animated = false;
@@ -133,12 +133,12 @@ public class MainMenu extends State implements SIZE {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.menuBG[ctrBg], 0, 48, width, height, null);
+        g.drawImage(Assets.menuBG[ctrBg], 0, 47, width, height, null);
         g.setColor(new Color(0x000100));
         ((Graphics2D) g).fill(overlayTop);
         ((Graphics2D) g).fill(overlayBot);
 
-        g.drawImage(Assets.mainLogo, 310, 483, 427, 245, null);
+        g.drawImage(Assets.mainLogo, 310, 476, 435, 253, null);
 
         // ICON DAN NAMA PLAYER
         g.drawImage(Assets.avatar, 10, 6, 60, 60, null);
@@ -166,7 +166,7 @@ public class MainMenu extends State implements SIZE {
         Text.drawString(g, "Store", 603, 64, false, Color.WHITE, Assets.menuRegulerFont);
 
         // BUTTON SETTINGS
-        g.drawImage(Assets.settingsIcon, 749, 6, 67, 58, null);
+        g.drawImage(Assets.settingsIcon, 751, 5, 68, 59, null);
         Text.drawString(g, "Settings", 741, 64, false, Color.WHITE, Assets.menuSmallFont);
 
         // BUTTON LOGOUT
@@ -187,29 +187,28 @@ public class MainMenu extends State implements SIZE {
         if(timer == 0) {
             ctrBg = (ctrBg != Assets.menuBG.length - 1) ? ++ctrBg : 0;
             ctrCoin = (ctrCoin != Assets.coinsIcon.length - 1) ? ++ctrCoin : 0;
-            ctrMummy = (ctrMummy != Assets.mummyEnemy.length - 1) ? ++ctrMummy : 0;
         }
         this.timer = (this.timer == 4) ? 0 : ++timer;
     }
 
     private void popAnimated(){
         if(jenisAnimasi.equalsIgnoreCase("turun")){
-            this.yGambar += 20;
-            this.yWarning += 20;
-            this.yMessage += 20;
-            this.yYes += 20;
-            this.yNo += 20;
+            this.yGambar += 22;
+            this.yWarning += 22;
+            this.yMessage += 22;
+            this.yYes += 22;
+            this.yNo += 22;
 
-            if(yGambar == 175) {
+            if(yGambar == 171) {
                 animated = false;
                 jenisAnimasi = "";
             }
         } else if(jenisAnimasi.equalsIgnoreCase("naik")){
-            this.yGambar -= 20;
-            this.yWarning -= 20;
-            this.yMessage -= 20;
-            this.yYes -= 20;
-            this.yNo -= 20;
+            this.yGambar -= 22;
+            this.yWarning -= 22;
+            this.yMessage -= 22;
+            this.yYes -= 22;
+            this.yNo -= 22;
 
             if(yGambar == -225) {
                 animated = false;

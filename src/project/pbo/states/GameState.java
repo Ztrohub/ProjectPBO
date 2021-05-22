@@ -21,13 +21,13 @@ public class GameState extends State implements SIZE {
     private final User user;
     private int gold = 0;
     private final Rectangle exitBtn = new Rectangle(962, 13, 90, 35);
-    private final Rectangle replayBtn = new Rectangle(597,340, 175, 35 );
+    private final Rectangle replayBtn = new Rectangle(597,375, 175, 35 ); // RESTART LOSE
 
     private int ctrHero;
     private int timerHero;
 
-    private final Rectangle continueBtn = new Rectangle(597,340, 175, 35 );
-    private final Rectangle loseBtn = new Rectangle(292,340, 200, 35 );
+    private final Rectangle continueBtn = new Rectangle(597,375, 175, 35 ); // NO EXIT
+    private final Rectangle loseBtn = new Rectangle(292,375, 200, 35 ); // YES EXIT & LOSE
 
     private Clip clip;
     private Clip click;
@@ -47,8 +47,26 @@ public class GameState extends State implements SIZE {
     private boolean pause = false;
     private boolean doneAnim = true;
     private boolean saved = true;
+    private boolean popAnim = false;
+    private String jenisAnimasi;
 
     private int ctrCoin, timer;
+
+    private int gambarPopUp = -203;
+    private int titlePopUp = -157;
+    private int kalah1Text = -98;
+    private int kalah2Text = -58;
+    private int exit1Text = -95;
+    private int exit2Text = -60;
+    private int yesAndNo = -1;
+
+    // GAMBAR -203
+    // WARNING -157
+    // PESAN 1 KALAH -98
+    // PESAN 2 KALAH -58
+    // PESAN 1 EXIT -93
+    // PESAN 2 EXIT -58
+    // YES -1
 
     private PlayerCard pc;
 
@@ -101,7 +119,8 @@ public class GameState extends State implements SIZE {
             step = 1;
             saved = true;
             init();
-            kalah = false;
+            popAnim = true;
+            jenisAnimasi = "naik";
         }
 
         if (exit && continueBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
@@ -110,7 +129,8 @@ public class GameState extends State implements SIZE {
             click.flush();
             click.setFramePosition(0);
             click.start();
-            exit = false;
+            popAnim = true;
+            jenisAnimasi = "naik";
         }
 
         if (exitBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY()) &&
@@ -120,11 +140,15 @@ public class GameState extends State implements SIZE {
             click.setFramePosition(0);
             click.start();
             exit = true;
+            popAnim = true;
+            jenisAnimasi = "turun";
         }
 
         if (pc.getHealth() == 0){
             kalah = true;
             if (saved){
+                popAnim = true;
+                jenisAnimasi = "turun";
                 user.getPlayer().setHighestStep(Math.max(user.getPlayer().getHighestStep(), step-1));
                 user.getPlayer().setGold(user.getPlayer().getGold() + gold);
                 saved = false;
@@ -209,26 +233,29 @@ public class GameState extends State implements SIZE {
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (kalah){
-            g.drawImage(Assets.popUp, 237, 155, 600, 240, null);
+            if(popAnim) popUpAnimasi();
 
-            Text.drawString(g, "YOU DIED!", 537, 201, true, new Color(0xe28743), Assets.warningFont);
-            Text.drawString(g, "You got " + gold + " gold", 537, 260, true, Color.WHITE, Assets.smallFont);
-            Text.drawString(g, "Want to restart?", 537, 300, true, Color.WHITE, Assets.warningFont);
+            g.drawImage(Assets.popUp, 237, gambarPopUp, 600, 240, null);
 
-            Text.drawString(g, "Exit", 392, 357, true, Color.white, Assets.smallFont);
-            Text.drawString(g, "Restart", 692, 357, true, Color.white, Assets.smallFont);
+            Text.drawString(g, "YOU DIED!", 537, titlePopUp, true, new Color(0xe28743), Assets.warningFont);
+            Text.drawString(g, "You got " + gold + " gold", 537, kalah1Text, true, Color.WHITE, Assets.smallFont);
+            Text.drawString(g, "Want to restart?", 537, kalah2Text, true, Color.WHITE, Assets.warningFont);
+
+            Text.drawString(g, "Exit", 392, yesAndNo, true, Color.white, Assets.smallFont);
+            Text.drawString(g, "Restart", 692, yesAndNo, true, Color.white, Assets.smallFont);
         }
 
         if (exit){
-            g.drawImage(Assets.popUp, 237, 155, 600, 240, null);
+            if(popAnim) popUpAnimasi();
 
-            Text.drawString(g, "WARNING!", 537, 201, true, new Color(0xe28743), Assets.warningFont);
-            Text.drawString(g, "Are you sure want to Exit?", 537, 265, true, Color.WHITE, Assets.warningFont);
-            Text.drawString(g, "Gold and step will not be saved!", 537, 300, true, Color.WHITE, Assets.warningFont);
+            g.drawImage(Assets.popUp, 237, gambarPopUp, 600, 240, null);
 
-            Text.drawString(g, "Yes", 392, 357, true, Color.white, Assets.smallFont);
-            Text.drawString(g, "No", 692, 357, true, Color.white, Assets.smallFont);
+            Text.drawString(g, "WARNING!", 537, titlePopUp, true, new Color(0xe28743), Assets.warningFont);
+            Text.drawString(g, "Are you sure want to Exit?", 537, exit1Text, true, Color.WHITE, Assets.warningFont);
+            Text.drawString(g, "Gold and step will not be saved!", 537, exit2Text, true, Color.WHITE, Assets.warningFont);
 
+            Text.drawString(g, "Yes", 392, yesAndNo, true, Color.white, Assets.smallFont);
+            Text.drawString(g, "No", 692, yesAndNo, true, Color.white, Assets.smallFont);
         }
 
         if(timer == 0) {
@@ -236,6 +263,46 @@ public class GameState extends State implements SIZE {
         }
         this.timer = (this.timer == 4) ? 0 : ++timer;
 
+    }
+
+    void popUpAnimasi(){
+        if(jenisAnimasi.equalsIgnoreCase("turun")){
+            this.gambarPopUp += 26;
+            this.titlePopUp += 26;
+            this.kalah1Text += 26;
+            this.kalah2Text += 26;
+            this.exit1Text += 26;
+            this.exit2Text += 26;
+            this.yesAndNo += 26;
+
+            if(gambarPopUp >= 187){
+                popAnim = false;
+                jenisAnimasi = "";
+            }
+        } else if(jenisAnimasi.equalsIgnoreCase("naik")){
+            this.gambarPopUp -= 26;
+            this.titlePopUp -= 26;
+            this.kalah1Text -= 26;
+            this.kalah2Text -= 26;
+            this.exit1Text -= 26;
+            this.exit2Text -= 26;
+            this.yesAndNo -= 26;
+
+            if(gambarPopUp <= -203){
+                if(kalah) kalah = false;
+                if(exit) exit = false;
+                popAnim = false;
+                jenisAnimasi = "";
+            }
+        }
+
+        // GAMBAR -203
+        // WARNING -157
+        // PESAN 1 KALAH -98
+        // PESAN 2 KALAH -58
+        // PESAN 1 EXIT -93
+        // PESAN 2 EXIT -58
+        // YES -1
     }
 
     void cetakKartu(Graphics g){
@@ -372,7 +439,6 @@ public class GameState extends State implements SIZE {
         }
     }
 
-
     void randomCard(){
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
@@ -403,10 +469,6 @@ public class GameState extends State implements SIZE {
             }
         }
     }
-
-
-
-
 
     @Override
     public void playMusic() {
