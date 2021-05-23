@@ -25,6 +25,9 @@ public class Assets {
     public static BufferedImage shop;
     public static BufferedImage bybuttonlight;
     public static BufferedImage bybuttondrk;
+    public static BufferedImage soundicon;
+    public static BufferedImage sliderbar;
+    public static BufferedImage slidericon;
 
     public static BufferedImage mainLogo, logoSTTS, avatar;
     public static BufferedImage loginBG, loadingBG, popUp, textArea;
@@ -70,6 +73,10 @@ public class Assets {
 
         potongSprite(coinsIcon, "/images/sprite/Coins/", -1, -1);
 
+//        SETTING
+        soundicon = ImageLoader.loadImage("/images/asset/setting/soundicon.png");
+        sliderbar = ImageLoader.loadImage("/images/asset/setting/slidebar.png");
+        slidericon = ImageLoader.loadImage("/images/asset/setting/slider.png");
     }
 
     public static void initLogin(){

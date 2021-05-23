@@ -83,6 +83,7 @@ public class ShopState extends State implements SIZE {
 
 
 
+
         if(timer == 0) {
             ctrBg = (ctrBg != Assets.blurBG.length - 1) ? ++ctrBg : 0;
         }

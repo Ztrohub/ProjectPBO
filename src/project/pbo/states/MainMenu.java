@@ -123,7 +123,7 @@ public class MainMenu extends State implements SIZE {
                     click.flush();
                     click.setFramePosition(0);
                     click.start();
-                    setCurrentState(new SettingState(handler));
+                    setCurrentState(new SettingState(handler,user));
                 }
                 mouseManager.setLeftPressed(false);
                 mouseManager.setRightPressed(false);
