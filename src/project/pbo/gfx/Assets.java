@@ -75,7 +75,7 @@ public class Assets {
 
 //        SETTING
         soundicon = ImageLoader.loadImage("/images/asset/setting/soundicon.png");
-        sliderbar = ImageLoader.loadImage("/images/asset/setting/slidebar.png");
+        sliderbar = ImageLoader.loadImage("/images/asset/setting/sliderbar.png");
         slidericon = ImageLoader.loadImage("/images/asset/setting/slider.png");
     }
 
@@ -129,6 +129,9 @@ public class Assets {
         shop = null;
         xIcon = null;
         popUp = null;
+        soundicon = null;
+        sliderbar = null;
+        slidericon = null;
 
         arrayNuller(coinsIcon);
         arrayNuller(menuBG);

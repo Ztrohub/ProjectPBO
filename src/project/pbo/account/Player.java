@@ -4,12 +4,8 @@ import java.io.Serializable;
 
 public class Player implements Serializable {
     private int gold = 0, health = 11, highestStep = 0;
-    private int damage = 0, defend = 0;
     private int healthlvl = 1,dmglvl =1, defendlvl = 1;
     private int maxdmg = 12, maxdef = 12;
-
-
-
 
     public int getHighestStep() {
         return highestStep;
@@ -33,22 +29,6 @@ public class Player implements Serializable {
 
     public void setHealth(int health) {
         this.health = health;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
-    public int getDefend() {
-        return defend;
-    }
-
-    public void setDefend(int defend) {
-        this.defend = defend;
     }
 
     public int getMaxdmg() {

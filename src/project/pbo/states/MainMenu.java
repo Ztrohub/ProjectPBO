@@ -117,7 +117,7 @@ public class MainMenu extends State implements SIZE {
                     click.flush();
                     click.setFramePosition(0);
                     click.start();
-                    setCurrentState(new ShopState(handler,user));
+                    setCurrentState(new ShopState(handler,user, this));
                 } else if(settingsBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){ // USER CLICK SETTINGS
                     click.stop();
                     click.flush();
@@ -145,13 +145,6 @@ public class MainMenu extends State implements SIZE {
         g.drawImage(Assets.coinsIcon[ctrCoin], 79, 42, 15, 15, null);
         Text.drawString(g, user.getUsername(), 78, 31, false, Color.WHITE, Assets.menuRegulerFont);
         Text.drawString(g, user.getPlayer().getGold() + "", 103, 55, false, Color.WHITE, Assets.regulerFont);
-
-//        g.setColor(new Color(0xE1AD01));
-//        ((Graphics2D) g).fill(playBtn);
-//        ((Graphics2D) g).fill(rankingBtn);
-//        ((Graphics2D) g).fill(storeBtn);
-//        ((Graphics2D) g).fill(settingsBtn);
-//        ((Graphics2D) g).fill(logoutBtn);
 
         // BUTTON PLAY
         g.drawImage(Assets.playIcon, 302, 6, 75, 56, null);

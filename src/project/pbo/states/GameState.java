@@ -85,7 +85,7 @@ public class GameState extends State implements SIZE {
     void init(){
         this.x = 1; this.y = 1;
         cards = new Card[3][3];
-        pc = new PlayerCard(user.getPlayer().getHealth(), user.getPlayer().getDefend(), user.getPlayer().getDamage(), user.getPlayer().getHealth());
+        pc = new PlayerCard(user.getPlayer().getHealth(), 0, 0, user.getPlayer().getHealth());
         cards[x][y] = pc;
         randomCard();
     }
@@ -223,8 +223,8 @@ public class GameState extends State implements SIZE {
         }
         Text.drawString(g, user.getUsername(), 855, 285, true, Color.WHITE, Assets.regulerFont);
         Text.drawString(g, pc.getHealth() + " / " + pc.getMaxHealth(), 730, 140, false, Color.WHITE, Assets.mediumFont);
-        Text.drawString(g, pc.getDamage()+"", 730, 190, false, Color.WHITE, Assets.mediumFont);
-        Text.drawString(g, pc.getDefend()+"", 730, 245, false, Color.WHITE, Assets.mediumFont);
+        Text.drawString(g, pc.getDamage()+" / " + user.getPlayer().getMaxdmg(), 730, 190, false, Color.WHITE, Assets.mediumFont);
+        Text.drawString(g, pc.getDefend()+" / " + user.getPlayer().getMaxdef(), 730, 245, false, Color.WHITE, Assets.mediumFont);
 
 //        Game
         cetakKartu(g);
@@ -349,7 +349,7 @@ public class GameState extends State implements SIZE {
             } else {
                 if (card instanceof Sword){
                     Sword sword = (Sword) card;
-                    pc.setDamage(Math.max(user.getPlayer().getDamage() + sword.getDamage(), pc.getDamage()));
+                    pc.setDamage(Math.min((sword.getDamage() + pc.getDamage()), user.getPlayer().getMaxdmg()));
                 }
                 if (card instanceof Healing){
                     Healing healing = (Healing) card;
@@ -361,7 +361,7 @@ public class GameState extends State implements SIZE {
                 }
                 if (card instanceof Shield){
                     Shield shield = (Shield) card;
-                    pc.setDefend(Math.max(user.getPlayer().getDefend() + shield.getDefend(), pc.getDefend()));
+                    pc.setDefend(Math.min((shield.getDefend() + pc.getDefend()), user.getPlayer().getMaxdef()));
                 }
                 if (card instanceof Gold){
                     Gold gold = (Gold) card;
