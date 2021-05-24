@@ -25,7 +25,8 @@ public class Assets {
     public static BufferedImage shop;
     public static BufferedImage bybuttonlight;
     public static BufferedImage bybuttondrk;
-    public static BufferedImage soundicon;
+    public static BufferedImage soundon;
+    public static BufferedImage soundsilent;
     public static BufferedImage sliderbar;
     public static BufferedImage slidericon;
 
@@ -74,9 +75,10 @@ public class Assets {
         potongSprite(coinsIcon, "/images/sprite/Coins/", -1, -1);
 
 //        SETTING
-        soundicon = ImageLoader.loadImage("/images/asset/setting/soundicon.png");
-        sliderbar = ImageLoader.loadImage("/images/asset/setting/sliderbar.png");
-        slidericon = ImageLoader.loadImage("/images/asset/setting/slider.png");
+        soundon = ImageLoader.loadImage("/images/asset/setting/sound.png");
+        soundsilent = ImageLoader.loadImage("/images/asset/setting/silentsound.png");
+        sliderbar = ImageLoader.loadImage("/images/asset/setting/soundbar.png");
+        slidericon = ImageLoader.loadImage("/images/asset/setting/soundicon.png");
     }
 
     public static void initLogin(){
@@ -129,9 +131,6 @@ public class Assets {
         shop = null;
         xIcon = null;
         popUp = null;
-        soundicon = null;
-        sliderbar = null;
-        slidericon = null;
 
         arrayNuller(coinsIcon);
         arrayNuller(menuBG);

@@ -31,16 +31,16 @@ public class SettingState extends State implements SIZE {
     public void tick() {
 
     }
-
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.blurBG[ctrBg], 0, 0, width, height, null);
         Text.drawString(g, "SETTING", 538, 80, true, Color.WHITE, Assets.superMegaBigFont);
         // SOUND ICON
-        g.drawImage(Assets.soundicon,80,215,236,209,null);
+        g.drawImage(Assets.soundsilent,80,215,236,209,null);
+        g.drawImage(Assets.soundon,780,215,236,209,null);
+
         // SLIDER
-        g.drawImage(Assets.sliderbar,150,215,208,55,null);
-        g.drawImage(Assets.slidericon,150,215,53,40,null);
+        g.drawImage(Assets.sliderbar,225,60,550,550,null);
 
 
 
