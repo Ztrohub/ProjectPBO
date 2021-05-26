@@ -68,7 +68,7 @@ public class Game implements Runnable {
             State.getCurrentState().tick();
     }
 
-    private void loadFile(){
+    public void loadFile(){
         File file = new File("res/save.txt");
         if (file.exists()){
             try {

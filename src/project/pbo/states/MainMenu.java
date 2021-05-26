@@ -215,4 +215,12 @@ public class MainMenu extends State implements SIZE {
     public void loadFile() {
         Assets.initMenu();
     }
+
+    public Clip getClip() {
+        return clip;
+    }
+
+    public Clip getClick() {
+        return click;
+    }
 }

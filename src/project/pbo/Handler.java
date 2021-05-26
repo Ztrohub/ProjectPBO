@@ -11,7 +11,7 @@ import java.io.*;
 public class Handler {
     private Game game;
     private DB db = new DB();
-    private double vol = 0.1;
+    private double vol = 0.2;
 
     public Handler(Game game) {
         this.game = game;
@@ -67,5 +67,9 @@ public class Handler {
 
     public MouseManager getMouseManager(){
         return game.getMouseManager();
+    }
+
+    public int getVol() {
+        return (int) (vol*900);
     }
 }
