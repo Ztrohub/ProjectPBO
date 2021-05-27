@@ -18,7 +18,7 @@ public class RankingState extends State implements SIZE {
     private final Clip click;
 
     private int ctrBg, timer;
-    private float alhpa = 0.1f;
+    private float alpha = 0.1f;
     private boolean animated;
     private String jenisAnimasi;
 
@@ -60,18 +60,18 @@ public class RankingState extends State implements SIZE {
 
         if(animated){
             if(this.jenisAnimasi.equalsIgnoreCase("muncul")){
-                if(alhpa < 1.0f){
-                    alhpa += 0.04f;
-                    if(alhpa >= 1.0f){
-                        alhpa = 1.0f;
+                if(alpha < 1.0f){
+                    alpha += 0.04f;
+                    if(alpha >= 1.0f){
+                        alpha = 1.0f;
                         this.jenisAnimasi = "";
                         animated = false;
                     }
                 }
             } else if(this.jenisAnimasi.equalsIgnoreCase("hilang")){
-                if(alhpa > 0.0f){
-                    alhpa -= 0.04f;
-                    if(alhpa <= 0.1f){
+                if(alpha > 0.0f){
+                    alpha -= 0.04f;
+                    if(alpha <= 0.1f){
                         animated = false;
                         this.jenisAnimasi = "";
                         setCurrentState(currMain);
@@ -83,7 +83,7 @@ public class RankingState extends State implements SIZE {
 
     @Override
     public void render(Graphics g) {
-        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alhpa));
+        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g.drawImage(Assets.blurBG[ctrBg], 0, 0, width, height, null);

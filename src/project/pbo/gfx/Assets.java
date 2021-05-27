@@ -15,7 +15,7 @@ public class Assets {
      */
 //
 
-    public static BufferedImage[] menuBG = new BufferedImage[20], blurBG = new BufferedImage[20];
+    public static BufferedImage[] menuBG = new BufferedImage[20], blurBG = new BufferedImage[10];
     public static BufferedImage[] coinsIcon = new BufferedImage[7];
     public static BufferedImage[] mummyEnemy = new BufferedImage[13];
     public static BufferedImage[] slimeEnemy = new BufferedImage[8];
@@ -163,7 +163,7 @@ public class Assets {
         regulerFont = FontLoader.loadFont("res/font/mainfont.ttf", 18);
         mediumFont = FontLoader.loadFont("res/font/mainfont.ttf", 20);
         biggerFont = FontLoader.loadFont("res/font/mainfont.ttf", 24);
-        superMegaBigFont = FontLoader.loadFont("res/font/mainfont.ttf", 55);
+        superMegaBigFont = FontLoader.loadFont("res/font/mainfont.ttf", 50);
         warningFont = FontLoader.loadFont("res/font/mainfont.ttf", 17);
         dungeonFont = FontLoader.loadFont("res/font/dungeon.ttf", 35);
 

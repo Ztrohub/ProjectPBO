@@ -221,6 +221,7 @@ public class GameState extends State implements SIZE {
             if(timerHero == 7) this.timerHero = 0;
             else this.timerHero++;
         }
+
         Text.drawString(g, user.getUsername(), 855, 285, true, Color.WHITE, Assets.regulerFont);
         Text.drawString(g, pc.getHealth() + " / " + pc.getMaxHealth(), 730, 140, false, Color.WHITE, Assets.mediumFont);
         Text.drawString(g, pc.getDamage()+" / " + user.getPlayer().getMaxdmg(), 730, 190, false, Color.WHITE, Assets.mediumFont);
@@ -265,7 +266,7 @@ public class GameState extends State implements SIZE {
 
     }
 
-    void popUpAnimasi(){
+    private void popUpAnimasi(){
         if(jenisAnimasi.equalsIgnoreCase("turun")){
             this.gambarPopUp += 26;
             this.titlePopUp += 26;

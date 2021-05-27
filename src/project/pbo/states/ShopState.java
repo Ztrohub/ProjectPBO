@@ -14,8 +14,7 @@ import java.awt.*;
 public class ShopState extends State implements SIZE {
     private final MouseManager mouseManager;
     private final Player Play;
-    private float alhpa = 0.1f ;
-    private int ctrBg,timer;
+    private int ctrBg, timer;
     private final Rectangle dmgbtn = new Rectangle(145,520,206,93);
     private final Rectangle defbtn = new Rectangle(445,520,206,93);
     private final Rectangle hltbtn = new Rectangle(745,520,206,93);
@@ -25,6 +24,10 @@ public class ShopState extends State implements SIZE {
     private final Rectangle exitBtn = new Rectangle(962, 26, 89, 36);
     private final MainMenu mainMenu;
 
+    private float alpha = 0.1f;
+    private boolean animated;
+    private String jenisAnimasi;
+
     public ShopState(Handler handler, User user, MainMenu mainMenu) {
         super(handler);
         this.mainMenu = mainMenu;
@@ -32,6 +35,9 @@ public class ShopState extends State implements SIZE {
         this.mouseManager = handler.getMouseManager();
         click = Assets.audioClick;
         handler.setVol(click, 0.1);
+
+        this.animated = true;
+        this.jenisAnimasi = "muncul";
     }
 
     @Override
@@ -42,10 +48,36 @@ public class ShopState extends State implements SIZE {
             click.flush();
             click.setFramePosition(0);
             click.start();
-            setCurrentState(mainMenu);
+
+            this.animated = true;
+            this.jenisAnimasi = "hilang";
+
             mouseManager.setLeftPressed(false);
             mouseManager.setRightPressed(false);
             handler.saveFile();
+        }
+
+        // ANIMASI FADE
+        if(animated){
+            if(this.jenisAnimasi.equalsIgnoreCase("muncul")){
+                if(alpha < 1.0f){
+                    alpha += 0.04f;
+                    if(alpha >= 1.0f){
+                        alpha = 1.0f;
+                        this.jenisAnimasi = "";
+                        animated = false;
+                    }
+                }
+            } else if(this.jenisAnimasi.equalsIgnoreCase("hilang")){
+                if(alpha > 0.0f){
+                    alpha -= 0.04f;
+                    if(alpha <= 0.1f){
+                        animated = false;
+                        this.jenisAnimasi = "";
+                        setCurrentState(mainMenu);
+                    }
+                }
+            }
         }
 
         if (dmgbtn.contains(mouseManager.getMouseX(),mouseManager.getMouseY())&& mouseManager.isLeftPressed()){
@@ -89,6 +121,8 @@ public class ShopState extends State implements SIZE {
 
     @Override
     public void render(Graphics g) {
+        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g.drawImage(Assets.blurBG[ctrBg], 0, 0, width, height, null);
 
