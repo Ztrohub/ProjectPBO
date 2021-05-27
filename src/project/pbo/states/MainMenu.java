@@ -60,7 +60,6 @@ public class MainMenu extends State implements SIZE {
         clip = Assets.audioMenu;
         clip.start();
         click = Assets.audioClick;
-        handler.setVol(click, 0.1);
         handler.setVol(clip,0.5);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }

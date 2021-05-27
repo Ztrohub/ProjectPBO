@@ -2,8 +2,6 @@ package project.pbo.states;
 
 import project.pbo.Handler;
 import project.pbo.account.DB;
-import project.pbo.account.Player;
-import project.pbo.account.User;
 import project.pbo.gfx.Assets;
 import project.pbo.gfx.Text;
 import project.pbo.input.MouseManager;
@@ -11,11 +9,13 @@ import project.pbo.window.SIZE;
 
 import javax.sound.sampled.Clip;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class SettingState extends State implements SIZE {
     private int xsound;
-    private MouseManager mouseManager;
+    private final MouseManager mouseManager;
     private float alpha = 0.1f ;
     private int ctrBg,timer;
     private final Rectangle exitBtn = new Rectangle(962, 26, 89, 36);
@@ -23,17 +23,28 @@ public class SettingState extends State implements SIZE {
     private final Rectangle reset = new Rectangle(415, 345, 89, 36);
     private final MainMenu mainMenu;
     private final Clip Click;
-    private final Rectangle soundoff = new Rectangle(410,215,98,85);
+    private final Rectangle soundoff = new Rectangle(410,215,60,85);
     private final Rectangle soundon = new Rectangle(705,215,98,85);
+
+    private final MyMouseAdapter myMouseAdapter = new MyMouseAdapter();
+    private int preX;
+    boolean pressedOut = false;
+    boolean ditekan = false;
 
 
     public SettingState(Handler handler,MainMenu mainMenu) { super(handler);
-        this.xsound = handler.getVol();
+
+        handler.getGame().getWindow().getFrame().addMouseListener(myMouseAdapter);
+        handler.getGame().getWindow().getFrame().addMouseMotionListener(myMouseAdapter);
+        handler.getGame().getWindow().getCanvas().addMouseListener(myMouseAdapter);
+        handler.getGame().getWindow().getCanvas().addMouseMotionListener(myMouseAdapter);
+
         System.out.println(xsound);
         this.mainMenu = mainMenu ;
         this.mouseManager = handler.getMouseManager();
         this.Click = Assets.audioClick;
-        soundicon = new Rectangle(470+xsound,238,40,39);
+        this.xsound = handler.getVol();
+        soundicon = new Rectangle(477+xsound,248,20,20);
     }
 
     @Override
@@ -48,20 +59,23 @@ public class SettingState extends State implements SIZE {
             Click.flush();
             Click.setFramePosition(0);
             Click.start();
+
+            handler.getGame().getWindow().getFrame().removeMouseListener(myMouseAdapter);
+            handler.getGame().getWindow().getFrame().removeMouseMotionListener(myMouseAdapter);
+            handler.getGame().getWindow().getCanvas().removeMouseListener(myMouseAdapter);
+            handler.getGame().getWindow().getCanvas().removeMouseMotionListener(myMouseAdapter);
+
             setCurrentState(mainMenu);
             mouseManager.setLeftPressed(false);
             mouseManager.setRightPressed(false);
             handler.saveFile();
         }
 
-        if ((mouseManager.isLeftPressed()|| mouseManager.isRightPressed())&& soundicon.contains(mouseManager.getMouseX(),mouseManager.getMouseY())){
-            if(mouseManager.getMouseX()>= 470 && mouseManager.getMouseX()<=690) {
-                this.xsound = mouseManager.getMouseX()-470;
-                System.out.println("di tekan");
-            }
-        }
-
         if ((mouseManager.isLeftPressed()|| mouseManager.isRightPressed())&& reset.contains(mouseManager.getMouseX(),mouseManager.getMouseY())){
+            Click.stop();
+            Click.flush();
+            Click.setFramePosition(0);
+            Click.start();
             handler.setDb(new DB());
             handler.saveFile();
             handler.getGame().loadFile();
@@ -69,20 +83,29 @@ public class SettingState extends State implements SIZE {
 
         }
         if  ((mouseManager.isLeftPressed()|| mouseManager.isRightPressed())&& soundoff.contains(mouseManager.getMouseX(),mouseManager.getMouseY())){
+            Click.stop();
+            Click.flush();
+            Click.setFramePosition(0);
+            Click.start();
+            soundicon.setLocation(477+xsound,248);
             handler.setVol(0.0);
-            handler.setVol(mainMenu.getClip());
+            handler.setVol(Click);
+            handler.setVol(mainMenu.getClip(), 0.5);
             handler.setVol(mainMenu.getClick());
-
+            this.xsound = handler.getVol();
         }
         if  ((mouseManager.isLeftPressed()|| mouseManager.isRightPressed())&& soundon.contains(mouseManager.getMouseX(),mouseManager.getMouseY())){
-            handler.setVol(0.2);
-            handler.setVol(mainMenu.getClip());
+            Click.stop();
+            Click.flush();
+            Click.setFramePosition(0);
+            Click.start();
+            soundicon.setLocation(477+xsound,684);
+            handler.setVol(0.5175);
+            handler.setVol(Click);
+            handler.setVol(mainMenu.getClip(), 0.5);
             handler.setVol(mainMenu.getClick());
-
+            this.xsound = handler.getVol();
         }
-
-
-
 
     }
     @Override
@@ -92,20 +115,25 @@ public class SettingState extends State implements SIZE {
         // SOUND ICON
         Text.drawString(g,"SOUND :",260, 270, false, Color.WHITE, Assets.biggerFont);
         g.drawImage(Assets.soundsilent,410,215,98,85,null);
-        g.drawImage(Assets.soundon,705,215,98,85,null);
+        g.drawImage(Assets.soundon,715,215,98,85,null);
 
 //        // SLIDER
-        g.drawImage(Assets.sliderbar,460,130,240,255,null);
-        g.drawImage(Assets.slidericon,470+xsound,238,40,39,null);
+        g.drawImage(Assets.sliderbar,460,130,260,255,null);
+        g.drawImage(Assets.slidericon,soundicon.x-10,238,40,39,null);
 //        //EXIT
         Text.drawString(g, "EXIT", 1019, 45, true, Color.WHITE, Assets.smallFont);
         g.drawRect(962, 26, 89, 36);
         g.drawImage(Assets.xIcon, 971, 38, 12, 12, null);
 //        // RESET
         Text.drawString(g,"RESET :",260, 370, false, Color.WHITE, Assets.biggerFont);
-        Text.drawString(g, "RESET", 460, 363, true, Color.RED, Assets.smallFont);
-        g.drawRect(415, 345, 89, 36);
+        g.setColor(Color.red);
+        g.fillRect(415, 345, 89, 36);
+        Text.drawString(g, "RESET", 460, 363, true, Color.WHITE, Assets.smallFont);
 
+        // g.setColor(Color.red);
+        // ((Graphics2D) g).draw(soundicon);
+        // ((Graphics2D) g).draw(soundoff);
+        // ((Graphics2D) g).draw(soundon);
 
 
         if(timer == 0) {
@@ -115,8 +143,54 @@ public class SettingState extends State implements SIZE {
 
     }
 
+
+
     @Override
     public void loadFile() {
 
+    }
+
+    private class MyMouseAdapter extends MouseAdapter {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            preX = soundicon.x - e.getX();
+
+            if (soundicon.contains(e.getX(), e.getY())) updateLocation(e);
+            else {
+                pressedOut = true;
+                ditekan = false;
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (soundicon.contains(e.getX(), e.getY())) {
+                updateLocation(e);
+            } else {
+                pressedOut = false;
+                ditekan = false;
+            }
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            if (!pressedOut){
+                updateLocation(e);
+            } else {
+                ditekan = false;
+            }
+        }
+
+        public void updateLocation(MouseEvent e){
+            ditekan = true;
+            if (preX + e.getX() >= 477 && preX + e.getX() <= 684 ) {
+                int tempx = preX + e.getX();
+                soundicon.setLocation(tempx, 248);
+                handler.setVol((tempx-477) * 1.0/400);
+                handler.setVol(Click);
+                handler.setVol(mainMenu.getClip(), 0.5);
+                handler.setVol(mainMenu.getClick());
+            }
+        }
     }
 }
