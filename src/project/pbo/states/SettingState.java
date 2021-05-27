@@ -24,7 +24,7 @@ public class SettingState extends State implements SIZE {
     private final MainMenu mainMenu;
     private final Clip Click;
     private final Rectangle soundoff = new Rectangle(410,215,60,85);
-    private final Rectangle soundon = new Rectangle(705,215,98,85);
+    private final Rectangle soundon = new Rectangle(715,215,70,85);
 
     private final MyMouseAdapter myMouseAdapter = new MyMouseAdapter();
     private int preX;
@@ -87,8 +87,8 @@ public class SettingState extends State implements SIZE {
             Click.flush();
             Click.setFramePosition(0);
             Click.start();
-            soundicon.setLocation(477+xsound,248);
             handler.setVol(0.0);
+            soundicon.setLocation(477+xsound,248);
             handler.setVol(Click);
             handler.setVol(mainMenu.getClip(), 0.5);
             handler.setVol(mainMenu.getClick());
@@ -99,8 +99,8 @@ public class SettingState extends State implements SIZE {
             Click.flush();
             Click.setFramePosition(0);
             Click.start();
-            soundicon.setLocation(477+xsound,684);
             handler.setVol(0.5175);
+            soundicon.setLocation(477+xsound,248);
             handler.setVol(Click);
             handler.setVol(mainMenu.getClip(), 0.5);
             handler.setVol(mainMenu.getClick());
@@ -129,12 +129,6 @@ public class SettingState extends State implements SIZE {
         g.setColor(Color.red);
         g.fillRect(415, 345, 89, 36);
         Text.drawString(g, "RESET", 460, 363, true, Color.WHITE, Assets.smallFont);
-
-        // g.setColor(Color.red);
-        // ((Graphics2D) g).draw(soundicon);
-        // ((Graphics2D) g).draw(soundoff);
-        // ((Graphics2D) g).draw(soundon);
-
 
         if(timer == 0) {
             ctrBg = (ctrBg != Assets.blurBG.length - 1) ? ++ctrBg : 0;
