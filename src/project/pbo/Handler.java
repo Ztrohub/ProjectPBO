@@ -11,7 +11,7 @@ import java.io.*;
 public class Handler {
     private Game game;
     private DB db = new DB();
-    private double vol = 0.1;
+    private double vol = db.getVol();
 
     public Handler(Game game) {
         this.game = game;
@@ -72,6 +72,10 @@ public class Handler {
     }
 
     public int getVol() {
-        return (int) (vol*400);
+        return (int) (vol*200);
+    }
+
+    public double myVol(){
+        return vol;
     }
 }

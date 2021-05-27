@@ -39,7 +39,6 @@ public class SettingState extends State implements SIZE {
         handler.getGame().getWindow().getCanvas().addMouseListener(myMouseAdapter);
         handler.getGame().getWindow().getCanvas().addMouseMotionListener(myMouseAdapter);
 
-        System.out.println(xsound);
         this.mainMenu = mainMenu ;
         this.mouseManager = handler.getMouseManager();
         this.Click = Assets.audioClick;
@@ -54,6 +53,7 @@ public class SettingState extends State implements SIZE {
 
     @Override
     public void tick() {
+
         if((mouseManager.isLeftPressed() || mouseManager.isRightPressed()) && exitBtn.contains(mouseManager.getMouseX(), mouseManager.getMouseY())){
             Click.stop();
             Click.flush();
@@ -76,10 +76,16 @@ public class SettingState extends State implements SIZE {
             Click.flush();
             Click.setFramePosition(0);
             Click.start();
+            handler.getGame().getWindow().getFrame().removeMouseListener(myMouseAdapter);
+            handler.getGame().getWindow().getFrame().removeMouseMotionListener(myMouseAdapter);
+            handler.getGame().getWindow().getCanvas().removeMouseListener(myMouseAdapter);
+            handler.getGame().getWindow().getCanvas().removeMouseMotionListener(myMouseAdapter);
             handler.setDb(new DB());
+            handler.getDb().setVol(handler.myVol());
             handler.saveFile();
             handler.getGame().loadFile();
-            setCurrentState(new IntroState(handler));
+            mainMenu.getClip().stop();
+            setCurrentState(new LoadingState(handler, new IntroState(handler)));
 
         }
         if  ((mouseManager.isLeftPressed()|| mouseManager.isRightPressed())&& soundoff.contains(mouseManager.getMouseX(),mouseManager.getMouseY())){
@@ -88,6 +94,7 @@ public class SettingState extends State implements SIZE {
             Click.setFramePosition(0);
             Click.start();
             handler.setVol(0.0);
+            handler.getDb().setVol(handler.myVol());
             soundicon.setLocation(477+xsound,248);
             handler.setVol(Click);
             handler.setVol(mainMenu.getClip(), 0.5);
@@ -100,6 +107,7 @@ public class SettingState extends State implements SIZE {
             Click.setFramePosition(0);
             Click.start();
             handler.setVol(0.5175);
+            handler.getDb().setVol(handler.myVol());
             soundicon.setLocation(477+xsound,248);
             handler.setVol(Click);
             handler.setVol(mainMenu.getClip(), 0.5);
@@ -180,7 +188,8 @@ public class SettingState extends State implements SIZE {
             if (preX + e.getX() >= 477 && preX + e.getX() <= 684 ) {
                 int tempx = preX + e.getX();
                 soundicon.setLocation(tempx, 248);
-                handler.setVol((tempx-477) * 1.0/400);
+                handler.setVol((tempx-477) * 1.0/200);
+                handler.getDb().setVol(handler.myVol());
                 handler.setVol(Click);
                 handler.setVol(mainMenu.getClip(), 0.5);
                 handler.setVol(mainMenu.getClick());

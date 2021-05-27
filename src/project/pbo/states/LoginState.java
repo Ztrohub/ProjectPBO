@@ -147,6 +147,8 @@ public class LoginState extends State implements SIZE, Pesan {
         click = Assets.audioClick;
         handler.setVol(click, 0.1f);
         handler.setVol(clip, 0.1f);
+        clip.stop();
+        clip.setFramePosition(0);
         clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
 

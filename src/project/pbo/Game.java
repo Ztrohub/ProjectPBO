@@ -57,7 +57,7 @@ public class Game implements Runnable {
 //        state.playMusic();
 
         State state = new IntroState(handler);
-
+        state.playMusic();
         State.setCurrentState(state);
 
     }
@@ -75,6 +75,7 @@ public class Game implements Runnable {
                 FileInputStream fis = new FileInputStream("res/save.txt");
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 handler.setDb((DB) ois.readObject());
+                handler.setVol(handler.getDb().getVol());
                 ois.close();
                 fis.close();
             } catch (IOException e){

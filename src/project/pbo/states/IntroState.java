@@ -10,15 +10,11 @@ public class IntroState extends State{
 
     private float alhpa = 0.1f;
     private int count = 0;
-    private final Clip clip;
+    private Clip clip;
 
     public IntroState(Handler handler) {
         super(handler);
 
-        Assets.initLogin();
-        clip = Assets.audioIntro;
-        clip.start();
-        handler.setVol(clip, 0.1f);
     }
 
     @Override
@@ -37,6 +33,7 @@ public class IntroState extends State{
         if (alhpa <= 0.0f){
             clip.stop();
 
+            Assets.initLogin();
             State state = new LoginState(handler);
             state.playMusic();
             State.setCurrentState(state);
@@ -52,7 +49,11 @@ public class IntroState extends State{
 
     @Override
     public void playMusic() {
-
+        clip = Assets.audioIntro;
+        clip.stop();
+        clip.setFramePosition(0);
+        clip.start();
+        handler.setVol(clip, 0.1f);
     }
 
     @Override
