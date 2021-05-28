@@ -133,7 +133,7 @@ public class ShopState extends State implements SIZE {
         g.drawImage(Assets.coinsIcon[ctrCoin], 15, 10, 35, 35, null);
         Text.drawString(g, "" + Play.getGold(), 70, 37, false, new Color(255,191,64), Assets.biggerFont);
 
-        Text.drawString(g, "SHOP", 538, 80, true, Color.WHITE, Assets.superMegaBigFont);
+        Text.drawString(g, "STORE", 538, 80, true, Color.WHITE, Assets.superMegaBigFont);
         g.drawImage(Assets.shop,80,135,306,306,null);
         g.drawImage(Assets.shop,380,135,306,306,null);
         g.drawImage(Assets.shop,680,135,306,306,null);

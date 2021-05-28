@@ -174,7 +174,7 @@ public class SettingsState extends State implements SIZE {
             Click.flush();
             Click.setFramePosition(0);
             Click.start();
-            handler.setVol(0.5175);
+            handler.setVol(1.035);
             handler.getDb().setVol(handler.myVol());
             soundicon.setLocation(477+xsound,248);
             handler.setVol(Click);
