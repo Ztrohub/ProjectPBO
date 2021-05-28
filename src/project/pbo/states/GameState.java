@@ -446,18 +446,17 @@ public class GameState extends State implements SIZE {
                 if (cards[i][j] == null){
                     Random random = new Random();
                     int enemyorhelp = random.nextInt(100);
-                    System.out.println(enemyorhelp);
                     int rand = random.nextInt(100);
-                    if (enemyorhelp > (Math.min(step * 5, 40))){
-                        if (rand < 30) cards[i][j] = new Shield();
-                        else if (rand < 60) cards[i][j] = new Sword();
-                        else if (rand < 80) cards[i][j] = new Gold();
-                        else  cards[i][j] = new Healing();
+                    if (enemyorhelp > (Math.min(step * 4, 35))){
+                        if (rand < 25) cards[i][j] = new Shield();
+                        else if (rand < 50) cards[i][j] = new Sword();
+                        else if (rand < 65) cards[i][j] = new Gold();
+                        else cards[i][j] = new Healing();
                     } else {
                         int stage = step/10 + 1;
                         if (rand < 50) cards[i][j] = new Slime(stage);
                         else if (rand < 70) cards[i][j] = new Mummy(stage);
-                        else if (rand < 90) cards[i][j] = new Poison();
+                        else if (rand < 80) cards[i][j] = new Poison();
                         else {
                             if (step - 1 < 100) cards[i][j] = new Shaman(stage);
                             else {
