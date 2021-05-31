@@ -1,6 +1,7 @@
 package project.pbo.states;
 
 import project.pbo.Handler;
+import project.pbo.account.Generic;
 import project.pbo.account.User;
 import project.pbo.gfx.Assets;
 import project.pbo.input.MouseManager;
@@ -10,7 +11,6 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 public class LoginState extends State implements SIZE, Pesan {
 
@@ -21,7 +21,7 @@ public class LoginState extends State implements SIZE, Pesan {
     private final Rectangle registBtn = new Rectangle(80,480, 130, 43 );
 
     private final MouseManager mouseManager;
-    private final ArrayList<User> users;
+    private final Generic<User> users;
     private Clip clip;
     private Clip click;
 
@@ -55,7 +55,9 @@ public class LoginState extends State implements SIZE, Pesan {
         String password = String.valueOf(jPassword.getPassword());
 
         boolean ada = false;
-        for (User user : users){
+
+        for (int i = 0; i < users.getIdx(); i++){
+            User user = users.get(i);
             if (user.getUsername().equals(username) && user.getPassword().equals(password)){
                 ada = true;
                 clip.stop();
@@ -109,7 +111,9 @@ public class LoginState extends State implements SIZE, Pesan {
                 String confirm = String.valueOf(c.getPassword());
 
                 boolean ada = false;
-                for (User user : users){
+
+                for (int i = 0; i < users.getIdx(); i++) {
+                    User user = users.get(i);
                     if (user.getUsername().equals(username)){
                         ada = true;
                         break;

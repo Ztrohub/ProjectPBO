@@ -54,4 +54,5 @@ public class Window extends JFrame implements SIZE{
     public JFrame getFrame(){
         return this;
     }
+    
 }

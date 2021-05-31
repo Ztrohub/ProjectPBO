@@ -1,6 +1,7 @@
 package project.pbo.states;
 
 import project.pbo.Handler;
+import project.pbo.account.Generic;
 import project.pbo.account.User;
 import project.pbo.gfx.Assets;
 import project.pbo.gfx.Text;
@@ -9,10 +10,9 @@ import project.pbo.window.SIZE;
 
 import javax.sound.sampled.Clip;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class RankingState extends State implements SIZE {
-    private final ArrayList <User> rank = handler.getDb().getUsers();
+    private final Generic<User> rank = handler.getDb().getUsers();
     private final MouseManager mouseManager;
     private final MainMenu currMain;
     private final Clip click;
@@ -31,8 +31,8 @@ public class RankingState extends State implements SIZE {
         click = Assets.audioClick;
         handler.setVol(click, 0.1);
 
-        if(rank.size() > 0){
-            for (int i = 1; i < rank.size(); i++) {
+        if(rank.getIdx() > 0){
+            for (int i = 1; i < rank.getIdx(); i++) {
                 if(rank.get(i-1).getPlayer().getHighestStep() < rank.get(i).getPlayer().getHighestStep()){
                     User temp = rank.get(i-1);
                     rank.set(i-1, rank.get(i));
@@ -101,7 +101,7 @@ public class RankingState extends State implements SIZE {
             Text.drawString(g, (i+1) + "", 206, 250+(69*i), true, Color.WHITE, Assets.mediumFont);
 
             // NAMA PLAYER
-            if(i < rank.size()){
+            if(i < rank.getIdx()){
                 if(rank.get(i).getPlayer().getHighestStep() > 0){
                     if(i == 0) g.drawImage(Assets.medalIcon, 253, 197, 77, 77, null);
                     else g.drawImage(Assets.avatar, 271, 297+(68*(i-1)), 42, 42, null);

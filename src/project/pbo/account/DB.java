@@ -4,19 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class DB implements Serializable {
-    private ArrayList<User> users;
+    private Generic<User> users;
     private double vol;
 
     public DB() {
-        users = new ArrayList<>();
+        users = new Generic<>();
         vol = 0.1;
     }
 
-    public ArrayList <User> getUsers() {
+    public Generic <User> getUsers() {
         return users;
     }
 
-    public void setUsers(ArrayList<User> users) {
+    public void setUsers(Generic<User> users) {
         this.users = users;
     }
 
