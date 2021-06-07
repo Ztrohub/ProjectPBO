@@ -17,9 +17,9 @@ public class LoadingState extends State implements SIZE {
     private final String[] quotes = {"Use WASD or Arrow keys to move your character."
             , "You can gain attack, damage, and max health from shop."
             , "\"Fear is the path to the dark side.\""
-            , "There are monster bosses waiting in every 10 stages."
-            , "Reflector only can be gain from the grass card."
-            , "When using reflector, user immune to all damage !"};
+            , "Always care about your damage and defend value."
+            , "You can upgrade your hero from shop"
+            , "You need to die first to get gold from the dungeon."};
 
     public LoadingState(Handler handler, State nextState) {
         super(handler);
